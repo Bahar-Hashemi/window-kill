@@ -1,0 +1,44 @@
+.root {
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Buttons */
+.button {
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-background-color: #333333;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 10; /* Makes the button round */
+    -fx-padding: 8 15; /* Adjust padding as needed */
+}
+
+.button:hover {
+    -fx-background-color: #282828;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.button:pressed {
+    -fx-background-color: #202020;
+}
+
+/* Text Fields */
+.text-field {
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-background-color: #333333;
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #999999;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 1 0; /* Adds bottom border */
+}
+
+/* Labels */
+.label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-padding: 8 15;
+}
