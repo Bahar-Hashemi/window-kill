@@ -16,6 +16,7 @@ public class GameController {
     static MainBoard mainBoard;
     static Scene scene;
     static Pane root;
+    static int gameTicks = 0;
 
     static public void run() {
         mainBoard = new MainBoard(); mainBoard.show();
@@ -28,7 +29,9 @@ public class GameController {
     }
     private static void launchGame() {
         Timeline timeline = new Timeline(new KeyFrame(new Duration(1), actionEvent -> {
-            mainBoard.moveEpsilon();
+            mainBoard.moveEntities();
+            gameTicks++;
+            if (mainBoard.isShooting && gameTicks % 250 == 0) mainBoard.makeBullet();
         }));
         timeline.setCycleCount(-1);
         timeline.play();
