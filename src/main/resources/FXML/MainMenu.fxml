@@ -5,15 +5,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="331.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="331.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.control.MainMenuController">
    <children>
-      <Button layoutX="90.0" layoutY="440.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="Exit" />
+      <Button layoutX="90.0" layoutY="440.0" mnemonicParsing="false" onAction="#onExit" prefHeight="49.0" prefWidth="151.0" text="Exit" />
       <Button layoutX="90.0" layoutY="380.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="TUTORIAL" />
       <Button layoutX="90.0" layoutY="320.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="SETTINGS" />
       <Button layoutX="90.0" layoutY="260.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="SKILL TREE" />
-      <Button layoutX="90.0" layoutY="200.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="NEW GAME" />
-      <Label layoutX="59.0" layoutY="67.0" prefHeight="36.0" prefWidth="183.0" text="byte-coins: " />
-      <Label layoutX="59.0" layoutY="115.0" prefHeight="36.0" prefWidth="183.0" text="hight-score:" />
+      <Button layoutX="90.0" layoutY="200.0" mnemonicParsing="false" onAction="#onNewGame" prefHeight="49.0" prefWidth="151.0" text="NEW GAME" />
+      <Label fx:id="byteCoin" layoutX="59.0" layoutY="67.0" prefHeight="36.0" prefWidth="266.0" text="" />
+      <Label fx:id="highScore" layoutX="59.0" layoutY="115.0" prefHeight="36.0" prefWidth="266.0" text="" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffcf1f" height="18.0" layoutX="40.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="19.0" />
       <Rectangle arcWidth="5.0" fill="WHITE" height="18.0" layoutX="40.0" layoutY="76.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="19.0" />
    </children>

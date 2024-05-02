@@ -1,10 +1,11 @@
 package bahar.window_kill;
 
-import bahar.window_kill.view.MainMenu;
+import bahar.window_kill.view.MainStage;
+import javafx.stage.Screen;
 
 public class Main {
     public static void main(String[] args) {
-        MainMenu mainMenu = new MainMenu();
-        mainMenu.initialize(args);
+        MainStage mainStage = new MainStage();
+        mainStage.initialize(args);
     }
 }
