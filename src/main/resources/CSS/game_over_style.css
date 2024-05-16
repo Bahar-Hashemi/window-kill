@@ -1,0 +1,22 @@
+.root {
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+}
+.button {
+    -fx-font-family: "cooper black";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-color: #18191A;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 10; /* Makes the button round */
+    -fx-padding: 8 15; /* Adjust padding as needed */
+}
+.button:hover {
+    -fx-background-color: #282828;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.button:pressed {
+    -fx-background-color: #202020;
+}

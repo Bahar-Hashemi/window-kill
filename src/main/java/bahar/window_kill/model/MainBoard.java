@@ -5,22 +5,29 @@ import bahar.window_kill.control.GameController;
 import bahar.window_kill.control.SoundController;
 import bahar.window_kill.model.entities.*;
 import bahar.window_kill.model.entities.collectables.Collectable;
-import bahar.window_kill.view.PauseStage;
+import bahar.window_kill.view.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainBoard extends GameBoard {
-    static public Epsilon epsilon;
+    public Epsilon epsilon;
     private Label HPLabel, XPLabel;
-    static public int xp = 100;
+    public int xp = 1000;
     public ArrayList<Bullet> bullets = new ArrayList<>();
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Collectable> collectables = new ArrayList<>();
     public boolean wIsPressed, aIsPressed, sIsPressed, dIsPressed;
+    public boolean qIsPressed = false;
     public boolean onPause = false;
     public boolean isShooting; public double mouseX, mouseY;
     public MainBoard() {
@@ -44,6 +51,17 @@ public class MainBoard extends GameBoard {
                     pauseStage.show();
                     onPause = true;
                 }
+            }
+            if (keyEvent.getCode() == KeyCode.Q) {
+                if (qIsPressed) {
+                    GameController.endGame();
+                    GameOverStage gameOverStage = new GameOverStage();
+                    GameLauncher.stage = gameOverStage;
+                    gameOverStage.show();
+                }
+                qIsPressed = true;
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {qIsPressed = false;}));
+                timeline.play();
             }
         });
         scene.setOnKeyReleased(keyEvent -> {
@@ -160,14 +178,22 @@ public class MainBoard extends GameBoard {
         }
     }
     public void moveEntities() {
+        processCollectibles();
         processImpacts();
         processEpsilonDamage();
         moveEpsilon();
         moveBullets();
         moveEnemies();
-        processCollectibles();
     }
     private void processCollectibles() {
+        Random random = new Random();
+        for (Collectable collectable: collectables) {
+            LocalRouting.apply(collectable, epsilon);
+            collectable.setDeltaX(collectable.getDeltaX() * 10);
+            collectable.setDeltaY(collectable.getDeltaY() * 10);
+            collectable.setLayoutX(collectable.getLayoutX() + collectable.getDeltaX());
+            collectable.setLayoutY(collectable.getLayoutY() + collectable.getDeltaY());
+        }
         boolean hasCollected = false;
         for (int i = collectables.size() - 1; i >= 0; i--) {
             Collectable collectable = collectables.get(i);
@@ -191,7 +217,18 @@ public class MainBoard extends GameBoard {
                 isDamaged = true;
             }
         if (isDamaged) {
+            epsilon.setColor(Color.RED);
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+                epsilon.setColor(Color.WHITE);
+            }));
+            timeline.play();
             SoundController.DAMAGE.play();
+        }
+        if (epsilon.getHP() < 0) {
+            GameController.endGame();
+            GameOverStage gameOverStage = new GameOverStage();
+            GameLauncher.stage = gameOverStage;
+            gameOverStage.show();
         }
     }
     private void moveEnemies() {

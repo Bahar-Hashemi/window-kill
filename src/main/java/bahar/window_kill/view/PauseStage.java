@@ -16,13 +16,10 @@ public class PauseStage extends Stage {
     public static Scene scene;
     public PauseStage() {
         this.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
-        this.setOpacity(0.99);
         scene = SceneBuilder.PAUSE_SCENE.generateScene();
         this.setOpacity(0.80);
-        this.setWidth(Constants.SCREEN_WIDTH / 2);
-        this.setHeight(Constants.SCREEN_HEIGHT / 2);
-        this.setX((Constants.SCREEN_WIDTH - this.getWidth()) / 2);
-        this.setY((Constants.SCREEN_HEIGHT - this.getHeight()) / 2);
+        this.setX(50);
+        this.setY(50);
         this.setScene(scene);
         this.setResizable(false);
         this.initStyle(StageStyle.UNDECORATED);

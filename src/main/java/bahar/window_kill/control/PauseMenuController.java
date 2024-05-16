@@ -4,11 +4,18 @@ import bahar.window_kill.Main;
 import bahar.window_kill.model.GameBoard;
 import bahar.window_kill.model.MainBoard;
 import bahar.window_kill.model.entities.Entity;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 public class PauseMenuController {
@@ -16,50 +23,73 @@ public class PauseMenuController {
     public Label HPLabel, XPLabel;
     @FXML
     public Button healButton, banishButton, empowerButton;
+    public Label volumeLabel;
+    public Slider volumeSlider;
+    public ImageView healImage, banishImage, empowerImage;
+
     @FXML
     public void initialize() {
+        makeOnHovers();
         updateLabels();
+        updateVolume();
         processButtonsDisable();
     }
+    private void makeOnHovers() {
+        healButton.setOnMouseEntered(e -> healImage.setImage(ImageController.HEAL_HOVER.getImage()));
+        healButton.setOnMouseExited(e -> healImage.setImage(ImageController.HEAL.getImage()));
+        banishButton.setOnMouseEntered(e -> banishImage.setImage(ImageController.BANISH_HOVER.getImage()));
+        banishButton.setOnMouseExited(e -> banishImage.setImage(ImageController.BANISH.getImage()));
+        empowerButton.setOnMouseEntered(e -> empowerImage.setImage(ImageController.EMPOWER_HOVER.getImage()));
+        empowerButton.setOnMouseExited(e -> empowerImage.setImage(ImageController.EMPOWER.getImage()));
+    }
+    private void updateVolume() {
+        volumeLabel.setText("Volume: " + (int) SoundController.volume);
+        volumeSlider.setValue(SoundController.volume);
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                volumeLabel.setText("Volume: " + (int) volumeSlider.getValue());
+                SoundController.setVolume(volumeSlider.getValue());
+            }
+        });
+    }
     private void updateLabels() {
-        HPLabel.setText("HP: " + MainBoard.epsilon.getHP());
-        XPLabel.setText("XP: " + MainBoard.xp);
+        HPLabel.setText("HP: " + GameController.mainBoard.epsilon.getHP());
+        XPLabel.setText("XP: " + GameController.mainBoard.xp);
     }
     @FXML
     public void onHeal(ActionEvent actionEvent) {
-        MainBoard.epsilon.setHP(MainBoard.epsilon.getHP() + 10);
-        MainBoard.xp -= 50;
+        GameController.mainBoard.epsilon.setHP(GameController.mainBoard.epsilon.getHP() + 20);
+        GameController.mainBoard.xp -= 50;
         updateLabels();
         processButtonsDisable();
     }
 
     public void onEmpower(ActionEvent actionEvent) {
-        MainBoard.xp -= 75;
-        GameController.ShootTicks /= 5;
-        Timeline timeline = new Timeline();
-        timeline.setDelay(Duration.seconds(10));
-        timeline.setOnFinished(e -> {GameController.ShootTicks *= 5; });
+        GameController.mainBoard.xp -= 75;
+        GameController.shootCount += 2;
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(15), e -> {GameController.shootCount -= 2;}));
         timeline.play();
         updateLabels();
         processButtonsDisable();
     }
     private void processButtonsDisable() {
-        if (MainBoard.xp < 75) {
+        if (GameController.mainBoard.xp < 75) {
             empowerButton.setDisable(true);
         }
-        if (MainBoard.xp < 50) {
+        if (GameController.mainBoard.xp < 50) {
             healButton.setDisable(true);
         }
-        if (MainBoard.xp < 100) {
+        if (GameController.mainBoard.xp < 100) {
             banishButton.setDisable(true);
         }
     }
     public void onBanish(ActionEvent actionEvent) {
-        MainBoard.xp -= 100;
+        GameController.mainBoard.xp -= 100;
         MainBoard mainBoard = GameController.mainBoard;
         Entity[] entities = new Entity[mainBoard.enemies.size()];
         for (int i = 0; i < mainBoard.enemies.size(); i++) entities[i] = mainBoard.enemies.get(i);
-        mainBoard.impact(MainBoard.epsilon.getLayoutX(), MainBoard.epsilon.getLayoutY(), entities, 3);
+        mainBoard.impact(GameController.mainBoard.epsilon.getLayoutX(), GameController.mainBoard.epsilon.getLayoutY(), entities, 3);
         updateLabels();
         processButtonsDisable();
     }

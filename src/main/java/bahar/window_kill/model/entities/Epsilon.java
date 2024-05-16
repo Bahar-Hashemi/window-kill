@@ -32,6 +32,9 @@ public class Epsilon extends Entity {
         circle.setStrokeWidth(3);
         return circle;
     }
+    public void setColor(Color color) {
+        ((Circle) view).setStroke(color);
+    }
     public double inBoardArea(MainBoard mainBoard) {
         Rectangle rectangle = new Rectangle(0, 0, mainBoard.getWidth(), mainBoard.getHeight());
         Shape intersection = Shape.intersect((Shape) this.getView(), (Shape) rectangle);

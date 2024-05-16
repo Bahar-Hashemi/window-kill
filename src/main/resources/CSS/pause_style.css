@@ -1,0 +1,61 @@
+.root {
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+}
+.label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-padding: 8 15;
+}
+#HPLabel {
+    -fx-text-fill: #FFFF00;
+}
+#XPLabel {
+    -fx-text-fill: #A020F0;
+}
+.button {
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-background-color: #18191A;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 20; /* Makes the button round */
+    -fx-padding: 8 15; /* Adjust padding as needed */
+    -fx-border-radius: 20px;
+    -fx-border-width: 5px;
+}
+.button:hover {
+    -fx-background-color: #282828;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+.button:pressed {
+    -fx-background-color: #202020;
+}
+
+#healButton {
+    -fx-font-family: "cooper black";
+    -fx-border-color: #00FF00;
+}
+#banishButton {
+    -fx-font-family: "cooper black";
+    -fx-border-color: orange;
+}
+#empowerButton {
+    -fx-font-family: "cooper black";
+    -fx-border-color: purple;
+}
+
+.slider .thumb {
+    -fx-background-color: gold; /* Gold thumb color */
+    -fx-background-radius: 10px; /* Round the corners of the thumb */
+}
+
+.slider .track {
+    -fx-background-color: #202020; /* Gray background color */
+}
+
+.slider .thumb:hover {
+    -fx-background-color: #ffd700; /* Lighter gold on hover */
+}

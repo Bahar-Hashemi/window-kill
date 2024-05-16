@@ -14,7 +14,7 @@ public enum SoundController {
     }
     public void play() {
         mediaPlayer.seek(Duration.ZERO);
-        mediaPlayer.setVolume(volume);
+        mediaPlayer.setVolume(volume / 100);
         mediaPlayer.play();
     }
     public static void setVolume(double volume) {
@@ -23,5 +23,8 @@ public enum SoundController {
             return;
         }
         SoundController.volume = volume;
+    }
+    public void changeVolume(double volume) { //todo checkThisPart
+        mediaPlayer.setVolume(volume / 100);
     }
 }

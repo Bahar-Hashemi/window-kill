@@ -10,7 +10,6 @@ public class LocalRouting {
         if (entity instanceof Collectable) {
             x = epsilon.getLayoutX() - entity.getView().getLayoutBounds().getCenterX();
             y = epsilon.getLayoutY() - entity.getView().getLayoutBounds().getCenterY();
-            System.out.println(entity.getView().getLayoutBounds().getHeight() + " " + entity.getView().getLayoutBounds().getWidth());
         }
         double chord = Math.sqrt(x * x + y * y);
         entity.setDeltaX(x / chord);
