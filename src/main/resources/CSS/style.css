@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: #000000;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -7,7 +7,7 @@
 .button {
     -fx-font-family: "cooper black";
     -fx-font-size: 16px;
-    -fx-background-color: #333333;
+    -fx-background-color: #18191A;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 10; /* Makes the button round */
     -fx-padding: 8 15; /* Adjust padding as needed */
@@ -41,4 +41,43 @@
     -fx-font-family: "cooper black";
     -fx-font-size: 16px;
     -fx-padding: 8 15;
+}
+#HPLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFF00;
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-padding: 8 15;
+}
+#XPLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: #A020F0;
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-padding: 8 15;
+}
+#healButton {
+     -fx-background-radius: 20;
+     -fx-border-color: #00FF00;
+     -fx-border-radius: 20px;
+     -fx-border-width: 5px;
+     -fx-padding: 10px;
+ }
+#healButton:hover {
+    -fx-scale-x: 1.5;
+         -fx-scale-y: 1.5;
+ }
+#banishButton {
+    -fx-background-radius: 20;
+    -fx-border-color: orange;
+    -fx-border-radius: 20px;
+    -fx-border-width: 5px;
+    -fx-padding: 10px;
+}
+#empowerButton {
+    -fx-background-radius: 20;
+    -fx-border-color: purple;
+    -fx-border-radius: 20px;
+    -fx-border-width: 5px;
+    -fx-padding: 10px;
 }

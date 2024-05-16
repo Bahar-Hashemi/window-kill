@@ -9,4 +9,5 @@ public class Constants {
     public static final double MINIMUM_WIDTH = Screen.getPrimary().getBounds().getWidth() / 6;
     public static final double MINIMUM_HEIGHT = (Screen.getPrimary().getBounds().getHeight() - 10) / 6;
     public static final Color BACKGROUND_COLOR = Color.web("#000000");
+    public static final double RESPOND_DURATION = 30;
 }

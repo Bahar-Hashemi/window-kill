@@ -11,9 +11,10 @@ import javafx.stage.StageStyle;
 public class MainStage extends Application {
     public static Stage stage;
     public static Scene scene;
+    public static String[] args;
 
-    public void initialize(String[] args) {
-        launch(args);
+    public void initialize() {
+        launch();
     }
     public void start(Stage stage) throws Exception {
         MainStage.stage = stage;

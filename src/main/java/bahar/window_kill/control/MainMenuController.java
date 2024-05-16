@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 public class MainMenuController {
-    String byteCoinString = "Byte-Coin: 2000";
+    String byteCoinString = "XP: 2000";
     String highScoreString = "High-Score: 1384";
     public Label byteCoin, highScore;
     Timeline timeline;

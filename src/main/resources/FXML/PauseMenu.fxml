@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="475.0" prefWidth="680.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.control.PauseMenuController">
+   <children>
+      <HBox alignment="CENTER" layoutX="1.0" layoutY="219.0" prefHeight="257.0" prefWidth="732.0" spacing="15.0">
+         <children>
+            <Button fx:id="healButton" mnemonicParsing="false" onAction="#onHeal" prefHeight="179.0" prefWidth="200.0" text="O' Apollo Heal" />
+            <Button fx:id="empowerButton" mnemonicParsing="false" onAction="#onEmpower" prefHeight="179.0" prefWidth="200.0" text="O’ Athena، Empower" />
+            <Button fx:id="banishButton" mnemonicParsing="false" onAction="#onBanish" prefHeight="179.0" prefWidth="200.0" text="O' Hephaestus، Banish" />
+         </children>
+      </HBox>
+      <VBox layoutX="99.0" layoutY="23.0" prefHeight="200.0" prefWidth="633.0" spacing="30.0">
+         <children>
+            <Label fx:id="HPLabel" prefHeight="38.0" prefWidth="357.0" text="HP: " />
+            <Label fx:id="XPLabel" prefHeight="38.0" prefWidth="357.0" text="XP: " />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

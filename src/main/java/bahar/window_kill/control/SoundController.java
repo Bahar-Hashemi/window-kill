@@ -5,14 +5,23 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public enum SoundController {
-    SHOOT("shootSound.wav"), WHOOSH("whoosh.wav");
+    SHOOT("shootSound.wav"), WHOOSH("whoosh.wav"), HIT("hit.wav"), DAMAGE("damage.wav"), COIN_COLLECT("coin_collect.mp3");
     private MediaPlayer mediaPlayer;
+    static double volume = 100;
     SoundController(String name) {
         Media media = new Media(getClass().getResource("/sounds/" + name).toString());
         mediaPlayer = new MediaPlayer(media);
     }
     public void play() {
         mediaPlayer.seek(Duration.ZERO);
+        mediaPlayer.setVolume(volume);
         mediaPlayer.play();
+    }
+    public static void setVolume(double volume) {
+        if (volume < 0 || volume > 100) {
+            System.err.println("Invalid volume");
+            return;
+        }
+        SoundController.volume = volume;
     }
 }

@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public enum SceneBuilder {
-    MAIN_MENU_SCENE("MainMenu.fxml"), GAME_SCENE("Game.fxml");
+    MAIN_MENU_SCENE("MainMenu.fxml"), GAME_SCENE("Game.fxml"), PAUSE_SCENE("PauseMenu.fxml");
     String name;
     SceneBuilder(String name) {
         this.name = name;
