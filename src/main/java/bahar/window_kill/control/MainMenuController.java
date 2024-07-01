@@ -1,20 +1,26 @@
 package bahar.window_kill.control;
 
 import bahar.window_kill.view.GameLauncher;
+import bahar.window_kill.view.MainStage;
+import bahar.window_kill.view.PaneBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class MainMenuController {
+    public Pane pane;
     String byteCoinString = "XP: 2000";
     String highScoreString = "High-Score: 1384";
     public Label byteCoin, highScore;
     Timeline timeline;
     @FXML
     public void initialize() {
+        MainStage.requestCenterOnScreen(pane);
         /*write labels after initializing*/
         writeLabels();
     }
@@ -39,12 +45,12 @@ public class MainMenuController {
     }
     @FXML
     public void onExit(ActionEvent e) {
-        GameLauncher.stage.close();
+        MainStage.getInstance().close();
     }
     @FXML
     public void onNewGame(ActionEvent e) {
         stopTimeline();
-        GameLauncher.stage.close();
+        MainStage.newScene();
         GameController.run();
     }
 }

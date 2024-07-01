@@ -1,7 +1,9 @@
 package bahar.window_kill.model.entities;
 
 import bahar.window_kill.control.Constants;
+import bahar.window_kill.model.GameBoard;
 import bahar.window_kill.model.MainBoard;
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -35,11 +37,14 @@ public class Epsilon extends Entity {
     public void setColor(Color color) {
         ((Circle) view).setStroke(color);
     }
-    public double inBoardArea(MainBoard mainBoard) {
-        Rectangle rectangle = new Rectangle(0, 0, mainBoard.getWidth(), mainBoard.getHeight());
-        Shape intersection = Shape.intersect((Shape) this.getView(), (Shape) rectangle);
-        double area = intersection.getBoundsInLocal().getWidth() * intersection.getBoundsInLocal().getHeight();
-        return area;
+    public double inBoardArea(GameBoard gameBoard) {
+        Bounds myBounds = view.getBoundsInParent();
+        Bounds paneBounds = new BoundingBox(0, 0, gameBoard.getWidth(), gameBoard.getHeight());
+        double minX = Math.max(myBounds.getMinX(), paneBounds.getMinX());
+        double maxX = Math.min(myBounds.getMaxX(), paneBounds.getMaxX());
+        double minY = Math.max(myBounds.getMinY(), paneBounds.getMinY());
+        double maxY = Math.min(myBounds.getMaxY(), paneBounds.getMaxY());
+        return ((maxX - minX) * (maxY - minY));
     }
     public Point2D collisionInBoardPoint(MainBoard mainBoard) {
         double x = getLayoutX();

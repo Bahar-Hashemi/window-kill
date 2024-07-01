@@ -1,16 +1,19 @@
 package bahar.window_kill.control;
 
+import bahar.window_kill.Main;
 import bahar.window_kill.model.MainBoard;
+import bahar.window_kill.model.User;
+import bahar.window_kill.model.entities.Enemy;
 import bahar.window_kill.model.entities.Epsilon;
 import bahar.window_kill.model.entities.Squarantine;
 import bahar.window_kill.model.entities.Trigorath;
-import bahar.window_kill.view.GameLauncher;
-import bahar.window_kill.view.MainMenuStage;
+import bahar.window_kill.view.MainStage;
+import bahar.window_kill.view.PaneBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -20,28 +23,30 @@ import java.util.Random;
 
 public class GameController {
     public static MainBoard mainBoard;
-    static Scene scene;
-    static Pane root;
     static int gameTicks = 0;
     static Timeline gameTimeLine, whooshTimeLine;
+    private static Pane pausePane;
     public static double shootCount = 1;
 
     static public void run() {
-        mainBoard = new MainBoard(); mainBoard.show();
-        scene = mainBoard.scene;
-        root = (Pane) scene.getRoot();
+        gameTicks = 0;
+        mainBoard = new MainBoard();
         mainBoard.setDimensions(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 4, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);
-        mainBoard.setEpsilon(new Epsilon(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 4));
+        mainBoard.setUser(new User(new Epsilon(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 4)));
+        MainStage.add(mainBoard);
         whoosh();
     }
     public static void launchGame() {
-        generateEnemies(0);
+        generateEnemies();
+        mainBoard.requestUserControls(mainBoard.getUser());
         gameTimeLine = new Timeline(new KeyFrame(new Duration(Constants.RESPOND_DURATION), actionEvent -> {
-            generateEnemies(99.7);
-            mainBoard.moveEntities();
+            if (mainBoard.getUser().hasPauseRequest)
+                pauseGame();
             gameTicks++;
+            generateEnemies();
+            mainBoard.moveEntities();
             for (int i = 0; i < shootCount; i++)
-                if (mainBoard.isShooting && gameTicks % ((int) (Constants.RESPOND_DURATION / 3) + i) == 0) {
+                if (mainBoard.getUser().isShooting && gameTicks % ((int) (Constants.RESPOND_DURATION / 3) + i) == 0) {
                     mainBoard.makeBullet();
                 }
             mainBoard.moveWalls();
@@ -51,15 +56,25 @@ public class GameController {
         gameTimeLine.setCycleCount(-1);
         gameTimeLine.play();
     }
-    private static void generateEnemies(double prob) {
-        Random random = new Random();
-        if (random.nextDouble(0, 1) > prob / 100) {
-            mainBoard.addEnemy(Trigorath.randomGenerate(mainBoard));
-            mainBoard.addEnemy(Squarantine.randomGenerate(mainBoard));
-            mainBoard.addEnemy(Squarantine.randomGenerate(mainBoard));
+    private static void generateEnemies() {
+        if (gameTicks % 300 == 0) {
+            int tmp = gameTicks;
+            while (tmp > 0) {
+                mainBoard.addEnemy(generateEnemy());
+                tmp /= 10;
+            }
         }
     }
+    private static Enemy generateEnemy() {
+        Random random = new Random();
+        if (random.nextDouble(0, 1) > 0.55)
+            return Squarantine.randomGenerate(mainBoard);
+        return Trigorath.randomGenerate(mainBoard);
+    }
     public static void pauseGame() {
+        pausePane = PaneBuilder.PAUSE_PANE.generatePane();
+        pausePane.requestFocus();
+        MainStage.add(pausePane);
         if (gameTimeLine == null) {
             whooshTimeLine.pause();
         }
@@ -67,6 +82,7 @@ public class GameController {
             gameTimeLine.pause();
     }
     public static void reStart() {
+        MainStage.remove(pausePane);
         int[] tick = new int[]{0};
         Color[] colors = new Color[] {Color.GREENYELLOW, Color.ORANGE, Color.RED, Color.RED};
         Label label = new Label("" + (3 - tick[0]));
@@ -77,7 +93,7 @@ public class GameController {
         label.setPrefWidth(mainBoard.getWidth());
         label.setLayoutX(0);
         label.setLayoutY(0);
-        mainBoard.root.getChildren().add(label);
+        mainBoard.getChildren().add(label);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             tick[0]++;
             label.setTextFill(colors[tick[0]]);
@@ -87,13 +103,14 @@ public class GameController {
         timeline.setDelay(Duration.seconds(1));
         timeline.setCycleCount(3);
         timeline.setOnFinished(e -> {
-            mainBoard.root.getChildren().remove(label);
-            mainBoard.onPause = false;
+            mainBoard.getChildren().remove(label);
+            mainBoard.getUser().hasPauseRequest = false;
             if (gameTimeLine == null) {
                 whooshTimeLine.play();
             }
             if (gameTimeLine != null)
                 gameTimeLine.play();
+            mainBoard.requestFocus();
         });
         timeline.play();
     }
@@ -111,8 +128,9 @@ public class GameController {
         SoundController.WHOOSH.play();
     }
     public static void endGame() {
-        pauseGame();
-        mainBoard.close();
+        gameTimeLine.stop();
+        Pane pane = PaneBuilder.GAME_OVER_PANE.generatePane();
+        MainStage.requestCenterOnScreen(pane);
+        MainStage.add(pane);
     }
-    
 }

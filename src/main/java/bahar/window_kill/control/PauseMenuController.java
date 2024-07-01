@@ -1,7 +1,5 @@
 package bahar.window_kill.control;
 
-import bahar.window_kill.Main;
-import bahar.window_kill.model.GameBoard;
 import bahar.window_kill.model.MainBoard;
 import bahar.window_kill.model.entities.Entity;
 import javafx.animation.KeyFrame;
@@ -13,9 +11,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class PauseMenuController {
@@ -26,6 +25,7 @@ public class PauseMenuController {
     public Label volumeLabel;
     public Slider volumeSlider;
     public ImageView healImage, banishImage, empowerImage;
+    public AnchorPane pane;
 
     @FXML
     public void initialize() {
@@ -33,6 +33,10 @@ public class PauseMenuController {
         updateLabels();
         updateVolume();
         processButtonsDisable();
+        pane.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.E)
+                GameController.reStart();
+        });
     }
     private void makeOnHovers() {
         healButton.setOnMouseEntered(e -> healImage.setImage(ImageController.HEAL_HOVER.getImage()));
@@ -54,12 +58,12 @@ public class PauseMenuController {
         });
     }
     private void updateLabels() {
-        HPLabel.setText("HP: " + GameController.mainBoard.epsilon.getHP());
+        HPLabel.setText("HP: " + GameController.mainBoard.getUser().epsilon.getHP());
         XPLabel.setText("XP: " + GameController.mainBoard.xp);
     }
     @FXML
     public void onHeal(ActionEvent actionEvent) {
-        GameController.mainBoard.epsilon.setHP(GameController.mainBoard.epsilon.getHP() + 20);
+        GameController.mainBoard.getUser().epsilon.setHP(GameController.mainBoard.getUser().epsilon.getHP() + 10);
         GameController.mainBoard.xp -= 50;
         updateLabels();
         processButtonsDisable();
@@ -89,7 +93,7 @@ public class PauseMenuController {
         MainBoard mainBoard = GameController.mainBoard;
         Entity[] entities = new Entity[mainBoard.enemies.size()];
         for (int i = 0; i < mainBoard.enemies.size(); i++) entities[i] = mainBoard.enemies.get(i);
-        mainBoard.impact(GameController.mainBoard.epsilon.getLayoutX(), GameController.mainBoard.epsilon.getLayoutY(), entities, 3);
+        mainBoard.impact(GameController.mainBoard.getUser().epsilon.getLayoutX(), GameController.mainBoard.getUser().epsilon.getLayoutY(), entities, 3);
         updateLabels();
         processButtonsDisable();
     }

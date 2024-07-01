@@ -1,25 +1,23 @@
 package bahar.window_kill.view;
 
+import bahar.window_kill.control.Constants;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class GameLauncher extends Application {
-    public static Stage stage;
-
     public void initialize() {
         launch();
     }
-    public void start(Stage stage) throws Exception {
-        GameLauncher.stage = new MainMenuStage();
-        GameLauncher.stage.show();
-    }
-    public static void setStage(Stage stage) {
-        GameLauncher.stage = stage;
-    }
-    public static void setScene(Scene scene) {
-        stage.setScene(scene);
+    public void start(Stage stage) {
+        MainStage.newScene();
+        Pane pane = PaneBuilder.MAIN_MENU_PANE.generatePane();
+        MainStage.add(pane);
+        MainStage.getInstance().show();
     }
 }

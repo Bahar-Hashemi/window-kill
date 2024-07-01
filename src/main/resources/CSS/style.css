@@ -2,6 +2,9 @@
     -fx-background-color: #000000;
     -fx-text-fill: #FFFFFF;
 }
+.pane {
+    -fx-background-color: #000000;
+}
 
 /* Buttons */
 .button {

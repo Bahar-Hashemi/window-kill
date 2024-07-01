@@ -5,176 +5,156 @@ import bahar.window_kill.control.GameController;
 import bahar.window_kill.control.SoundController;
 import bahar.window_kill.model.entities.*;
 import bahar.window_kill.model.entities.collectables.Collectable;
-import bahar.window_kill.view.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainBoard extends GameBoard {
-    public Epsilon epsilon;
     private Label HPLabel, XPLabel;
-    public int xp = 1000;
+    private User user;
+    public int xp = 0;
     public ArrayList<Bullet> bullets = new ArrayList<>();
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Collectable> collectables = new ArrayList<>();
-    public boolean wIsPressed, aIsPressed, sIsPressed, dIsPressed;
-    public boolean qIsPressed = false;
-    public boolean onPause = false;
-    public boolean isShooting; public double mouseX, mouseY;
     public MainBoard() {
         super();
-        addMouseEvents();
+        user = new User();
     }
-    private void addMouseEvents() {
-        scene.setOnKeyPressed(keyEvent -> {
+    public void requestUserControls(User user) {
+        requestFocus();
+        this.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.W)
-                wIsPressed = true;
+                user.wIsPressed = true;
             if (keyEvent.getCode() == KeyCode.A)
-                aIsPressed = true;
+                user.aIsPressed = true;
             if (keyEvent.getCode() == KeyCode.S)
-                sIsPressed = true;
+                user.sIsPressed = true;
             if (keyEvent.getCode() == KeyCode.D)
-                dIsPressed = true;
+                user.dIsPressed = true;
             if (keyEvent.getCode() == KeyCode.E) {
-                if (!onPause) {
+                user.hasPauseRequest = !user.hasPauseRequest;
+                if (user.hasPauseRequest)
                     GameController.pauseGame();
-                    PauseStage pauseStage = new PauseStage();
-                    pauseStage.show();
-                    onPause = true;
-                }
+                else
+                    GameController.reStart();
             }
             if (keyEvent.getCode() == KeyCode.Q) {
-                if (qIsPressed) {
+                if (user.hasKillWish())
                     GameController.endGame();
-                    GameOverStage gameOverStage = new GameOverStage();
-                    GameLauncher.stage = gameOverStage;
-                    gameOverStage.show();
-                }
-                qIsPressed = true;
-                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {qIsPressed = false;}));
-                timeline.play();
+                user.killRequest();
             }
         });
-        scene.setOnKeyReleased(keyEvent -> {
+        this.setOnKeyReleased(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.W)
-                wIsPressed = false;
+                user.wIsPressed = false;
             if (keyEvent.getCode() == KeyCode.A)
-                aIsPressed = false;
+                user.aIsPressed = false;
             if (keyEvent.getCode() == KeyCode.S)
-                sIsPressed = false;
+                user.sIsPressed = false;
             if (keyEvent.getCode() == KeyCode.D)
-                dIsPressed = false;
+                user.dIsPressed = false;
         });
-        scene.setOnMousePressed(mouseEvent -> {
-            isShooting = true;
-            mouseX = mouseEvent.getX();
-            mouseY = mouseEvent.getY();
+        this.setOnMousePressed(mouseEvent -> {
+            user.isShooting = true;
+            user.mouseX = mouseEvent.getX();
+            user.mouseY = mouseEvent.getY();
         });
-        scene.setOnMouseReleased(mouseEvent -> isShooting = false);
-        scene.setOnMouseDragged(mouseEvent -> {mouseX = mouseEvent.getX(); mouseY = mouseEvent.getY();});
+        this.setOnMouseReleased(mouseEvent -> user.isShooting = false);
+        this.setOnMouseDragged(mouseEvent -> {user.mouseX = mouseEvent.getX(); user.mouseY = mouseEvent.getY();});
+    }
+    public void setUser(User user) {
+        this.user = user;
+        add(user.epsilon.getView());
+    }
+    public User getUser() {
+        return user;
     }
     public void addCollectable(Collectable collectable) {
         add(collectable.getView());
         collectables.add(collectable);
     }
     public void removeCollectable(Collectable collectable) {
-        root.getChildren().remove(collectable.getView());
+        getChildren().remove(collectable.getView());
         collectables.remove(collectable);
     }
     public void updateXPLabel() {
         if (XPLabel == null) {
             XPLabel = new Label("XP: " + xp);
-            XPLabel.setLayoutX(root.getWidth() - XPLabel.getWidth()); XPLabel.setLayoutY(0);
+            XPLabel.setLayoutX(getWidth() - XPLabel.getWidth()); XPLabel.setLayoutY(0);
             XPLabel.getStyleClass().add("XPLabel");
-            root.getChildren().add(XPLabel);
+            getChildren().add(XPLabel);
         }
         else {
             XPLabel.setText("XP: " + xp);
-            XPLabel.setLayoutX(root.getWidth() - XPLabel.getWidth());
+            XPLabel.setLayoutX(getWidth() - XPLabel.getWidth());
         }
     }
     public void updateHPLabel() {
-        if (epsilon != null && HPLabel == null) {
-            HPLabel = new Label("HP: " + epsilon.getHP());
+        if (user.epsilon != null && HPLabel == null) {
+            HPLabel = new Label("HP: " + user.epsilon.getHP());
             HPLabel.setLayoutX(0); HPLabel.setLayoutY(0);
             HPLabel.getStyleClass().add("HPLabel");
-            root.getChildren().add(HPLabel);
+            getChildren().add(HPLabel);
         }
-        else if (epsilon != null) {
-            HPLabel.setText("HP: " + epsilon.getHP());
+        else if (user.epsilon != null) {
+            HPLabel.setText("HP: " + user.epsilon.getHP());
         }
     }
     public void makeBullet() {
-        double x = mouseX - epsilon.getLayoutX();
-        double y = mouseY - epsilon.getLayoutY();
+        double x = user.mouseX - user.epsilon.getLayoutX();
+        double y = user.mouseY - user.epsilon.getLayoutY();
         double chord = Math.sqrt(x * x + y * y);
         Bullet bullet = new Bullet(x / chord, y / chord);
-        bullet.setLayoutLocation(epsilon.getLayoutX(), epsilon.getLayoutY());
+        bullet.setLayoutLocation(user.epsilon.getLayoutX(), user.epsilon.getLayoutY());
         bullets.add(bullet);
-        ((Pane) scene.getRoot()).getChildren().add(bullet.getView());
+        getChildren().add(bullet.getView());
     }
     public void setXAndMoveEntities(double x) {
-        double deltaX = getX() - x;
-        if (epsilon != null)
-            epsilon.setLayoutX(epsilon.getLayoutX() + deltaX);
+        double deltaX = getLayoutX() - x;
+        if (user.epsilon != null)
+            user.epsilon.setLayoutX(user.epsilon.getLayoutX() + deltaX);
         for (Bullet bullet: bullets)
             bullet.setLayoutX(bullet.getLayoutX() + deltaX);
         for (Enemy enemy: enemies)
             enemy.setLayoutX(enemy.getLayoutX() + deltaX);
         for (Collectable collectable: collectables)
             collectable.setLayoutX(collectable.getLayoutX() + deltaX);
-        setX(x);
+        setLayoutX(x);
     }
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
         add(enemy.getView());
     }
     public void setYAndMoveEntities(double y) {
-        double deltaY = getY() - y;
-        if (epsilon != null)
-            epsilon.setLayoutY(epsilon.getLayoutY() + deltaY);
+        double deltaY = getLayoutY() - y;
+        if (user.epsilon != null)
+            user.epsilon.setLayoutY(user.epsilon.getLayoutY() + deltaY);
         for (Bullet bullet: bullets)
             bullet.setLayoutY(bullet.getLayoutY() + deltaY);
         for (Enemy enemy: enemies)
             enemy.setLayoutY(enemy.getLayoutY() + deltaY);
         for (Collectable collectable: collectables)
             collectable.setLayoutY(collectable.getLayoutY() + deltaY);
-        setY(y);
+        setLayoutY(y);
     }
     public void setDimensions(double x, double y, double width, double height) {
         setXAndMoveEntities(x);
         setYAndMoveEntities(y);
-        setWidth(width); setHeight(height);
+        setSize(width, height);
     }
     public void moveEpsilon() {
-        if (epsilon.onImpact()) {
-            epsilon.setLayoutX(epsilon.getLayoutX() + epsilon.getDeltaX());
-            epsilon.setLayoutY(epsilon.getLayoutY() + epsilon.getDeltaY());
-            epsilon.setDeltaX(epsilon.getDeltaX() * 0.80);
-            epsilon.setDeltaY(epsilon.getDeltaY() * 0.80);
-            if (Math.sqrt(epsilon.getDeltaX() * epsilon.getDeltaX() + epsilon.getDeltaY() * epsilon.getDeltaY()) < 1) {
-                epsilon.setImpact(false);
-                epsilon.setDeltaX(Constants.RESPOND_DURATION / 5);
-                epsilon.setDeltaY(Constants.RESPOND_DURATION / 5);
-            }
-            return;
-        }
-        if (wIsPressed) epsilon.setLayoutY(epsilon.getLayoutY() - epsilon.getDeltaY());
-        if (sIsPressed) epsilon.setLayoutY(epsilon.getLayoutY() + epsilon.getDeltaX());
-        if (aIsPressed) epsilon.setLayoutX(epsilon.getLayoutX() - epsilon.getDeltaX());
-        if (dIsPressed) epsilon.setLayoutX(epsilon.getLayoutX() + epsilon.getDeltaX());
-        if (epsilon.inBoardArea(this) < 528) { //todo insert epsilon area
-            Point2D collisionPoint = epsilon.collisionInBoardPoint(this);
-            impact(collisionPoint.getX(), collisionPoint.getY(), new Entity[]{epsilon}, 1);
+        user.move();
+        //process being in board
+        if (user.epsilon.inBoardArea(this) < 527) { //todo insert epsilon area
+            Point2D collisionPoint = user.epsilon.collisionInBoardPoint(this);
+            impact(collisionPoint.getX(), collisionPoint.getY(), new Entity[]{user.epsilon}, 1);
         }
     }
     public void moveEntities() {
@@ -188,7 +168,7 @@ public class MainBoard extends GameBoard {
     private void processCollectibles() {
         Random random = new Random();
         for (Collectable collectable: collectables) {
-            LocalRouting.apply(collectable, epsilon);
+            LocalRouting.apply(collectable, user.epsilon);
             collectable.setDeltaX(collectable.getDeltaX() * 10);
             collectable.setDeltaY(collectable.getDeltaY() * 10);
             collectable.setLayoutX(collectable.getLayoutX() + collectable.getDeltaX());
@@ -197,10 +177,10 @@ public class MainBoard extends GameBoard {
         boolean hasCollected = false;
         for (int i = collectables.size() - 1; i >= 0; i--) {
             Collectable collectable = collectables.get(i);
-            if (Entity.commonArea(collectable.getView(), epsilon.getView()) > 5) {
+            if (Entity.commonArea(collectable.getView(), user.epsilon.getView()) > 5) {
                 xp += collectable.getXp();
                 collectables.remove(i);
-                root.getChildren().remove(collectable.getView());
+                getChildren().remove(collectable.getView());
                 hasCollected = true;
             }
         }
@@ -211,24 +191,21 @@ public class MainBoard extends GameBoard {
     private void processEpsilonDamage() {
         boolean isDamaged = false;
         for (Enemy enemy: enemies)
-            if (Entity.commonArea(epsilon.getView(), enemy.getView()) > 5) {
-                epsilon.setHP(epsilon.getHP() - enemy.getAttackDamage());
-                impact((epsilon.getLayoutX() + enemy.getLayoutX()) / 2, (epsilon.getLayoutY() + enemy.getLayoutY()) / 2, new Entity[]{enemy}, 1);
+            if (Entity.commonArea(user.epsilon.getView(), enemy.getView()) > 5) {
+                user.epsilon.setHP(user.epsilon.getHP() - enemy.getAttackDamage());
+                impact((user.epsilon.getLayoutX() + enemy.getLayoutX()) / 2, (user.epsilon.getLayoutY() + enemy.getLayoutY()) / 2, new Entity[]{enemy}, 1);
                 isDamaged = true;
             }
         if (isDamaged) {
-            epsilon.setColor(Color.RED);
+            user.epsilon.setColor(Color.RED);
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-                epsilon.setColor(Color.WHITE);
+                user.epsilon.setColor(Color.WHITE);
             }));
             timeline.play();
             SoundController.DAMAGE.play();
         }
-        if (epsilon.getHP() < 0) {
+        if (user.epsilon.getHP() < 0) {
             GameController.endGame();
-            GameOverStage gameOverStage = new GameOverStage();
-            GameLauncher.stage = gameOverStage;
-            gameOverStage.show();
         }
     }
     private void moveEnemies() {
@@ -251,13 +228,13 @@ public class MainBoard extends GameBoard {
             bullet.setLayoutLocation(bullet.getLayoutX() + bullet.getDeltaX(), bullet.getLayoutY() + bullet.getDeltaY());
             if (bullet.getLayoutY() <= 0) {
                 setHeight(getHeight() + 3 * bullet.getHP());
-                setYAndMoveEntities(getY() - 3 * bullet.getHP());
+                setYAndMoveEntities(getLayoutY() - 3 * bullet.getHP());
                 hasShoot = true;
                 bullet.setHP(0);
             }
             if (bullet.getLayoutX() <= 0) {
                 setWidth(getWidth() + 3 * bullet.getHP());
-                setXAndMoveEntities(getX() - 3 * bullet.getHP());
+                setXAndMoveEntities(getLayoutX() - 3 * bullet.getHP());
                 hasShoot = true;
                 bullet.setHP(0);
             }
@@ -285,7 +262,7 @@ public class MainBoard extends GameBoard {
         for (int i = bullets.size() - 1; i >= 0; i--)
             if (bullets.get(i).getHP() == 0) {
                 SoundController.HIT.play();
-                root.getChildren().remove(bullets.get(i).getView());
+                getChildren().remove(bullets.get(i).getView());
                 bullets.remove(i);
             }
     }
@@ -294,19 +271,13 @@ public class MainBoard extends GameBoard {
         if (enemy.getHP() <= 0) {
             enemies.remove(enemy);
             enemy.addCollectible(this);
-            root.getChildren().remove(enemy.getView());
+            getChildren().remove(enemy.getView());
         }
     }
     public void moveWalls() {
         double minusWidth = Math.min((getWidth() - Constants.MINIMUM_WIDTH) / 2, 0.2);
         double minusHeight = Math.min((getHeight() - Constants.MINIMUM_HEIGHT) / 2, 0.2);
-        setDimensions(getX() + minusWidth / 2, getY() + minusHeight / 2, getWidth() - 2 * minusWidth , getHeight() - 2 * minusHeight);
-    }
-    public void setEpsilon(Epsilon epsilon) {
-        if (this.epsilon != null)
-            ((Pane) this.getScene().getRoot()).getChildren().remove(this.epsilon);
-        this.epsilon = epsilon;
-        ((Pane) this.getScene().getRoot()).getChildren().add(this.epsilon.getView());
+        setDimensions(getLayoutX() + minusWidth / 2, getLayoutY() + minusHeight / 2, getWidth() - 2 * minusWidth , getHeight() - 2 * minusHeight);
     }
     public void impact(double x, double y, Entity[] entities, double power) {
         for (Entity entity: entities) {

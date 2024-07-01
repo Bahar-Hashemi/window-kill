@@ -1,35 +1,36 @@
 package bahar.window_kill.model;
 
 import bahar.window_kill.control.Constants;
-import bahar.window_kill.view.SceneBuilder;
+import bahar.window_kill.view.PaneBuilder;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class GameBoard extends Stage {
-    public Scene scene;
-    public Pane root;
+public class GameBoard extends Pane {
     public void setDimensions(double x, double y, double width, double height) {
-        setX(x); setY(y);
-        setWidth(width); setHeight(height);
+        setLayoutX(x); setLayoutY(y);
+        setSize(width, height);
     }
     public void setSize(double width, double height) {
-        setWidth(width); setHeight(height);
+        setMinWidth(width); setMinHeight(height);
+        setMaxWidth(width); setMaxHeight(height);
+        clip();
     }
-    public GameBoard() {
-        this.initStyle(StageStyle.UNDECORATED);
-        scene = SceneBuilder.GAME_SCENE.generateScene();
-        root = (Pane) scene.getRoot();
-        ((Pane) scene.getRoot()).setBackground(Background.fill(Constants.BACKGROUND_COLOR));
-        this.setScene(scene);
-        this.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
+    private void clip() {
+        Rectangle clip = new Rectangle(getMinWidth(), getMinHeight());
+        setClip(clip);
     }
     public void add(Node node) {
-        root.getChildren().add(node);
+        getChildren().add(node);
+    }
+    public GameBoard() {
+        setOpacity(1);
+        setBackground(Background.fill(Constants.BACKGROUND_COLOR));
+        setStyle("-fx-font-family: \"cooper black\"; -fx-font-weight: bold; -fx-font-size: 12px;");
+        clip();
     }
 }

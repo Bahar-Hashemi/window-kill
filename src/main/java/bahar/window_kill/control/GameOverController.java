@@ -1,13 +1,14 @@
 package bahar.window_kill.control;
 
 import bahar.window_kill.view.GameLauncher;
-import bahar.window_kill.view.MainMenuStage;
+import bahar.window_kill.view.MainStage;
+import bahar.window_kill.view.PaneBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class GameOverController {
@@ -35,14 +36,14 @@ public class GameOverController {
 
     public void onNewGame(ActionEvent actionEvent) {
         timeline.stop();
-        GameLauncher.stage.close();
+        MainStage.newScene();
         GameController.run();
     }
 
     public void onMainMenu(ActionEvent actionEvent) {
-        GameLauncher.stage.close();
         timeline.stop();
-        GameLauncher.stage = new MainMenuStage();
-        GameLauncher.stage.show();
+        MainStage.newScene();
+        Pane pane = PaneBuilder.MAIN_MENU_PANE.generatePane();
+        MainStage.add(pane);
     }
 }

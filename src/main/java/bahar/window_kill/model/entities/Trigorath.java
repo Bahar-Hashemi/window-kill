@@ -25,9 +25,9 @@ public class Trigorath extends Enemy {
     public void processMovement(MainBoard mainBoard) {
         if (onImpact)
             return;
-        LocalRouting.apply(this, mainBoard.epsilon);
-        double dx = mainBoard.epsilon.getLayoutX() - getLayoutX();
-        double dy = mainBoard.epsilon.getLayoutY() - getLayoutY();
+        LocalRouting.apply(this, mainBoard.getUser().epsilon);
+        double dx = mainBoard.getUser().epsilon.getLayoutX() - getLayoutX();
+        double dy = mainBoard.getUser().epsilon.getLayoutY() - getLayoutY();
         double dist = Math.sqrt(dx * dx + dy * dy);
         deltaX *= dist / 40;
         deltaY *= dist / 40;
@@ -57,7 +57,7 @@ public class Trigorath extends Enemy {
         double width = (random.nextBoolean() ? mainBoard.getWidth() + 30 : -30);
         double height = (random.nextDouble(-30, mainBoard.getHeight() + 30));
         Trigorath trigorath = new Trigorath(width, height);
-        LocalRouting.apply(trigorath, mainBoard.epsilon);
+        LocalRouting.apply(trigorath, mainBoard.getUser().epsilon);
         return new Trigorath(width, height);
     }
 
