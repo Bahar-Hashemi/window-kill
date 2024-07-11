@@ -1,23 +1,19 @@
 package bahar.window_kill.model.entities;
 
-import bahar.window_kill.model.MainBoard;
-import javafx.geometry.Bounds;
+import bahar.window_kill.control.fazes.processors.strategies.strategies.Strategy;
+import bahar.window_kill.control.fazes.processors.strategies.movements.ImpactStrategy;
 import javafx.scene.Node;
-import javafx.scene.shape.Shape;
 
 abstract public class Entity {
     protected double HP;
-    boolean onImpact = false;
-    protected double deltaX, deltaY;
-    protected Node view;
-
-    abstract protected Node makeView();
-    public Node getView() {
-        return view;
-    }
-    public void setLayoutLocation(double x, double y) {
-        view.setLayoutX(x);
-        view.setLayoutY(y);
+    protected final ImpactStrategy impactStrategy;
+    protected final Node view;
+    protected final Strategy strategy;
+    protected Entity(Node view, int HP, boolean canImpact, Strategy strategy) {
+        this.view = view;
+        this.HP = HP;
+        impactStrategy = new ImpactStrategy(canImpact);
+        this.strategy = strategy;
     }
     public void setLayoutX(double x) {
         view.setLayoutX(x);
@@ -25,23 +21,32 @@ abstract public class Entity {
     public void setLayoutY(double y) {
         view.setLayoutY(y);
     }
-    public double getLayoutX() {
-        return view.getLayoutX();
+    public void setLocation(double x, double y) {
+        setLayoutX(x);
+        setLayoutY(y);
     }
-    public double getLayoutY() {
-        return view.getLayoutY();
+    public double getCenterOnSceneX() {
+        return view.getBoundsInParent().getCenterX() + view.getParent().getLayoutX();
     }
-    public void setDeltaX(double deltaX) {
-        this.deltaX = deltaX;
+    public double getCenterOnSceneY() {
+        return view.getBoundsInParent().getCenterY() + view.getParent().getLayoutY();
     }
-    public void setDeltaY(double deltaY) {
-        this.deltaY = deltaY;
+    public abstract void move(double targetX, double targetY);
+    public Node getView() {
+        return view;
     }
-    public double getDeltaX() {
-        return deltaX;
+    public void setSceneLocation(double x, double y) {setSceneX(x);setSceneY(y);}
+    public void setSceneX(double x) {
+        view.setLayoutX(x - view.getParent().getLayoutX());
     }
-    public double getDeltaY() {
-        return deltaY;
+    public void setSceneY(double y) {
+        view.setLayoutY(y - view.getParent().getLayoutY());
+    }
+    public double getSceneX() {
+        return view.getParent().getLayoutX() + view.getLayoutX();
+    }
+    public double getSceneY() {
+        return view.getParent().getLayoutY() + view.getLayoutY();
     }
     public double getHP() {
         return HP;
@@ -49,15 +54,15 @@ abstract public class Entity {
     public void setHP(double HP) {
         this.HP = HP;
     }
-    public static double commonArea(Node first, Node second) {
-            Shape intersection = Shape.intersect((Shape) first, (Shape) second);
-            double area = intersection.getBoundsInLocal().getWidth() * intersection.getBoundsInLocal().getHeight();
-            return area;
+    public Strategy getAggressionStrategy() {
+        return strategy;
     }
-    public void setImpact(Boolean onImpact) {
-        this.onImpact = onImpact;
+    public abstract void aggress();
+    public abstract void shout();
+    public boolean canImpact() {
+        return impactStrategy.canImpact();
     }
-    public Boolean onImpact() {
-        return onImpact;
+    public void impactFrom(double sourceX, double sourceY) {
+        impactStrategy.impact(sourceX, sourceY, this);
     }
 }

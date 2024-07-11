@@ -1,23 +1,16 @@
 package bahar.window_kill.view;
 
 import bahar.window_kill.control.Constants;
-import bahar.window_kill.control.GameController;
-import bahar.window_kill.control.ImageController;
-import bahar.window_kill.model.User;
+import bahar.window_kill.control.loader.ImageLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
-import java.util.ResourceBundle;
 
 public class MainStage extends Stage {
     private static MainStage instance;
@@ -31,7 +24,7 @@ public class MainStage extends Stage {
         scene = new Scene(pane, Color.TRANSPARENT);
         setScene(scene);
         //
-        this.getIcons().add(ImageController.GAME_ICON.getImage());
+        this.getIcons().add(ImageLoader.GAME_ICON.getImage());
         this.setMaxHeight(Constants.SCREEN_HEIGHT); this.setMinHeight(Constants.SCREEN_HEIGHT);
         this.setMaxWidth(Constants.SCREEN_WIDTH); this.setMinWidth(Constants.SCREEN_WIDTH);
         this.initStyle(StageStyle.TRANSPARENT);

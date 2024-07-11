@@ -1,18 +1,33 @@
 package bahar.window_kill.model;
 
-import bahar.window_kill.control.Constants;
-import bahar.window_kill.model.entities.Epsilon;
+import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.util.Duration;
 
 public class User {
-    public Epsilon epsilon;
-    public boolean wIsPressed = false, aIsPressed = false, sIsPressed = false, dIsPressed = false;
+    private boolean hasUpRequest = false, hasLeftRequest = false, hasDownRequest = false, hasRightRequest = false;
     private boolean killWish = false;
-    public boolean isShooting = false;
-    public double mouseX, mouseY;
-    public boolean hasPauseRequest = false;
+    private boolean shooting = false;
+    private double mouseX, mouseY;
+    private boolean hasPauseRequest = false;
+    final private Epsilon epsilon;
+    final private Watch watch;
+    public User(Epsilon epsilon) {
+        this.epsilon = epsilon;
+        watch = new Watch(400, actionEvent -> {
+            if (shooting) {
+                double dx = mouseX - epsilon.getSceneX();
+                double dy = mouseY - epsilon.getSceneY();
+                double chord = Math.sqrt(dx * dx + dy * dy);
+                epsilon.setGunDirectionX(dx / chord);
+                epsilon.setGunDirectionY(dy / chord);
+                epsilon.aggress();
+            }
+        });
+    }
     public void killRequest() {
         killWish = true;
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> killWish = false));
@@ -21,28 +36,75 @@ public class User {
     public boolean hasKillWish() {
         return killWish;
     }
-    public User() {
-        epsilon = new Epsilon();
+
+    public boolean hasUpRequest() {
+        return hasUpRequest;
     }
-    public User(Epsilon epsilon) {
-        this.epsilon = epsilon;
+
+    public void setUpRequest(boolean hasUpRequest) {
+        this.hasUpRequest = hasUpRequest;
     }
-    public void move() {
-        if (epsilon.onImpact()) {
-            epsilon.setLayoutX(epsilon.getLayoutX() + epsilon.getDeltaX());
-            epsilon.setLayoutY(epsilon.getLayoutY() + epsilon.getDeltaY());
-            epsilon.setDeltaX(epsilon.getDeltaX() * 0.80);
-            epsilon.setDeltaY(epsilon.getDeltaY() * 0.80);
-            if (Math.sqrt(epsilon.getDeltaX() * epsilon.getDeltaX() + epsilon.getDeltaY() * epsilon.getDeltaY()) < 1) {
-                epsilon.setImpact(false);
-                epsilon.setDeltaX(Constants.RESPOND_DURATION / 5);
-                epsilon.setDeltaY(Constants.RESPOND_DURATION / 5);
-            }
-            return;
-        }
-        if (wIsPressed) epsilon.setLayoutY(epsilon.getLayoutY() - epsilon.getDeltaY());
-        if (sIsPressed) epsilon.setLayoutY(epsilon.getLayoutY() + epsilon.getDeltaX());
-        if (aIsPressed) epsilon.setLayoutX(epsilon.getLayoutX() - epsilon.getDeltaX());
-        if (dIsPressed) epsilon.setLayoutX(epsilon.getLayoutX() + epsilon.getDeltaX());
+
+    public boolean hasLeftRequest() {
+        return hasLeftRequest;
+    }
+
+    public void setLeftRequest(boolean hasLeftRequest) {
+        this.hasLeftRequest = hasLeftRequest;
+    }
+
+    public boolean hasDownRequest() {
+        return hasDownRequest;
+    }
+
+    public void setDownRequest(boolean hasDownRequest) {
+        this.hasDownRequest = hasDownRequest;
+    }
+
+    public boolean hasRightRequest() {
+        return hasRightRequest;
+    }
+
+    public void setRightRequest(boolean hasRightRequest) {
+        this.hasRightRequest = hasRightRequest;
+    }
+
+    public boolean isShooting() {
+        return shooting;
+    }
+
+    public void setShooting(boolean shooting) {
+        this.shooting = shooting;
+    }
+
+    public double getMouseX() {
+        return mouseX;
+    }
+
+    public void setMouseX(double mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    public double getMouseY() {
+        return mouseY;
+    }
+
+    public void setMouseY(double mouseY) {
+        this.mouseY = mouseY;
+    }
+
+    public boolean hasPauseRequest() {
+        return hasPauseRequest;
+    }
+
+    public void setPauseRequest(boolean hasPauseRequest) {
+        this.hasPauseRequest = hasPauseRequest;
+    }
+
+    public Epsilon getEpsilon() {
+        return epsilon;
+    }
+    public void aggress() {
+        watch.call();
     }
 }

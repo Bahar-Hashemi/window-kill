@@ -1,18 +1,24 @@
-package bahar.window_kill.control;
+package bahar.window_kill.control.loader;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-public enum SoundController {
-    SHOOT("shootSound.wav"), WHOOSH("whoosh.wav"), HIT("hit.wav"), DAMAGE("damage.wav"), COIN_COLLECT("coin_collect.mp3");
+public enum SoundLoader {
+    WHOOSH("whoosh.wav", 1), HIT("hit.wav", 1), DAMAGE("damage.wav", 1),
+    COIN_COLLECT("coin_collect.mp3", 1), ENEMY_SHOOT("enemy_shoot.wav", 1),
+    DRILL("drill.wav", 1), BACKGROUND("background.wav", -1),
+    WALLHIT("wall_hit.wav", 1);
     private MediaPlayer mediaPlayer;
-    static double volume = 100;
-    SoundController(String name) {
+    private int loopCount;
+    private static double volume = 100;
+    SoundLoader(String name, int loopCount) {
         Media media = new Media(getClass().getResource("/sounds/" + name).toString());
+        this.loopCount = loopCount;
         mediaPlayer = new MediaPlayer(media);
     }
     public void play() {
+        mediaPlayer.setCycleCount(loopCount);
         mediaPlayer.seek(Duration.ZERO);
         mediaPlayer.setVolume(volume / 100);
         mediaPlayer.play();
@@ -22,9 +28,9 @@ public enum SoundController {
             System.err.println("Invalid volume");
             return;
         }
-        SoundController.volume = volume;
+        SoundLoader.volume = volume;
     }
-    public void changeVolume(double volume) { //todo checkThisPart
-        mediaPlayer.setVolume(volume / 100);
+    public static double getVolume() {
+        return volume;
     }
 }

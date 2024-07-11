@@ -1,13 +1,12 @@
-package bahar.window_kill.control;
+package bahar.window_kill.view.controller;
 
-import bahar.window_kill.view.GameLauncher;
+import bahar.window_kill.control.GameController;
 import bahar.window_kill.view.MainStage;
-import bahar.window_kill.view.PaneBuilder;
+import bahar.window_kill.control.loader.SoundLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -31,7 +30,7 @@ public class MainMenuController {
             if (tickPass[0] > 1) {
                 byteCoin.setText(byteCoinString.substring(0, Math.min(byteCoinString.length(), byteCoin.getText().length() + 1)));
                 highScore.setText(highScoreString.substring(0, Math.min(highScoreString.length(), highScore.getText().length() + 1)));
-                SoundController.SHOOT.play();
+                SoundLoader.HIT.play();
             }
         }));
         timeline.setCycleCount(1 + Math.max(byteCoinString.length(), highScoreString.length()));

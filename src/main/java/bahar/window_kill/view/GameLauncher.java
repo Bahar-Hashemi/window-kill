@@ -1,6 +1,7 @@
 package bahar.window_kill.view;
 
 import bahar.window_kill.control.Constants;
+import bahar.window_kill.control.loader.SoundLoader;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ public class GameLauncher extends Application {
         launch();
     }
     public void start(Stage stage) {
+        SoundLoader.BACKGROUND.play();
         MainStage.newScene();
         Pane pane = PaneBuilder.MAIN_MENU_PANE.generatePane();
         MainStage.add(pane);
