@@ -22,12 +22,8 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     GameBoard gameBoard;
     Circle iris;
     public Wyrm() {
-        super(makeView(), 12, true, new SpawnStrategy());
+        super(makeView(), 12, true, new SpawnStrategy(1000));
         makeIris();
-        gunWatch = new Watch(1000, event -> {
-            strategy.act(this);
-            SoundLoader.ENEMY_SHOOT.play();
-        });
         byBoard();
     }
     private void makeIris() {
@@ -76,12 +72,12 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
 
     @Override
     public void aggress() {
-        gunWatch.call();
+        strategy.act(this);
     }
 
     @Override
     public void shout() {
-
+        SoundLoader.HIT.play();
     }
     public void setSceneX(double x) {
         super.setSceneX(x);

@@ -20,7 +20,7 @@ public class Nechropic extends ShooterEntity implements LootDropper {
     boolean canAct = true;
     Watch stateWatch;
     public Nechropic() {
-        super(makeView(), 10, true, new SpawnStrategy());
+        super(makeView(), 10, true, new SpawnStrategy(15));
         makeWatches();
     }
     private void makeWatches() {

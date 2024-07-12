@@ -9,26 +9,22 @@ public class GameBoard extends Pane {
     protected boolean hovering;
     public GameBoard(boolean hovering) {
         this.hovering = hovering;
-        if (!hovering)
-            makeBorder();
+        makeBorder(hovering);
         setStyle("-fx-font-family: \"cooper black\"; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-color: rgba(0, 0, 0, 1);");
         clip();
     }
-    private void makeBorder() {
+    private void makeBorder(boolean hovering) {
         BorderStroke borderStroke = new BorderStroke(
-                Color.RED, // Border color
+                (hovering? Color.rgb(255, 255, 255, 0.1): Color.RED), // Border color
                 BorderStrokeStyle.SOLID, // Border style
-                new CornerRadii(2), // No corner radii
-                new BorderWidths(5) // Border width
+                new CornerRadii(2),
+                new BorderWidths((hovering? 2: 5)) // Border width
         );
         setBorder(new Border(borderStroke));
     }
-    public void setHovering() {
-        hovering = !hovering;
-        if (hovering)
-            setBorder(null);
-        else
-            makeBorder();
+    public void setHovering(boolean hovering) {
+        this.hovering = hovering;
+        makeBorder(hovering);
     }
     public void setDimensions(double x, double y, double width, double height) {
         setLayoutX(x); setLayoutY(y);

@@ -34,6 +34,7 @@ public class BoardsProcessor extends GameProcessor {
         mainBoard.setIndependentDimensions(mainBoard.getLayoutX() + minusWidth / 2, mainBoard.getLayoutY() + minusHeight / 2, mainBoard.getWidth() - 2 * minusWidth , mainBoard.getHeight() - 2 * minusHeight);
     }
     private static void updateMainBoardLabel() { //todo complete here
+        mainBoard.labelsToFront();
         mainBoard.setHP((int) user.getEpsilon().getHP());
         mainBoard.setXP((int) user.getEpsilon().getXp());
     }

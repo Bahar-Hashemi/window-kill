@@ -8,7 +8,7 @@ abstract public class Entity {
     protected double HP;
     protected final ImpactStrategy impactStrategy;
     protected final Node view;
-    protected final Strategy strategy;
+    protected Strategy strategy;
     protected Entity(Node view, int HP, boolean canImpact, Strategy strategy) {
         this.view = view;
         this.HP = HP;

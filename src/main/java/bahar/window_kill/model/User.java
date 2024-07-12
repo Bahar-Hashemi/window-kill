@@ -14,19 +14,8 @@ public class User {
     private double mouseX, mouseY;
     private boolean hasPauseRequest = false;
     final private Epsilon epsilon;
-    final private Watch watch;
     public User(Epsilon epsilon) {
         this.epsilon = epsilon;
-        watch = new Watch(400, actionEvent -> {
-            if (shooting) {
-                double dx = mouseX - epsilon.getSceneX();
-                double dy = mouseY - epsilon.getSceneY();
-                double chord = Math.sqrt(dx * dx + dy * dy);
-                epsilon.setGunDirectionX(dx / chord);
-                epsilon.setGunDirectionY(dy / chord);
-                epsilon.aggress();
-            }
-        });
     }
     public void killRequest() {
         killWish = true;
@@ -105,6 +94,13 @@ public class User {
         return epsilon;
     }
     public void aggress() {
-        watch.call();
+        if (isShooting()) {
+            double dx = mouseX - epsilon.getSceneX();
+            double dy = mouseY - epsilon.getSceneY();
+            double chord = Math.sqrt(dx * dx + dy * dy);
+            epsilon.setGunDirectionX(dx / chord);
+            epsilon.setGunDirectionY(dy / chord);
+            epsilon.aggress();
+        }
     }
 }

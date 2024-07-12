@@ -15,8 +15,7 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
     Watch watch;
     double previousX = 1, previousY = 0;
     public SpawnerArchmire() {
-        super(makeView(), 30, false, new SpawnStrategy());
-        watch = new Watch(300, actionEvent -> getAggressionStrategy().act(this));
+        super(makeView(), 30, false, new SpawnStrategy(200));
     }
     private static Node makeView() {
         Path path = new Path();
@@ -66,7 +65,7 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
 
     @Override
     public void aggress() {
-        watch.call();
+        strategy.act(this);
     }
 
     @Override

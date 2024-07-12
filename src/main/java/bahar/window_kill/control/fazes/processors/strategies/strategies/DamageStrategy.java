@@ -1,10 +1,12 @@
 package bahar.window_kill.control.fazes.processors.strategies.strategies;
 
 import bahar.window_kill.control.fazes.processors.BoardsProcessor;
+import bahar.window_kill.model.entities.BlackOrb;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.control.GameUtil;
 import bahar.window_kill.model.entities.attackers.AttackerArchmire;
 import bahar.window_kill.model.entities.attackers.AttackerEntity;
+import bahar.window_kill.model.entities.attackers.BlackOrbLaser;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import bahar.window_kill.model.entities.generators.SpawnerArchmire;
 
@@ -30,7 +32,8 @@ public class DamageStrategy extends Strategy {
                 continue;
             if (attacker instanceof AttackerArchmire && entity instanceof SpawnerArchmire)
                 continue;
-            //todo complete here when implementation is done!
+            if (attacker instanceof BlackOrbLaser && (entity instanceof BlackOrb || entity instanceof BlackOrbLaser))
+                continue;
             if (GameUtil.commonArea(attacker, entity) > 10) {
                 entity.setHP(entity.getHP() - attacker.getDamage());
                 entity.shout();

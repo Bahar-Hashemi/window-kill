@@ -1,6 +1,7 @@
 package bahar.window_kill.model.entities.generators.shooters;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.control.loader.SoundLoader;
 import bahar.window_kill.model.Watch;
 import bahar.window_kill.model.boards.GameBoard;
 import bahar.window_kill.model.entities.Collectable;
@@ -19,11 +20,9 @@ import java.util.Random;
 
 public class Omenoct extends ShooterEntity implements LootDropper {
     private int lockStrategy; // 0: up, 1: right, 2: down, 3: left
-    Watch watch;
     public Omenoct() {
-        super(makeView(), 20, true, new SpawnStrategy());
+        super(makeView(), 20, true, new SpawnStrategy(500));
         lockStrategy = new Random().nextInt(4);
-        watch = new Watch(500, actionEvent -> getAggressionStrategy().act(this));
     }
     private static Node makeView() {
         Group shapes = new Group();
@@ -82,12 +81,12 @@ public class Omenoct extends ShooterEntity implements LootDropper {
 
     @Override
     public void aggress() {
-        watch.call();
+        strategy.act(this);
     }
 
     @Override
     public void shout() {
-
+        SoundLoader.HIT.play();
     }
 
     @Override

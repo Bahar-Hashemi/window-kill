@@ -50,6 +50,16 @@ public class GameUtil {
             }
        return false;
     }
+    public static void setSceneX(Node node, double x) {
+        node.setLayoutX(x - node.getParent().getLayoutX());
+    }
+    public static void setSceneY(Node node, double y) {
+        node.setLayoutY(y - node.getParent().getLayoutY());
+    }
+    public static void setSceneLocation(Node node, double x, double y) {
+        setSceneX(node, x);
+        setSceneY(node, y);
+    }
     public static boolean isInOneBoard(Entity entity) {
         Bounds boundsInScene = entity.getView().localToScene(entity.getView().getBoundsInLocal());
         for (Node node: ((Pane) MainStage.getInstance().getScene().getRoot()).getChildren())

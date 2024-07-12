@@ -12,7 +12,7 @@ public class Epsilon extends ShooterEntity {
     private static final double radius = 10;
     int xp = 0;
     public Epsilon() {
-        super(makeView(), 100, true, new SpawnStrategy());
+        super(makeView(), 100, true, new SpawnStrategy(400));
     }
     private static Node makeView() {
         Circle circle = new Circle();

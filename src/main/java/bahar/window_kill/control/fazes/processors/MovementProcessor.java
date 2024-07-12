@@ -60,7 +60,17 @@ public class MovementProcessor extends GameProcessor {
         if (Deck.user.hasRightRequest()) moveX += 1;
         Epsilon epsilon = user.getEpsilon();
         epsilon.move(moveX, moveY);
-        if (!GameUtil.isInOneBoard(epsilon))
-            epsilon.impactFrom(epsilon.getSceneX() + moveX, epsilon.getSceneY() + moveY);
+        makeEpsilonInBoard();
+    }
+    private void makeEpsilonInBoard() {
+        Epsilon epsilon = user.getEpsilon();
+        if (epsilon.getSceneX() < mainBoard.getLayoutX())
+            epsilon.impactFrom(epsilon.getSceneX() - 10, epsilon.getSceneY());
+        if (epsilon.getSceneX() > mainBoard.getLayoutX() + mainBoard.getWidth())
+            epsilon.impactFrom(epsilon.getSceneX() + 10, epsilon.getSceneY());
+        if (epsilon.getSceneY() < mainBoard.getLayoutY())
+            epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() - 10);
+        if (epsilon.getSceneY() > mainBoard.getLayoutY() + mainBoard.getHeight())
+            epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() + 10);
     }
 }
