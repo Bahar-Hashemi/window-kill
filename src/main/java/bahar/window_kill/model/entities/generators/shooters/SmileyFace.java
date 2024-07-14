@@ -1,8 +1,13 @@
-package bahar.window_kill.model.entities;
+package bahar.window_kill.model.entities.generators.shooters;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.Strategy;
 import bahar.window_kill.control.loader.SoundLoader;
 import bahar.window_kill.model.boards.GameBoard;
+import bahar.window_kill.model.entities.BoardOwner;
+import bahar.window_kill.model.entities.Collectable;
+import bahar.window_kill.model.entities.Entity;
+import bahar.window_kill.model.entities.LootDropper;
+import bahar.window_kill.model.entities.attackers.Bullet;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
@@ -12,12 +17,14 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.CubicCurve;
 
-public class SmileyFace extends Entity implements BoardOwner, LootDropper {
+import java.util.Random;
+
+public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper {
     GameBoard gameBoard;
     Circle leftEye, rightEye;
     CubicCurve mouth;
     public SmileyFace() {
-        super(makeView(), 300, true, null);
+        super(makeView(), 1000, true, null);
         byBoard();
         makeEyes();
         makeMouth();
@@ -75,7 +82,7 @@ public class SmileyFace extends Entity implements BoardOwner, LootDropper {
     public void move(double targetX, double targetY) {
         moveEye(leftEye, -10, -10, targetX, targetY);
         moveEye(rightEye, 10, -10, targetX, targetY);
-        setHappiness(getHP() / 300 * 100);
+        setHappiness(getHP() / 1000 * 100);
     }
     private void moveEye(Node node, double firstX, double firstY, double targetX, double targetY) {
         node.setLayoutX(firstX);
@@ -88,6 +95,8 @@ public class SmileyFace extends Entity implements BoardOwner, LootDropper {
     }
     @Override
     public void aggress() {
+        if (strategy != null)
+            strategy.act(this);
     }
 
     @Override
@@ -102,7 +111,7 @@ public class SmileyFace extends Entity implements BoardOwner, LootDropper {
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(10, Color.YELLOW);
+        return new Collectable(40, Color.YELLOW);
     }
     public void setSceneX(double x) {
         super.setSceneX(x);
@@ -112,4 +121,10 @@ public class SmileyFace extends Entity implements BoardOwner, LootDropper {
         super.setSceneY(y);
         gameBoard.setLayoutY(y - 70);
     }
+
+    @Override
+    public Entity makeBullet() {
+        double x = new Random().nextDouble(-1, 1);
+        double y = Math.sqrt(1 - x * x);
+        return new Bullet(10, 5, Color.YELLOW, 10, x, y, this, true);    }
 }

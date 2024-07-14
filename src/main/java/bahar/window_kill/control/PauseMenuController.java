@@ -1,5 +1,7 @@
 package bahar.window_kill.control;
 
+import bahar.window_kill.control.fazes.processors.abilities.HealWatch;
+import bahar.window_kill.control.fazes.processors.BoardsProcessor;
 import bahar.window_kill.control.loader.ImageLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,17 +9,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+
+import static bahar.window_kill.control.Deck.*;
 
 public class PauseMenuController {
     @FXML
-    public Label HPLabel, XPLabel;
+    public Label HPLabel, XPLabel, volumeLabel;
     @FXML
-    public Button healButton, banishButton, empowerButton;
-    public Label volumeLabel;
+    public Button healButton, banishButton, empowerButton, dismayButton, slumberButton, thunderButton;
     public Slider volumeSlider;
-    public ImageView healImage, banishImage, empowerImage;
-    public AnchorPane pane;
+    @FXML
+    public ImageView healImage, banishImage, empowerImage, dismayImage, slumberImage, thunderImage;
 
     @FXML
     public void initialize() {
@@ -27,12 +29,16 @@ public class PauseMenuController {
         processButtonsDisable();
     }
     private void makeOnHovers() {
-        healButton.setOnMouseEntered(e -> healImage.setImage(ImageLoader.HEAL_HOVER.getImage()));
-        healButton.setOnMouseExited(e -> healImage.setImage(ImageLoader.HEAL.getImage()));
-        banishButton.setOnMouseEntered(e -> banishImage.setImage(ImageLoader.BANISH_HOVER.getImage()));
-        banishButton.setOnMouseExited(e -> banishImage.setImage(ImageLoader.BANISH.getImage()));
-        empowerButton.setOnMouseEntered(e -> empowerImage.setImage(ImageLoader.EMPOWER_HOVER.getImage()));
-        empowerButton.setOnMouseExited(e -> empowerImage.setImage(ImageLoader.EMPOWER.getImage()));
+        makeButton(healButton, healImage, ImageLoader.HEAL, ImageLoader.HEAL_HOVER);
+        makeButton(banishButton, banishImage, ImageLoader.BANISH, ImageLoader.BANISH_HOVER);
+        makeButton(empowerButton, empowerImage, ImageLoader.EMPOWER, ImageLoader.EMPOWER_HOVER);
+        makeButton(dismayButton, dismayImage, ImageLoader.DISMAY, ImageLoader.DISMAY_HOVER);
+        makeButton(slumberButton, slumberImage, ImageLoader.SLUMBER, ImageLoader.SLUMBER_HOVER);
+        makeButton(thunderButton, thunderImage, ImageLoader.THUNDER, ImageLoader.THUNDER_HOVER);
+    }
+    private void makeButton(Button button, ImageView buttonImage, ImageLoader image, ImageLoader onHover) {
+        button.setOnMouseEntered(e -> buttonImage.setImage(onHover.getImage()));
+        button.setOnMouseExited(e -> buttonImage.setImage(image.getImage()));
     }
     private void updateVolume() {
 //        volumeLabel.setText("Volume: " + (int) SoundController.volume);
@@ -46,35 +52,31 @@ public class PauseMenuController {
 //        });
     }
     private void updateLabels() {
-//        HPLabel.setText("HP: " + GameController.mainBoard.getUser().epsilon.getHP());
-//        XPLabel.setText("XP: " + GameController.mainBoard.xp);
+        HPLabel.setText("HP: " + user.getEpsilon().getHP());
+        XPLabel.setText("XP: " + user.getEpsilon().getXp());
     }
     @FXML
     public void onHeal(ActionEvent actionEvent) {
-//        //GameController.mainBoard.getUser().epsilon.setHP(GameController.mainBoard.getUser().epsilon.getHP() + 10);
-//        //GameController.mainBoard.xp -= 50;
-//        updateLabels();
-//        processButtonsDisable();
+        abilities.add(new HealWatch());
+        user.getEpsilon().setXp(user.getEpsilon().getXp() - 50);
+        updateLabels();
+        BoardsProcessor.updateMainBoardLabel();
+        processButtonsDisable();
     }
 
     public void onEmpower(ActionEvent actionEvent) {
-//        //GameController.mainBoard.xp -= 75;
-//        //GameController.shootCount += 2;
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(15), e -> {GameController.shootCount -= 2;}));
-//        timeline.play();
-//        updateLabels();
-//        processButtonsDisable();
     }
-    private void processButtonsDisable() {
-//        if (GameController.mainBoard.xp < 75) {
-//            empowerButton.setDisable(true);
-//        }
-//        if (GameController.mainBoard.xp < 50) {
-//            healButton.setDisable(true);
-//        }
-//        if (GameController.mainBoard.xp < 100) {
-//            banishButton.setDisable(true);
-//        }
+    public void processButtonsDisable() {
+        processButtonsEnable(healButton, 50);
+        processButtonsEnable(banishButton, 100);
+        processButtonsEnable(empowerButton, 75);
+        processButtonsEnable(dismayButton, 120);
+        processButtonsEnable(slumberButton, 150);
+        processButtonsEnable(thunderButton, 200);
+    }
+    private void processButtonsEnable(Button button, int minimumXP) {
+        if (user.getEpsilon().getXp() < minimumXP)
+            button.setDisable(true);
     }
     public void onBanish(ActionEvent actionEvent) {
 //        GameController.mainBoard.xp -= 100;
@@ -84,5 +86,14 @@ public class PauseMenuController {
 //        mainBoard.impact(GameController.mainBoard.getUser().epsilon.getLayoutX(), GameController.mainBoard.getUser().epsilon.getLayoutY(), entities, 3);
 //        updateLabels();
 //        processButtonsDisable();
+    }
+
+    public void onDismay(ActionEvent actionEvent) {
+    }
+
+    public void onSlumber(ActionEvent actionEvent) {
+    }
+
+    public void onThunder(ActionEvent actionEvent) {
     }
 }

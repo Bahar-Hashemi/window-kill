@@ -5,16 +5,18 @@ import bahar.window_kill.control.fazes.processors.strategies.strategies.DamageSt
 import bahar.window_kill.control.fazes.processors.strategies.strategies.Strategy;
 import bahar.window_kill.model.entities.Barricados;
 import bahar.window_kill.model.entities.BlackOrb;
+import bahar.window_kill.model.entities.Entity;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-public class BlackOrbLaser extends AttackerEntity {
+public class BlackOrbLaser extends Entity implements AttackerEntity {
     private final BlackOrb terminal1, terminal2;
     private final Node terminal1View, terminal2View;
     private static final int INF = (int) 1E9 + 7;
+    private int damage = 12;
     public BlackOrbLaser(BlackOrb terminal1, BlackOrb terminal2) {
-        super(makeView(terminal1, terminal2), INF, true, new DamageStrategy(), 12);
+        super(makeView(terminal1, terminal2), INF, true, new DamageStrategy());
         this.terminal1 = terminal1;
         this.terminal2 = terminal2;
         //در اینجا مقادیری تف زدیم
@@ -55,5 +57,15 @@ public class BlackOrbLaser extends AttackerEntity {
     @Override
     public void shout() {
         //todo add laser sound
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

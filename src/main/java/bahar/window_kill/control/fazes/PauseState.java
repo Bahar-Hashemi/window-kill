@@ -14,9 +14,10 @@ import static bahar.window_kill.control.Deck.mainBoard;
 import static bahar.window_kill.control.Deck.user;
 
 public class PauseState extends GameState {
-    final static Pane pausePane = PaneBuilder.PAUSE_PANE.generatePane();
+    Pane pausePane;
     protected PauseState() {
         super(makeTimeLine());
+        pausePane = PaneBuilder.PAUSE_PANE.generatePane();
     }
     private static Timeline makeTimeLine() {
         Timeline pauseTimeLine = new Timeline(new KeyFrame(new Duration(Constants.RESPOND_DURATION), actionEvent -> {
@@ -31,7 +32,9 @@ public class PauseState extends GameState {
     public void play() {
         super.play();
         MainStage.add(pausePane);
-        Deck.mainBoard.requestFocus();
+        pausePane.setLayoutX(Constants.SCREEN_WIDTH / 6);
+        pausePane.setLayoutY(Constants.MINIMUM_HEIGHT / 6);
+        mainBoard.requestFocus();
     }
 
     @Override

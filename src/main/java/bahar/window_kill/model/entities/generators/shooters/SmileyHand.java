@@ -1,9 +1,15 @@
-package bahar.window_kill.model.entities;
+package bahar.window_kill.model.entities.generators.shooters;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.Strategy;
 import bahar.window_kill.control.loader.ImageLoader;
 import bahar.window_kill.control.loader.SoundLoader;
 import bahar.window_kill.model.boards.GameBoard;
+import bahar.window_kill.model.entities.BoardOwner;
+import bahar.window_kill.model.entities.Collectable;
+import bahar.window_kill.model.entities.Entity;
+import bahar.window_kill.model.entities.LootDropper;
+import bahar.window_kill.model.entities.attackers.AttackerEntity;
+import bahar.window_kill.model.entities.attackers.Bullet;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -12,11 +18,14 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
-public class SmileyHand extends Entity implements LootDropper, BoardOwner {
+import java.util.Random;
+
+public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner, AttackerEntity {
     GameBoard gameBoard;
     boolean isLeftHand;
+    int damage = 0;
     public SmileyHand(boolean isLeftHand) {
-        super(makeView(isLeftHand), 100, true, null);
+        super(makeView(isLeftHand), 300, true, null);
         this.isLeftHand = isLeftHand;
         byBoard();
     }
@@ -72,7 +81,7 @@ public class SmileyHand extends Entity implements LootDropper, BoardOwner {
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(10, Color.YELLOW);
+        return new Collectable(30, Color.YELLOW);
     }
     public void setSceneX(double x) {
         super.setSceneX(x);
@@ -81,5 +90,20 @@ public class SmileyHand extends Entity implements LootDropper, BoardOwner {
     public void setSceneY(double y) {
         super.setSceneY(y);
         gameBoard.setLayoutY(y - 10);
+    }
+
+    @Override
+    public Entity makeBullet() {
+        return new Bullet(10, 5, Color.YELLOW, 10, gunDirectionX, gunDirectionY, this, true);
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

@@ -1,5 +1,6 @@
 package bahar.window_kill.model.boards;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -39,7 +40,9 @@ public class GameBoard extends Pane {
         lockHeight(height);
     }
     public void lockWidth(double width) {
-        setMinWidth(width); setMaxWidth(width);
+        setMinWidth(width);
+        setMaxWidth(width);
+        setPrefWidth(width);
         clip();
     }
     public void lockHeight(double height) {

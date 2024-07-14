@@ -7,6 +7,7 @@ import bahar.window_kill.control.GameUtil;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 import bahar.window_kill.model.entities.generators.shooters.Omenoct;
+import bahar.window_kill.model.entities.generators.shooters.SmileyHand;
 
 import java.util.ArrayList;
 
@@ -46,6 +47,9 @@ public class MovementProcessor extends GameProcessor {
             for (int j = i - 1; j >= 0; j--) {
                 if (newEntities.get(i).canImpact() && newEntities.get(j).canImpact()) {
                     if (GameUtil.commonArea(newEntities.get(i), newEntities.get(j)) > 15) {
+                        int power = 6;
+                        if (newEntities.get(i) instanceof SmileyHand || newEntities.get(j) instanceof SmileyHand)
+                            power = 25;
                         newEntities.get(i).impactFrom(newEntities.get(j).getCenterOnSceneX(), newEntities.get(j).getCenterOnSceneY());
                         newEntities.get(j).impactFrom(newEntities.get(i).getCenterOnSceneX(), newEntities.get(i).getCenterOnSceneY());
                     }
@@ -66,11 +70,11 @@ public class MovementProcessor extends GameProcessor {
         Epsilon epsilon = user.getEpsilon();
         if (epsilon.getSceneX() < mainBoard.getLayoutX())
             epsilon.impactFrom(epsilon.getSceneX() - 10, epsilon.getSceneY());
-        if (epsilon.getSceneX() > mainBoard.getLayoutX() + mainBoard.getWidth())
+        if (epsilon.getSceneX() + 6 > mainBoard.getLayoutX() + mainBoard.getWidth())
             epsilon.impactFrom(epsilon.getSceneX() + 10, epsilon.getSceneY());
         if (epsilon.getSceneY() < mainBoard.getLayoutY())
             epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() - 10);
-        if (epsilon.getSceneY() > mainBoard.getLayoutY() + mainBoard.getHeight())
+        if (epsilon.getSceneY() + 6 > mainBoard.getLayoutY() + mainBoard.getHeight())
             epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() + 10);
     }
 }

@@ -12,10 +12,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
 
-public class Trigorath extends AttackerEntity implements LootDropper {
+public class Trigorath extends Entity implements LootDropper, AttackerEntity {
     private double speed = 0.025;
+    private int damage = 10;
     public Trigorath() {
-        super(makeView(), 15, true, new DamageStrategy(), 10);
+        super(makeView(), 15, true, new DamageStrategy());
     }
 
     private static Node makeView() {
@@ -62,5 +63,15 @@ public class Trigorath extends AttackerEntity implements LootDropper {
     @Override
     public Entity makeLoot() {
         return new Collectable(5, Color.ORANGE);
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

@@ -6,9 +6,10 @@ import javafx.event.EventHandler;
 
 public class Watch {
     long previousClick = System.currentTimeMillis();
-    private final long duration;
+    private long duration;
     private final EventHandler<ActionEvent> eventHandler;
     private int cycleCount = -1;
+    private boolean wasCalled = false;
     public Watch(int duration, EventHandler<ActionEvent> eventHandler) {
         this.duration = duration;
         this.eventHandler = eventHandler;
@@ -24,16 +25,21 @@ public class Watch {
             System.err.println("the watch was called in zero cycle count");
             return;
         }
+        if (!wasCalled)
+            onStart();
+        wasCalled = true;
         if (previousClick / duration < PlayingState.getClock() / duration) {
             ActionEvent event = new ActionEvent(this, null);
             eventHandler.handle(event);
+            if (cycleCount != -1)
+                cycleCount--;
+            if (cycleCount == 0)
+                onEnd();
         }
         previousClick = PlayingState.getClock();
-        if (cycleCount != -1)
-            cycleCount--;
-        if (cycleCount == 0)
-            onEnd();
     }
     protected void onEnd() {
+    }
+    protected void onStart() {
     }
 }

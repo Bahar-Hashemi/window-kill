@@ -57,6 +57,7 @@ abstract public class Entity {
     public Strategy getAggressionStrategy() {
         return strategy;
     }
+    public void setAggressionStrategy(Strategy strategy) { this.strategy = strategy; }
     public abstract void aggress();
     public abstract void shout();
     public boolean canImpact() {

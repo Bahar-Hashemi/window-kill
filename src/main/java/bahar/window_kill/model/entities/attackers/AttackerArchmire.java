@@ -9,11 +9,12 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
-public class AttackerArchmire extends AttackerEntity implements LootDropper {
+public class AttackerArchmire extends Entity implements LootDropper, AttackerEntity {
     Watch opacityWatch;
     Watch damageWatch;
+    private int damage = 10;
     public AttackerArchmire() {
-        super(makeView(), 10, false, new DamageStrategy(), 10);
+        super(makeView(), 10, false, new DamageStrategy());
         opacityWatch = new Watch(30, actionEvent -> {view.setOpacity(view.getOpacity() - 0.003);});
         damageWatch = new Watch(800, actionEvent -> {setHP(getHP() - 2); setDamage(getDamage() - 2); strategy.act(this);});
     }
@@ -68,11 +69,21 @@ public class AttackerArchmire extends AttackerEntity implements LootDropper {
 
     @Override
     public int getLootCount() {
-        return 2;
+        return 1;
     }
 
     @Override
     public Entity makeLoot() {
         return new Collectable(3, Color.DARKMAGENTA);
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

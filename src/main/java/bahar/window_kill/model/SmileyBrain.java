@@ -1,16 +1,22 @@
 package bahar.window_kill.model;
 
 import bahar.window_kill.control.Constants;
-import bahar.window_kill.model.bosswatch.ComingInWatch;
-import bahar.window_kill.model.entities.SmileyFace;
-import bahar.window_kill.model.entities.SmileyHand;
+import bahar.window_kill.model.boards.MainBoard;
+import bahar.window_kill.model.bosswatch.*;
+import bahar.window_kill.model.entities.generators.shooters.SmileyFace;
+import bahar.window_kill.model.entities.generators.shooters.SmileyHand;
+import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SmileyBrain {
     private final SmileyFace face;
     private final SmileyHand leftHand, rightHand;
-    ArrayList<Watch> watches = new ArrayList<>();
+    ArrayList<BossWatch> watches = new ArrayList<>();
+    Watch attackController; boolean canAttack = false;
+    private static Class<?>[] attackWatches = new Class[] {SlapWatch.class, ProjectileWatch.class, RapidFireWatch.class, SlapWatch.class, SqueezeWatch.class, VomitWatch.class};
     public SmileyBrain(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
         this.face = face;
         this.leftHand = leftHand;
@@ -19,12 +25,34 @@ public class SmileyBrain {
         leftHand.setSceneLocation(-100, Constants.SCREEN_HEIGHT / 2);
         rightHand.setSceneLocation(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT / 2);
         watches.add(new ComingInWatch(face, leftHand, rightHand));
+        attackController = new Watch(10000, event -> canAttack = true);
     }
-    public void act() {
-        for (Watch watch: watches)
+    public void act(Epsilon epsilon, MainBoard mainBoard) {
+        for (BossWatch watch: watches)
             watch.call();
         for (int i = watches.size() - 1; i >= 0; i--)
             if (watches.get(i).getCycleCount() == 0)
                 watches.remove(i);
+        attackController.call();
+        if (canAttack) {
+            attack(epsilon, mainBoard);
+            canAttack = false;
+        }
+    }
+    private void attack(Epsilon epsilon, MainBoard mainBoard) {
+        boolean doneSomething = false;
+        while (!doneSomething) {
+            Class<?> type = attackWatches[new Random().nextInt(attackWatches.length)];
+            try {
+                Constructor<?> constructor = type.getConstructor(SmileyFace.class, SmileyHand.class, SmileyHand.class);
+                BossWatch watch = (BossWatch) constructor.newInstance(face, leftHand, rightHand);
+                if (watch.isValid(epsilon, mainBoard)) {
+                    watches.add(watch);
+                    doneSomething = true;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

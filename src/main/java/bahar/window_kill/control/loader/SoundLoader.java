@@ -3,6 +3,8 @@ package bahar.window_kill.control.loader;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 
 public enum SoundLoader {
     WHOOSH("whoosh.wav", 1), HIT("hit.wav", 1), DAMAGE("damage.wav", 1),

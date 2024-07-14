@@ -8,11 +8,17 @@ import bahar.window_kill.model.boards.GameBoard;
 import bahar.window_kill.model.entities.BoardOwner;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.attackers.Bullet;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.chart.Axis;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Sphere;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -39,6 +45,18 @@ public class BlackOrb extends Entity implements BoardOwner, LootDropper{
         innerCircle.setCenterY(new Random().nextDouble(-5, 5)); // Offset the inner circle to create a 3D illusion
 
         sphereVisual.getChildren().addAll(outerCircle, innerCircle);
+
+        ScaleTransition transition = new ScaleTransition();
+        transition.setDuration(Duration.millis(1000));
+        transition.setNode(sphereVisual);
+        transition.setFromX(1);
+        transition.setFromY(1);
+        transition.setToX(0.7);
+        transition.setToY(0.7);
+        transition.setCycleCount(-1);
+        transition.setAutoReverse(true);
+        transition.play();
+
         return sphereVisual;
     }
 

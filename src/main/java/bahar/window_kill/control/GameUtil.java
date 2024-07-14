@@ -45,10 +45,15 @@ public class GameUtil {
         for (GameBoard gameBoard: gameBoards)
             if (!gameBoard.getHovering()) {
                 Bounds secondBounds = gameBoard.localToScene(gameBoard.getBoundsInLocal());
-                if (firstBounds.contains(secondBounds))
+                if (firstBounds.intersects(secondBounds))
                     return true;
             }
        return false;
+    }
+    public static boolean intersects(GameBoard firstBoard, GameBoard secondBoard) {
+        Bounds firstBounds = firstBoard.localToScene(firstBoard.getBoundsInLocal());
+        Bounds secondBounds = secondBoard.localToScene(secondBoard.getBoundsInLocal());
+        return firstBounds.intersects(secondBounds);
     }
     public static void setSceneX(Node node, double x) {
         node.setLayoutX(x - node.getParent().getLayoutX());

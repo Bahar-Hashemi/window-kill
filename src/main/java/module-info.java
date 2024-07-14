@@ -2,6 +2,7 @@ module learningJavaFX {
     requires  javafx.controls;
     requires javafx.fxml;
     requires javafx.media;
+    requires freetts;
 
     exports bahar.window_kill.view;
     exports bahar.window_kill.control;
@@ -12,4 +13,5 @@ module learningJavaFX {
     exports bahar.window_kill.control.fazes.processors;
     exports bahar.window_kill.control.fazes;
     exports bahar.window_kill.control.loader;
+    exports bahar.window_kill.control.fazes.processors.strategies.spawners;
 }

@@ -6,10 +6,11 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class Bullet extends AttackerEntity {
+public class Bullet extends Entity implements AttackerEntity {
     private final double directionX, directionY;
     private final Entity source;
     private final boolean traverser;
+    private int damage;
     public Bullet(int HP, double radius, Color color, int damage, double directionX, double directionY, Entity source, boolean traversesWalls) {
         super(makeView(radius, color), HP, false,
                 new DamageStrategy() {
@@ -19,8 +20,8 @@ public class Bullet extends AttackerEntity {
                         aggressionSource.setHP(0);
                         ((Bullet)aggressionSource).setDamage(0);
                     }
-                },
-                damage);
+                });
+        this.damage = damage;
         this.source = source;
         this.directionX = directionX;
         this.directionY = directionY;
@@ -56,5 +57,15 @@ public class Bullet extends AttackerEntity {
 
     public boolean isTraverser() {
         return traverser;
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

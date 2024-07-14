@@ -65,14 +65,14 @@ public class Omenoct extends ShooterEntity implements LootDropper {
     }
     @Override
     public void move(double width, double height) {
-        int speed = 1;
+        int speed = 5;
         if (lockStrategy == 0 && Math.abs(view.getLayoutY()) > speed)
             view.setLayoutY(view.getLayoutY() + (view.getLayoutY() > 0? -1: 1) * speed);
 
-        else if (lockStrategy == 1 && Math.abs(view.getLayoutX() - width) > speed)
+        else if (lockStrategy == 1 && Math.abs(view.getLayoutX() - width) + 0.5 > speed)
             view.setLayoutX(view.getLayoutX() + (view.getLayoutX() > width? -1: 1) * speed);
 
-        else if (lockStrategy == 2 && (view.getLayoutY() - height) > speed)
+        else if (lockStrategy == 2 && (view.getLayoutY() - height ) > speed)
             view.setLayoutY(view.getLayoutY() + (view.getLayoutY() > height? -1: 1) * speed);
 
         else if (lockStrategy == 3 && Math.abs(view.getLayoutX()) > speed)

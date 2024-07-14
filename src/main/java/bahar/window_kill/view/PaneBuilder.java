@@ -2,12 +2,11 @@ package bahar.window_kill.view;
 
 import bahar.window_kill.control.Constants;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public enum PaneBuilder {
-    MAIN_MENU_PANE("MainMenu.fxml", 1), PAUSE_PANE("PauseMenu.fxml", 0.9), GAME_OVER_PANE("GameOver.fxml", 0.9);
+    MAIN_MENU_PANE("MainMenu.fxml", 1), PAUSE_PANE("PauseMenu.fxml", 0.7), GAME_OVER_PANE("GameOver.fxml", 0.9);
     final String name;
     final double opacity;
     PaneBuilder(String name, double opacity) {
@@ -19,6 +18,13 @@ public enum PaneBuilder {
             Pane pane = FXMLLoader.load(getClass().getResource("/FXML/" + name));
             pane.setBackground(Background.fill(Constants.BACKGROUND_COLOR));
             pane.setOpacity(opacity);
+            BorderStroke borderStroke = new BorderStroke(
+                    Color.rgb(255, 255, 255, 0.2), // Border color
+                    BorderStrokeStyle.SOLID, // Border style
+                    new CornerRadii(2),
+                    new BorderWidths(3) // Border width
+            );
+            pane.setBorder(new Border(borderStroke));
             return pane;
         } catch (Exception e) {
             System.err.println(name + "can't be made!");

@@ -13,11 +13,12 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
-public class Squarantine extends AttackerEntity implements LootDropper  {
+public class Squarantine extends Entity implements LootDropper, AttackerEntity  {
     private double speed = 2;
     private double dashSpeed = 1;
+    private int damage = 6;
     public Squarantine() {
-        super(makeView(), 15, true, new DamageStrategy(), 6);
+        super(makeView(), 15, true, new DamageStrategy());
     }
 
     private static Node makeView() {
@@ -67,5 +68,15 @@ public class Squarantine extends AttackerEntity implements LootDropper  {
     @Override
     public Entity makeLoot() {
         return new Collectable(5, Color.LIMEGREEN);
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

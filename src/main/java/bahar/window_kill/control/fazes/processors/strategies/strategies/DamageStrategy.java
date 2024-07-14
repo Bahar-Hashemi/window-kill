@@ -9,6 +9,7 @@ import bahar.window_kill.model.entities.attackers.AttackerEntity;
 import bahar.window_kill.model.entities.attackers.BlackOrbLaser;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import bahar.window_kill.model.entities.generators.SpawnerArchmire;
+import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 
 import static bahar.window_kill.control.Deck.*;
 
@@ -21,10 +22,12 @@ public class DamageStrategy extends Strategy {
         }
         attackEnemies(attacker);
         attackEpsilon(attacker);
-        attackWalls(attacker);
+        attackWalls(aggressionSource);
 
     }
     private void attackEnemies(AttackerEntity attacker) {
+        if (attacker instanceof Bullet && !(((Bullet) attacker).getSource() instanceof Epsilon))
+            return;
         for (Entity entity: entities) {
             if (entity instanceof AttackerArchmire)
                 continue;
@@ -34,44 +37,44 @@ public class DamageStrategy extends Strategy {
                 continue;
             if (attacker instanceof BlackOrbLaser && (entity instanceof BlackOrb || entity instanceof BlackOrbLaser))
                 continue;
-            if (GameUtil.commonArea(attacker, entity) > 10) {
+            if (GameUtil.commonArea((Entity) attacker, entity) > 10) {
                 entity.setHP(entity.getHP() - attacker.getDamage());
                 entity.shout();
-                onAct(attacker);
+                onAct((Entity) attacker);
             }
         }
     }
     private void attackEpsilon(AttackerEntity attacker) {
-        if (GameUtil.commonArea(attacker, user.getEpsilon()) > 10 &&
+        if (GameUtil.commonArea((Entity) attacker, user.getEpsilon()) > 10 &&
                 (!(attacker instanceof Bullet) || ((Bullet) attacker).getSource() != user.getEpsilon())) {
             user.getEpsilon().setHP(user.getEpsilon().getHP() - attacker.getDamage());
             user.getEpsilon().shout();
-            onAct(attacker);
+            onAct((Entity) attacker);
         }
     }
-    private void attackWalls(AttackerEntity attacker) { //walls are weaker than enemies
+    private void attackWalls(Entity attacker) { //walls are weaker than enemies
         if (attacker instanceof Bullet && !((Bullet) attacker).isTraverser()) {
             if (attacker.getSceneX() < mainBoard.getLayoutX()) {
-                BoardsProcessor.requestMainBoardChangeInBounds(-3 * attacker.getDamage(), 0,
-                        3 * attacker.getDamage(), 0);
+                BoardsProcessor.requestMainBoardChangeInBounds(-5 * ((AttackerEntity) attacker).getDamage(), 0,
+                        5 * ((AttackerEntity) attacker).getDamage(), 0);
                 mainBoard.shout();
                 onAct(attacker);
             }
             if (attacker.getSceneY() < mainBoard.getLayoutY()) {
-                BoardsProcessor.requestMainBoardChangeInBounds(0, -3 * attacker.getDamage(),
-                        0, 3 * attacker.getDamage());
+                BoardsProcessor.requestMainBoardChangeInBounds(0, -5 * ((AttackerEntity) attacker).getDamage(),
+                        0, 5 * ((AttackerEntity) attacker).getDamage());
                 mainBoard.shout();
                 onAct(attacker);
             }
             if (attacker.getSceneX() > mainBoard.getLayoutX() + mainBoard.getWidth()) {
                 BoardsProcessor.requestMainBoardChangeInBounds(0, 0,
-                        3 * attacker.getDamage(), 0);
+                        5 * ((AttackerEntity) attacker).getDamage(), 0);
                 mainBoard.shout();
                 onAct(attacker);
             }
             if (attacker.getSceneY() > mainBoard.getLayoutY() + mainBoard.getHeight()) {
                 BoardsProcessor.requestMainBoardChangeInBounds(0, 0,
-                        0, 3 * attacker.getDamage());
+                        0, 5 * ((AttackerEntity) attacker).getDamage());
                 mainBoard.shout();
                 onAct(attacker);
             }

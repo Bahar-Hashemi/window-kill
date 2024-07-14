@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
 
 public class Epsilon extends ShooterEntity {
     private static final double radius = 10;
-    int xp = 0;
+    int xp = 100;
     public Epsilon() {
         super(makeView(), 100, true, new SpawnStrategy(400));
     }

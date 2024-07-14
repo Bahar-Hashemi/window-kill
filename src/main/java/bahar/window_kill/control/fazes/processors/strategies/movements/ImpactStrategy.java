@@ -2,14 +2,14 @@ package bahar.window_kill.control.fazes.processors.strategies.movements;
 
 import bahar.window_kill.model.entities.Entity;
 
-public class ImpactStrategy {
+public class ImpactStrategy { //todo need to change it for slap
     boolean onImpact, canImpact;
     double deltaX, deltaY;
     public ImpactStrategy(boolean canImpact) {
         this.canImpact = canImpact;
     }
     public void impact(double impactX, double impactY, Entity target) {
-        impact(impactX, impactY, target, 6);
+        impact(impactX, impactY, target, 15);
     }
     public void impact(double impactX, double impactY, Entity target, double power) {
         onImpact = true;
