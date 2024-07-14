@@ -1,6 +1,5 @@
 package bahar.window_kill.model.entities.generators.shooters;
 
-import bahar.window_kill.control.fazes.processors.strategies.strategies.Strategy;
 import bahar.window_kill.control.loader.ImageLoader;
 import bahar.window_kill.control.loader.SoundLoader;
 import bahar.window_kill.model.boards.GameBoard;
@@ -10,15 +9,11 @@ import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.LootDropper;
 import bahar.window_kill.model.entities.attackers.AttackerEntity;
 import bahar.window_kill.model.entities.attackers.Bullet;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-
-import java.util.Random;
 
 public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner, AttackerEntity {
     GameBoard gameBoard;
@@ -28,6 +23,7 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
         super(makeView(isLeftHand), 300, true, null);
         this.isLeftHand = isLeftHand;
         byBoard();
+        setBulletDamage(10);
     }
     private static Node makeView(boolean isLeftHand) {
         Rectangle rectangle = new Rectangle();
@@ -94,7 +90,7 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
 
     @Override
     public Entity makeBullet() {
-        return new Bullet(10, 5, Color.YELLOW, 10, gunDirectionX, gunDirectionY, this, true);
+        return new Bullet(getBulletDamage(), 5, Color.YELLOW, getBulletDamage(), gunDirectionX, gunDirectionY, this, true);
     }
 
     @Override
@@ -103,7 +99,7 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
     }
 
     @Override
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setDamage(int bulletDamage) {
+        this.damage = bulletDamage;
     }
 }

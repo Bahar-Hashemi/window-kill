@@ -66,4 +66,7 @@ abstract public class Entity {
     public void impactFrom(double sourceX, double sourceY) {
         impactStrategy.impact(sourceX, sourceY, this);
     }
+    public void impactFrom(double sourceX, double sourceY, int power) {
+        impactStrategy.impact(sourceX, sourceY, this, power);
+    }
 }

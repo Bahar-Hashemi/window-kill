@@ -1,8 +1,11 @@
 package bahar.window_kill.control;
 
-import bahar.window_kill.control.fazes.processors.abilities.HealWatch;
+import bahar.window_kill.control.fazes.processors.abilities.*;
 import bahar.window_kill.control.fazes.processors.BoardsProcessor;
 import bahar.window_kill.control.loader.ImageLoader;
+import bahar.window_kill.control.loader.SoundLoader;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,15 +44,15 @@ public class PauseMenuController {
         button.setOnMouseExited(e -> buttonImage.setImage(image.getImage()));
     }
     private void updateVolume() {
-//        volumeLabel.setText("Volume: " + (int) SoundController.volume);
-//        volumeSlider.setValue(SoundController.volume);
-//        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-//                volumeLabel.setText("Volume: " + (int) volumeSlider.getValue());
-//                SoundController.setVolume(volumeSlider.getValue());
-//            }
-//        });
+        volumeLabel.setText("Volume: " + (int) SoundLoader.getVolume());
+        volumeSlider.setValue(SoundLoader.getVolume());
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                volumeLabel.setText("Volume: " + (int) volumeSlider.getValue());
+                SoundLoader.setVolume(volumeSlider.getValue());
+            }
+        });
     }
     private void updateLabels() {
         HPLabel.setText("HP: " + user.getEpsilon().getHP());
@@ -59,12 +62,17 @@ public class PauseMenuController {
     public void onHeal(ActionEvent actionEvent) {
         abilities.add(new HealWatch());
         user.getEpsilon().setXp(user.getEpsilon().getXp() - 50);
+        afterButtonPress();
+    }
+    private void afterButtonPress() {
         updateLabels();
         BoardsProcessor.updateMainBoardLabel();
         processButtonsDisable();
     }
-
     public void onEmpower(ActionEvent actionEvent) {
+        abilities.add(new EmpowerWatch());
+        user.getEpsilon().setXp(user.getEpsilon().getXp() - 75);
+        afterButtonPress();
     }
     public void processButtonsDisable() {
         processButtonsEnable(healButton, 50);
@@ -75,25 +83,30 @@ public class PauseMenuController {
         processButtonsEnable(thunderButton, 200);
     }
     private void processButtonsEnable(Button button, int minimumXP) {
-        if (user.getEpsilon().getXp() < minimumXP)
+        if (user.getEpsilon().getXp() < minimumXP || coolDown > 0)
             button.setDisable(true);
     }
     public void onBanish(ActionEvent actionEvent) {
-//        GameController.mainBoard.xp -= 100;
-//        MainBoard mainBoard = GameController.mainBoard;
-//        Entity[] entities = new Entity[mainBoard.enemies.size()];
-//        for (int i = 0; i < mainBoard.enemies.size(); i++) entities[i] = mainBoard.enemies.get(i);
-//        mainBoard.impact(GameController.mainBoard.getUser().epsilon.getLayoutX(), GameController.mainBoard.getUser().epsilon.getLayoutY(), entities, 3);
-//        updateLabels();
-//        processButtonsDisable();
+        abilities.add(new BanishWatch());
+        user.getEpsilon().setXp(user.getEpsilon().getXp() - 100);
+        afterButtonPress();
     }
 
     public void onDismay(ActionEvent actionEvent) {
+        abilities.add(new DismayWatch());
+        user.getEpsilon().setXp(user.getEpsilon().getXp() - 120);
+        afterButtonPress();
     }
 
     public void onSlumber(ActionEvent actionEvent) {
+        abilities.add(new SlumberWatch());
+        user.getEpsilon().setXp(user.getEpsilon().getXp() - 150);
+        afterButtonPress();
     }
 
     public void onThunder(ActionEvent actionEvent) {
+        abilities.add(new ThunderWatch());
+        user.getEpsilon().setXp(user.getEpsilon().getXp() - 200);
+        afterButtonPress();
     }
 }

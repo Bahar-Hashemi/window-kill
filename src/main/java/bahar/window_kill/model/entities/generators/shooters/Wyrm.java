@@ -25,6 +25,7 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
         super(makeView(), 12, true, new SpawnStrategy(1000));
         makeIris();
         byBoard();
+        setBulletDamage(5);
     }
     private void makeIris() {
         // Adjust iris to be centered in the wider eye
@@ -91,7 +92,7 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     }
     @Override
     public Entity makeBullet() {
-        return new Bullet(5, 5, Color.CRIMSON, 5, gunDirectionX, gunDirectionY, this, true);
+        return new Bullet(getBulletDamage(), 5, Color.CRIMSON, getBulletDamage(), gunDirectionX, gunDirectionY, this, true);
     }
 
     @Override

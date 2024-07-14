@@ -23,6 +23,7 @@ public class Omenoct extends ShooterEntity implements LootDropper {
     public Omenoct() {
         super(makeView(), 20, true, new SpawnStrategy(500));
         lockStrategy = new Random().nextInt(4);
+        setBulletDamage(4);
     }
     private static Node makeView() {
         Group shapes = new Group();
@@ -91,7 +92,7 @@ public class Omenoct extends ShooterEntity implements LootDropper {
 
     @Override
     public Entity makeBullet() {
-        return new Bullet(4, 3, Color.RED, 4, gunDirectionX, gunDirectionY, this, true);
+        return new Bullet(getBulletDamage(), 3, Color.RED, getBulletDamage(), gunDirectionX, gunDirectionY, this, true);
     }
 
     @Override

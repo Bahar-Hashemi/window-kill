@@ -19,6 +19,7 @@ public class SpawnProcessor extends GameProcessor {
     SpawnWatch[] spawnWatches = new SpawnWatch[10];
     ArrayList<Watch> currentWatches = new ArrayList<>();
     SmileyBrain smileyBrain;
+    static boolean isLocked = false;
     public SpawnProcessor() {
         makeWatches();
     }
@@ -38,7 +39,7 @@ public class SpawnProcessor extends GameProcessor {
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
         makeWatch(8, 4500, 40, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(9, 4000, 50, new Class<?>[]{
+        makeWatch(9, 4000, 1, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
         currentWatches.add(spawnWatches[Deck.wave]); //todo think more about here!
     }
@@ -68,11 +69,19 @@ public class SpawnProcessor extends GameProcessor {
     }
     @Override
     public void run() {
+        if (isLocked)
+            return;
         if (Deck.wave == 10) {
             smileyBrain.act(Deck.user.getEpsilon(), Deck.mainBoard);
             return;
         }
         for (int i = currentWatches.size() - 1; i >= 0; i--)
             currentWatches.get(i).call();
+    }
+    public static void setLocked(boolean isLocked) {
+        SpawnProcessor.isLocked = isLocked;
+    }
+    public static boolean getLocked() {
+        return isLocked;
     }
 }

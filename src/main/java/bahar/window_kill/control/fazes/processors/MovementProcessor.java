@@ -15,6 +15,7 @@ import static bahar.window_kill.control.Deck.mainBoard;
 import static bahar.window_kill.control.Deck.user;
 
 public class MovementProcessor extends GameProcessor {
+    static boolean isLocked = false;
     public void run() {
         processEpsilonMovement();
         processImpacts();
@@ -34,6 +35,8 @@ public class MovementProcessor extends GameProcessor {
         double epsilonX = Deck.user.getEpsilon().getSceneX();
         double epsilonY = (int) Deck.user.getEpsilon().getSceneY();
         for (Entity entity: Deck.entities) {
+            if (isLocked && !(entity instanceof Bullet && ((Bullet) entity).getSource() == user.getEpsilon()))
+                continue;
             if (entity instanceof Omenoct)
                 entity.move(mainBoard.getWidth(), mainBoard.getHeight());
             else
@@ -49,9 +52,9 @@ public class MovementProcessor extends GameProcessor {
                     if (GameUtil.commonArea(newEntities.get(i), newEntities.get(j)) > 15) {
                         int power = 6;
                         if (newEntities.get(i) instanceof SmileyHand || newEntities.get(j) instanceof SmileyHand)
-                            power = 25;
-                        newEntities.get(i).impactFrom(newEntities.get(j).getCenterOnSceneX(), newEntities.get(j).getCenterOnSceneY());
-                        newEntities.get(j).impactFrom(newEntities.get(i).getCenterOnSceneX(), newEntities.get(i).getCenterOnSceneY());
+                            power = 35;
+                        newEntities.get(i).impactFrom(newEntities.get(j).getCenterOnSceneX(), newEntities.get(j).getCenterOnSceneY(), power);
+                        newEntities.get(j).impactFrom(newEntities.get(i).getCenterOnSceneX(), newEntities.get(i).getCenterOnSceneY(), power);
                     }
                 }
             }
@@ -76,5 +79,11 @@ public class MovementProcessor extends GameProcessor {
             epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() - 10);
         if (epsilon.getSceneY() + 6 > mainBoard.getLayoutY() + mainBoard.getHeight())
             epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() + 10);
+    }
+    public static void setLocked(boolean isLocked) {
+        MovementProcessor.isLocked = isLocked;
+    }
+    public static boolean getLocked() {
+        return isLocked;
     }
 }

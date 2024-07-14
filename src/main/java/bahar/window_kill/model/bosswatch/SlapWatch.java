@@ -35,7 +35,7 @@ public class SlapWatch extends BossWatch {
         hand = new Random().nextBoolean()? leftHand: rightHand;
         hand.punch();
         hand.setAggressionStrategy(new DamageStrategy());
-        hand.setDamage(20);
+        hand.setBulletDamage(20);
     }
 
     @Override

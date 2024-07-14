@@ -10,9 +10,10 @@ import javafx.scene.shape.Circle;
 
 public class Epsilon extends ShooterEntity {
     private static final double radius = 10;
-    int xp = 100;
+    int xp = 1000;
     public Epsilon() {
         super(makeView(), 100, true, new SpawnStrategy(400));
+        setBulletDamage(5);
     }
     private static Node makeView() {
         Circle circle = new Circle();
@@ -29,7 +30,7 @@ public class Epsilon extends ShooterEntity {
         return xp;
     }
     public Entity makeBullet() {
-        return new Bullet(5, 3.5, Color.WHITE, 5, gunDirectionX, gunDirectionY, this, false);
+        return new Bullet(getBulletDamage(), 3.5, Color.WHITE, getBulletDamage(), gunDirectionX, gunDirectionY, this, false);
     }
     public void setColor(Color color) {
         ((Circle) view).setStroke(color);

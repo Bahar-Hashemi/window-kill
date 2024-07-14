@@ -35,4 +35,10 @@ public class SpawnStrategy extends Strategy {
         onAct(aggressionSource);
         hasBullet = false;
     }
+    public void setSpawnDuration(long spawnDuration) {
+        watch.setDuration(spawnDuration);
+    }
+    public long getSpawnDuration() {
+        return watch.getDuration();
+    }
 }

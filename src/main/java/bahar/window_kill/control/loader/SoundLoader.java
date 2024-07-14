@@ -6,6 +6,8 @@ import javafx.util.Duration;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 
+import java.util.ArrayList;
+
 public enum SoundLoader {
     WHOOSH("whoosh.wav", 1), HIT("hit.wav", 1), DAMAGE("damage.wav", 1),
     COIN_COLLECT("coin_collect.mp3", 1), ENEMY_SHOOT("enemy_shoot.wav", 1),
@@ -30,6 +32,9 @@ public enum SoundLoader {
             System.err.println("Invalid volume");
             return;
         }
+        for (SoundLoader soundLoader: SoundLoader.values())
+            if (soundLoader.loopCount == -1)
+                soundLoader.mediaPlayer.setVolume(volume / 100);
         SoundLoader.volume = volume;
     }
     public static double getVolume() {

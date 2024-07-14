@@ -15,11 +15,13 @@ public class Deck {
     public static ArrayList<GameBoard> gameBoards = new ArrayList<>();
     public static ArrayList<AbilityWatch> abilities = new ArrayList<>();
     public static int wave = 0;
+    public static long coolDown = 0;
     public static void newDeck() {
         entities = new ArrayList<>();
         gameBoards = new ArrayList<>();
         user = null;
         mainBoard = null;
         wave = 0;
+        coolDown = 0;
     }
 }

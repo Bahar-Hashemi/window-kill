@@ -28,6 +28,7 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
         byBoard();
         makeEyes();
         makeMouth();
+        setBulletDamage(20);
     }
     private void makeMouth() {
         // Creating a CubicCurve for the mouth
@@ -126,5 +127,5 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
     public Entity makeBullet() {
         double x = new Random().nextDouble(-1, 1);
         double y = Math.sqrt(1 - x * x);
-        return new Bullet(10, 5, Color.YELLOW, 10, x, y, this, true);    }
+        return new Bullet(getBulletDamage(), 5, Color.YELLOW, getBulletDamage(), x, y, this, true);    }
 }

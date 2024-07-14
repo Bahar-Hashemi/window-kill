@@ -22,6 +22,7 @@ public class Nechropic extends ShooterEntity implements LootDropper {
     public Nechropic() {
         super(makeView(), 10, true, new SpawnStrategy(15));
         makeWatches();
+        setBulletDamage(5);
     }
     private void makeWatches() {
         stateWatch = new Watch(500, actionEvent -> {statePointer = (statePointer + 1) % 24; canAct = true;});
@@ -85,7 +86,7 @@ public class Nechropic extends ShooterEntity implements LootDropper {
 
     @Override
     public Entity makeBullet() {
-        return new Bullet(5, 3, Color.web("#640000"), 5, gunDirectionX, gunDirectionY, this, true);
+        return new Bullet(getBulletDamage(), 3, Color.web("#640000"), getBulletDamage(), gunDirectionX, gunDirectionY, this, true);
     }
     private void ascent(double targetX, double targetY) {
         //

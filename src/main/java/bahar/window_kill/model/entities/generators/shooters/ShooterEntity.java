@@ -8,6 +8,7 @@ import javafx.scene.Node;
 
 public abstract class ShooterEntity extends GeneratorEntity {
     protected Double gunDirectionX, gunDirectionY;
+    protected int bulletDamage;
 
     protected ShooterEntity(Node view, int HP, boolean canImpact, Strategy strategy) {
         super(view, HP, canImpact, strategy);
@@ -15,6 +16,12 @@ public abstract class ShooterEntity extends GeneratorEntity {
     public void setGunDirection(double gunDirectionX, double gunDirectionY) {
         setGunDirectionX(gunDirectionX);
         setGunDirectionY(gunDirectionY);
+    }
+    public void setBulletDamage(int bulletDamage) {
+        this.bulletDamage = bulletDamage;
+    }
+    public int getBulletDamage() {
+        return bulletDamage;
     }
     public void target(Entity target) {
         Point2D sourcePosition = this.getView().localToScene(0, 0);

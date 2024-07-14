@@ -42,4 +42,10 @@ public class Watch {
     }
     protected void onStart() {
     }
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+    public long getDuration() {
+        return duration;
+    }
 }
