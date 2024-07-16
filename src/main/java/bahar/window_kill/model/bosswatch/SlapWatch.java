@@ -14,12 +14,12 @@ public class SlapWatch extends BossWatch {
     private static SmileyHand hand;
     private static int counter;
     public SlapWatch(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(30, makeEventHandler(face, leftHand, rightHand), face, leftHand, rightHand);
+        super(30, makeRunnable(face, leftHand, rightHand), face, leftHand, rightHand);
         setCycleCount(100);
         counter = 0;
     }
-    private static EventHandler<ActionEvent> makeEventHandler(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        return event -> {
+    private static Runnable makeRunnable(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+        return () -> {
             counter++;
             int change = (counter > 50)? -10: 10;
             if (hand == leftHand)

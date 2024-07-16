@@ -1,7 +1,6 @@
 package bahar.window_kill.model.entities.generators.shooters;
 
-import bahar.window_kill.control.fazes.processors.strategies.strategies.Strategy;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.boards.GameBoard;
 import bahar.window_kill.model.entities.BoardOwner;
 import bahar.window_kill.model.entities.Collectable;
@@ -10,10 +9,7 @@ import bahar.window_kill.model.entities.LootDropper;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.CubicCurve;
 
@@ -102,7 +98,7 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
 
     @Override
     public void shout() {
-        SoundLoader.HIT.play();
+        SoundUtil.HIT.play();
     }
 
     @Override
@@ -121,6 +117,16 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
     public void setSceneY(double y) {
         super.setSceneY(y);
         gameBoard.setLayoutY(y - 70);
+    }
+    public void setLayoutX(double x) {
+        super.setLayoutX(x);
+        if (gameBoard != null)
+            gameBoard.setLayoutX(x - 70);
+    }
+    public void setLayoutY(double y) {
+        super.setLayoutY(y);
+        if (gameBoard != null)
+            gameBoard.setLayoutY(y - 70);
     }
 
     @Override

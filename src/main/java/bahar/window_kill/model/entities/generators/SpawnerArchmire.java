@@ -1,7 +1,7 @@
 package bahar.window_kill.model.entities.generators;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.SpawnStrategy;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.Watch;
 import bahar.window_kill.model.entities.Collectable;
 import bahar.window_kill.model.entities.Entity;
@@ -70,7 +70,7 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
 
     @Override
     public void shout() {
-        SoundLoader.HIT.play();
+        SoundUtil.HIT.play();
     }
 
     @Override

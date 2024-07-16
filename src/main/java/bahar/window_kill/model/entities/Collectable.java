@@ -1,7 +1,7 @@
 package bahar.window_kill.model.entities;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.PositiveStrategy;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -50,6 +50,6 @@ public class Collectable extends Entity {
 
     @Override
     public void shout() {
-        SoundLoader.COIN_COLLECT.play();
+        SoundUtil.COIN_COLLECT.play();
     }
 }

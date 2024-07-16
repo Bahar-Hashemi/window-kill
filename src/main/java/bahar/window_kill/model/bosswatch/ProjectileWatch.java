@@ -10,7 +10,7 @@ import javafx.event.EventHandler;
 
 public class ProjectileWatch extends BossWatch {
     public ProjectileWatch(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(6000, event -> {}, face, leftHand, rightHand);
+        super(6000,() -> {}, face, leftHand, rightHand);
         setCycleCount(1);
     }
 

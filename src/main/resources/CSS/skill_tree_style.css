@@ -1,0 +1,53 @@
+.root {
+    -fx-opacity: 0.8;
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+}
+.label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-padding: 8 15;
+}
+.button {
+    -fx-font-family: "cooper black";
+    -fx-font-size: 14px;
+    -fx-background-color: #18191A;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 20; /* Makes the button round */
+    -fx-padding: 8 15; /* Adjust padding as needed */
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+}
+.button:hover {
+    -fx-background-color: #282828;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+.button:pressed {
+    -fx-background-color: #202020;
+}
+
+.scroll-pane, .scroll-pane * {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-bar, .scroll-bar * {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+/* Ensuring any borders or effects are also transparent */
+.scroll-pane, .scroll-bar, .scroll-bar .thumb, .scroll-bar .track {
+    -fx-border-color: transparent;
+    -fx-effect: null;
+}

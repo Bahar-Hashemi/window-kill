@@ -1,35 +1,27 @@
-package bahar.window_kill.control.fazes.processors.abilities;
+package bahar.window_kill.control.fazes.processors.abilities.shop;
 
 import bahar.window_kill.control.Deck;
 import bahar.window_kill.control.fazes.processors.AggressionProcessor;
 import bahar.window_kill.control.fazes.processors.MovementProcessor;
 import bahar.window_kill.control.fazes.processors.SpawnProcessor;
+import bahar.window_kill.control.fazes.processors.abilities.AbilityWatch;
 
 public class SlumberWatch extends AbilityWatch {
     public SlumberWatch() {
-        super(30, e -> {});
+        super(30, () -> {}, "Slumber", 150);
         setCycleCount(333);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        AggressionProcessor.setLocked(true);
-        MovementProcessor.setLocked(true);
-        SpawnProcessor.setLocked(true);
-        Deck.coolDown += 10 * 1000;
+        Deck.isLocked = true;
     }
 
     @Override
     protected void onEnd() {
         super.onEnd();
-        AggressionProcessor.setLocked(false);
-        MovementProcessor.setLocked(false);
-        SpawnProcessor.setLocked(false);
+        Deck.isLocked = false;
     }
 
-    @Override
-    public String getName() {
-        return "slumber";
-    }
 }

@@ -1,10 +1,12 @@
-package bahar.window_kill.control.fazes.processors.abilities;
+package bahar.window_kill.control.fazes.processors.abilities.shop;
+
+import bahar.window_kill.control.fazes.processors.abilities.AbilityWatch;
 
 import static bahar.window_kill.control.Deck.*;
 
 public class ThunderWatch extends AbilityWatch {
     public ThunderWatch() {
-        super(30, event -> {});
+        super(30, () -> {}, "Thunder", 200);
         setCycleCount(30);
     }
 
@@ -12,17 +14,11 @@ public class ThunderWatch extends AbilityWatch {
     protected void onStart() {
         super.onStart();
         user.getEpsilon().setBulletDamage(user.getEpsilon().getBulletDamage() * 10);
-        coolDown += 120 * 1000;
     }
 
     @Override
     protected void onEnd() {
         super.onEnd();
         user.getEpsilon().setBulletDamage(user.getEpsilon().getBulletDamage() / 10);
-    }
-
-    @Override
-    public String getName() {
-        return "thunder";
     }
 }

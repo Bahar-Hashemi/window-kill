@@ -9,4 +9,6 @@ public interface BoardOwner {
     public GameBoard getBoard();
     public void setSceneX(double x);
     public void setSceneY(double y);
+    public void setLayoutX(double x);
+    public void setLayoutY(double y);
 }

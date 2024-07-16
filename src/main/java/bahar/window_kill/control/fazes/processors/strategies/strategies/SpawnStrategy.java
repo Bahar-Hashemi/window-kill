@@ -1,10 +1,9 @@
 package bahar.window_kill.control.fazes.processors.strategies.strategies;
 
-import bahar.window_kill.control.GameUtil;
+import bahar.window_kill.control.util.GameUtil;
 import bahar.window_kill.model.Watch;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.generators.GeneratorEntity;
-import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
 
@@ -14,7 +13,7 @@ public class SpawnStrategy extends Strategy {
     boolean hasBullet = false;
     Watch watch;
     public SpawnStrategy(int spawnDuration) {
-        watch = new Watch(spawnDuration, event -> hasBullet = true);
+        watch = new Watch(spawnDuration, () -> hasBullet = true);
     }
     @Override
     public void act(Entity aggressionSource) {

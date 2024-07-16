@@ -1,7 +1,7 @@
 package bahar.window_kill.model.entities.generators.shooters;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.SpawnStrategy;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.Watch;
 import bahar.window_kill.model.entities.Collectable;
 import bahar.window_kill.model.entities.Entity;
@@ -25,7 +25,7 @@ public class Nechropic extends ShooterEntity implements LootDropper {
         setBulletDamage(5);
     }
     private void makeWatches() {
-        stateWatch = new Watch(500, actionEvent -> {statePointer = (statePointer + 1) % 24; canAct = true;});
+        stateWatch = new Watch(500, () -> {statePointer = (statePointer + 1) % 24; canAct = true;});
     }
     private static Node makeView() {
         Polygon polygon = new Polygon(
@@ -74,14 +74,14 @@ public class Nechropic extends ShooterEntity implements LootDropper {
         stateWatch.call();
         if (canAct && statePointer > 3 && statePointer < 20) {
             strategy.act(this);
-            SoundLoader.ENEMY_SHOOT.play();
+            SoundUtil.ENEMY_SHOOT.play();
             canAct = false;
         }
     }
 
     @Override
     public void shout() {
-        SoundLoader.HIT.play();
+        SoundUtil.HIT.play();
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Nechropic extends ShooterEntity implements LootDropper {
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), view);
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(1);
-        SoundLoader.DRILL.play();
+        SoundUtil.DRILL.play();
         rotateTransition.play();
         fadeTransition.play();
     }
@@ -118,7 +118,7 @@ public class Nechropic extends ShooterEntity implements LootDropper {
         fadeTransition.setToValue(0);
         rotateTransition.play();
         fadeTransition.play();
-        SoundLoader.DRILL.play();
+        SoundUtil.DRILL.play();
     }
 
     @Override

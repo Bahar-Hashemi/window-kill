@@ -1,19 +1,24 @@
 package bahar.window_kill.model.entities.generators.shooters;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.SpawnStrategy;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.FileUtil;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.entities.Entity;
+import bahar.window_kill.model.entities.attackers.AttackerEntity;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class Epsilon extends ShooterEntity {
+public class Epsilon extends ShooterEntity implements AttackerEntity {
     private static final double radius = 10;
-    int xp = 1000;
-    public Epsilon() {
+    int xp = 0;
+    int damage = 0;
+    final int SPEED;
+    public Epsilon(int speed) {
         super(makeView(), 100, true, new SpawnStrategy(400));
         setBulletDamage(5);
+        this.SPEED = speed;
     }
     private static Node makeView() {
         Circle circle = new Circle();
@@ -42,7 +47,6 @@ public class Epsilon extends ShooterEntity {
             impactStrategy.act(this);
             return;
         }
-        int SPEED = 8;
         if (targetX < 0)
             setSceneX(getSceneX() - SPEED);
         if (targetX > 0)
@@ -60,6 +64,16 @@ public class Epsilon extends ShooterEntity {
 
     @Override
     public void shout() {
-        SoundLoader.DAMAGE.play();
+        SoundUtil.DAMAGE.play();
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

@@ -5,18 +5,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="386.0" spacing="20.0" stylesheets="@../CSS/game_over_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.view.controller.GameOverController">
-   <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" lineSpacing="10.0" prefHeight="254.0" prefWidth="347.0" text="GAME&#10;OVER&#10;" textAlignment="CENTER" textFill="#f70000">
-         <font>
-            <Font name="Cooper Black" size="76.0" />
-         </font>
-      </Label>
-      <Label fx:id="XPLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="92.0" prefWidth="354.0" textFill="#6f03c1">
-         <font>
-            <Font name="Cooper Black" size="19.0" />
-         </font></Label>
-      <Button mnemonicParsing="false" onAction="#onNewGame" prefHeight="55.0" prefWidth="160.0" text="NEW GAME" />
-      <Button mnemonicParsing="false" onAction="#onMainMenu" prefHeight="55.0" prefWidth="160.0" text="MAIN MENU" />
-   </children>
+<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="386.0" spacing="20.0" stylesheets="@../CSS/game_over_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.view.controller.GameOverController">
+   <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" lineSpacing="10.0" prefHeight="254.0" prefWidth="347.0" text="GAME&#10;OVER&#10;" textAlignment="CENTER" textFill="#ff0000">
+      <font>
+         <Font name="Cooper Black" size="76.0" />
+      </font>
+   </Label>
+   <Label fx:id="XPLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="92.0" prefWidth="354.0" textFill="#6f03c1">
+      <font>
+         <Font name="Cooper Black" size="19.0" />
+      </font>
+   </Label>
+   <Button mnemonicParsing="false" onAction="#onNewGame" prefHeight="55.0" prefWidth="160.0" text="NEW GAME" />
+   <Button mnemonicParsing="false" onAction="#onMainMenu" prefHeight="55.0" prefWidth="160.0" text="MAIN MENU" />
 </VBox>

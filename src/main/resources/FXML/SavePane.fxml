@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="389.0" spacing="15.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.view.controller.SaveController">
+   <children>
+      <Label text="XP Earcned: " fx:id="xpLabel" />
+      <HBox prefHeight="30.0" prefWidth="334.0">
+         <children>
+            <Label fx:id="savingLabel" prefHeight="35.0" prefWidth="186.0" text="SAVING PRICE: " />
+            <Label fx:id="notSavingLabel" text="NOT SAVING XP:" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="116.0" prefWidth="396.0" spacing="15.0">
+         <children>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSave" prefHeight="90.0" prefWidth="90.0" text="SAVE&#10;" textAlignment="CENTER" />
+            <Button fx:id="notSaveButton" mnemonicParsing="false" onAction="#onNotSave" prefHeight="90.0" prefWidth="90.0" text="DON'T&#10;SAVE&#10;" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

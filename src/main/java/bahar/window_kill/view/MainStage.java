@@ -1,7 +1,7 @@
 package bahar.window_kill.view;
 
 import bahar.window_kill.control.Constants;
-import bahar.window_kill.control.loader.ImageLoader;
+import bahar.window_kill.control.util.ImageUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Node;
@@ -24,7 +24,7 @@ public class MainStage extends Stage {
         scene = new Scene(pane, Color.TRANSPARENT);
         setScene(scene);
         //
-        this.getIcons().add(ImageLoader.GAME_ICON.getImage());
+        this.getIcons().add(ImageUtil.GAME_ICON.getImage());
         this.setMaxHeight(Constants.SCREEN_HEIGHT); this.setMinHeight(Constants.SCREEN_HEIGHT);
         this.setMaxWidth(Constants.SCREEN_WIDTH); this.setMinWidth(Constants.SCREEN_WIDTH);
         this.initStyle(StageStyle.TRANSPARENT);
@@ -49,10 +49,7 @@ public class MainStage extends Stage {
         ((Pane) getInstance().getScene().getRoot()).getChildren().remove(node);
     }
     public static void requestCenterOnScreen(Pane node) {
-        Timeline timeline = new Timeline(new KeyFrame(new Duration(10), actionEvent -> {
-            node.setLayoutX((getInstance().getWidth() - (node).getWidth()) / 2);
-            node.setLayoutY((getInstance().getHeight() - (node).getHeight()) / 2);
-        }));
-        timeline.play();
+        node.setLayoutX((Constants.SCREEN_WIDTH - 331) / 2.0);
+        node.setLayoutY((Constants.SCREEN_HEIGHT - 555) / 2.0);
     } //todo if you can clean here
 }

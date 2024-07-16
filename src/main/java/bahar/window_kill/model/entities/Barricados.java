@@ -1,19 +1,13 @@
 package bahar.window_kill.model.entities;
 
-import bahar.window_kill.control.loader.ImageLoader;
+import bahar.window_kill.control.util.ImageUtil;
 import bahar.window_kill.model.Watch;
 import bahar.window_kill.model.boards.GameBoard;
-import bahar.window_kill.view.MainStage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class Barricados extends Entity implements BoardOwner {
@@ -21,7 +15,7 @@ public class Barricados extends Entity implements BoardOwner {
     Watch watch;
     public Barricados() {
         super(makeView(), 1000 * 1000 * 1000, true, null);
-        watch = new Watch(60 * 1000, actionEvent -> setHP(0));
+        watch = new Watch(60 * 1000, () -> setHP(0));
         byBoard();
     }
     private static Node makeView() {
@@ -32,7 +26,7 @@ public class Barricados extends Entity implements BoardOwner {
         rectangle.setStrokeWidth(2);
         rectangle.setArcWidth(2);
         rectangle.setArcHeight(2);
-        ImagePattern imagePattern = new ImagePattern(ImageLoader.BARRICADOS.getImage());
+        ImagePattern imagePattern = new ImagePattern(ImageUtil.BARRICADOS.getImage());
         rectangle.setFill(imagePattern);
         return rectangle;
     }
@@ -70,6 +64,16 @@ public class Barricados extends Entity implements BoardOwner {
     @Override
     public void setSceneY(double y) {
         super.setSceneY(y);
+        if (gameBoard != null)
+            gameBoard.setLayoutY(y - 20);
+    }
+    public void setLayoutX(double x) {
+        super.setLayoutX(x);
+        if (gameBoard != null)
+            gameBoard.setLayoutX(x - 20);
+    }
+    public void setLayoutY(double y) {
+        super.setLayoutY(y);
         if (gameBoard != null)
             gameBoard.setLayoutY(y - 20);
     }

@@ -6,12 +6,21 @@ import javafx.event.EventHandler;
 
 import static bahar.window_kill.control.Deck.abilities;
 
-abstract public class AbilityWatch extends Watch {
-    public AbilityWatch(int duration, EventHandler<ActionEvent> eventHandler) {
-        super(duration, eventHandler);
+public class AbilityWatch extends Watch {
+    final String name;
+    final int price;
+    public AbilityWatch(int duration, Runnable runnable, String name, int price) {
+        super(duration, runnable);
+        this.name = name;
+        this.price = price;
     }
-    abstract public String getName();
     protected void onEnd() {
         abilities.remove(this);
+    }
+    public String getName() {
+        return name;
+    }
+    public int getPrice() {
+        return price;
     }
 }

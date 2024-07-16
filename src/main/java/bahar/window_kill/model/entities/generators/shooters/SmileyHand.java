@@ -1,7 +1,7 @@
 package bahar.window_kill.model.entities.generators.shooters;
 
-import bahar.window_kill.control.loader.ImageLoader;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.ImageUtil;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.boards.GameBoard;
 import bahar.window_kill.model.entities.BoardOwner;
 import bahar.window_kill.model.entities.Collectable;
@@ -31,7 +31,7 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
         rectangle.setHeight(80);
         rectangle.setArcWidth(2);
         rectangle.setArcHeight(2);
-        Image image = isLeftHand? ImageLoader.LEFT_HAND.getImage() : ImageLoader.RIGHT_HAND.getImage();
+        Image image = isLeftHand? ImageUtil.LEFT_HAND.getImage() : ImageUtil.RIGHT_HAND.getImage();
         ImagePattern imagePattern = new ImagePattern(image);
         rectangle.setFill(imagePattern);
         return rectangle;
@@ -42,11 +42,11 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
         gameBoard.lockSize(100, 100);
     }
     public void punch() {
-        Image image = isLeftHand? ImageLoader.LEFT_PUNCH.getImage() : ImageLoader.RIGHT_PUNCH.getImage();
+        Image image = isLeftHand? ImageUtil.LEFT_PUNCH.getImage() : ImageUtil.RIGHT_PUNCH.getImage();
         ((Rectangle) view).setFill(new ImagePattern(image));
     }
     public void free() {
-        Image image = isLeftHand? ImageLoader.LEFT_HAND.getImage() : ImageLoader.RIGHT_HAND.getImage();
+        Image image = isLeftHand? ImageUtil.LEFT_HAND.getImage() : ImageUtil.RIGHT_HAND.getImage();
         ((Rectangle) view).setFill(new ImagePattern(image));
     }
     @Override
@@ -67,7 +67,7 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
 
     @Override
     public void shout() {
-        SoundLoader.HIT.play();
+        SoundUtil.HIT.play();
     }
 
     @Override
@@ -86,6 +86,16 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
     public void setSceneY(double y) {
         super.setSceneY(y);
         gameBoard.setLayoutY(y - 10);
+    }
+    public void setLayoutX(double x) {
+        super.setLayoutX(x);
+        if (gameBoard != null)
+            gameBoard.setLayoutX(x - 10);
+    }
+    public void setLayoutY(double y) {
+        super.setLayoutY(y);
+        if (gameBoard != null)
+            gameBoard.setLayoutY(y - 10);
     }
 
     @Override

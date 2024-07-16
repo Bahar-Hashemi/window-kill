@@ -15,7 +15,7 @@ import static bahar.window_kill.control.Deck.user;
 
 public class PauseState extends GameState {
     Pane pausePane;
-    protected PauseState() {
+    public PauseState() {
         super(makeTimeLine());
         pausePane = PaneBuilder.PAUSE_PANE.generatePane();
     }

@@ -2,8 +2,9 @@ package bahar.window_kill.control.fazes.processors;
 
 import bahar.window_kill.control.Deck;
 import bahar.window_kill.control.fazes.PlayingState;
-import bahar.window_kill.control.fazes.processors.strategies.spawners.BlackOrbSpawner;
-import bahar.window_kill.control.fazes.processors.strategies.spawners.SpawnWatch;
+import bahar.window_kill.control.fazes.processors.spawners.BlackOrbSpawner;
+import bahar.window_kill.control.fazes.processors.spawners.SaveSpawner;
+import bahar.window_kill.control.fazes.processors.spawners.EntitySpawner;
 import bahar.window_kill.model.SmileyBrain;
 import bahar.window_kill.model.Watch;
 import bahar.window_kill.model.entities.Barricados;
@@ -12,51 +13,48 @@ import bahar.window_kill.model.entities.attackers.Trigorath;
 import bahar.window_kill.model.entities.generators.SpawnerArchmire;
 import bahar.window_kill.model.entities.generators.shooters.*;
 
-import javax.crypto.spec.DESKeySpec;
 import java.util.ArrayList;
 
+import static bahar.window_kill.control.Deck.settings;
+
 public class SpawnProcessor extends GameProcessor {
-    SpawnWatch[] spawnWatches = new SpawnWatch[10];
+    EntitySpawner[] entitySpawners = new EntitySpawner[10];
     ArrayList<Watch> currentWatches = new ArrayList<>();
     SmileyBrain smileyBrain;
-    static boolean isLocked = false;
     public SpawnProcessor() {
         makeWatches();
     }
     private void makeWatches() {
-        makeWatch(0, 2500, 30, new Class<?>[]{Trigorath.class, Squarantine.class});
-        makeWatch(1, 1800, 50, new Class<?>[]{Trigorath.class, Squarantine.class});
-        makeWatch(2, 4000, 50, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
-        makeWatch(3, 3000, 60, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
+        int difficulty = 100 / settings.getDifficulty();
+        makeWatch(0, 5000 * difficulty, 4, new Class<?>[]{Trigorath.class, Squarantine.class});
+        makeWatch(1, 4000 * difficulty, 50, new Class<?>[]{Trigorath.class, Squarantine.class});
+        makeWatch(2, 8000 * difficulty, 50, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
+        makeWatch(3, 6000 * difficulty, 60, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
 
-        makeWatch(4, 4000, 50, new Class<?>[]{
+        makeWatch(4, 8000 * difficulty, 50, new Class<?>[]{
                 Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(5, 4500, 50, new Class<?>[]{
+        makeWatch(5, 9500 * difficulty, 50, new Class<?>[]{
                 Wyrm.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(6, 4500, 60, new Class<?>[]{
+        makeWatch(6, 9500 * difficulty, 60, new Class<?>[]{
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class});
-        makeWatch(7, 4500, 50, new Class<?>[]{
+        makeWatch(7, 9500 * difficulty, 50, new Class<?>[]{
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(8, 4500, 40, new Class<?>[]{
+        makeWatch(8, 9500 * difficulty, 40, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(9, 4000, 1, new Class<?>[]{
+        makeWatch(9, 9000 * difficulty, 40, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        currentWatches.add(spawnWatches[Deck.wave]); //todo think more about here!
+        currentWatches.add(entitySpawners[Deck.wave]); //todo think more about here!
     }
     private void makeWatch(int index, int duration, int cycleCount, Class<?>[] enemyTypes) {
-        spawnWatches[index] = new SpawnWatch(duration, cycleCount, enemyTypes) {
+        entitySpawners[index] = new EntitySpawner(duration, cycleCount, enemyTypes) {
             @Override
             protected void onEnd() {
-                currentWatches.remove(spawnWatches[Deck.wave]);
-                Deck.wave = index + 1;
-                if (index == 9) {
-                    SmileyFace face = new SmileyFace(); addEntity(face);
-                    SmileyHand leftHand = new SmileyHand(true); addEntity(leftHand);
-                    SmileyHand rightHand = new SmileyHand(false); addEntity(rightHand);
-                    smileyBrain = new SmileyBrain(face, leftHand, rightHand);
-                    return;
-                }
-                currentWatches.add(spawnWatches[Deck.wave]);
+                currentWatches.remove(entitySpawners[Deck.wave]);
+                currentWatches.add(makeSaveWatch(index));
+            }
+
+            @Override
+            protected void onStart() {
                 if (index >= 7)
                     currentWatches.add(new BlackOrbSpawner() {
                         @Override
@@ -67,9 +65,30 @@ public class SpawnProcessor extends GameProcessor {
             }
         };
     }
+    private SaveSpawner makeSaveWatch(int index) {
+        SaveSpawner saveSpawner = new SaveSpawner() {
+            @Override
+            protected void onEnd() {
+                super.onEnd();
+                currentWatches.remove(this);
+                Deck.wave = index + 1;
+                if (index == 9) {
+                    SmileyFace face = new SmileyFace(); addEntity(face);
+                    SmileyHand leftHand = new SmileyHand(true); addEntity(leftHand);
+                    SmileyHand rightHand = new SmileyHand(false); addEntity(rightHand);
+                    smileyBrain = new SmileyBrain(face, leftHand, rightHand);
+                    return;
+                }
+                currentWatches.add(entitySpawners[Deck.wave]);
+            }
+        };
+        return saveSpawner;
+    }
     @Override
     public void run() {
-        if (isLocked)
+        if (Deck.wave == 10 && smileyBrain.getHP() <= 0)
+            PlayingState.endGame();
+        if (Deck.isLocked)
             return;
         if (Deck.wave == 10) {
             smileyBrain.act(Deck.user.getEpsilon(), Deck.mainBoard);
@@ -77,11 +96,5 @@ public class SpawnProcessor extends GameProcessor {
         }
         for (int i = currentWatches.size() - 1; i >= 0; i--)
             currentWatches.get(i).call();
-    }
-    public static void setLocked(boolean isLocked) {
-        SpawnProcessor.isLocked = isLocked;
-    }
-    public static boolean getLocked() {
-        return isLocked;
     }
 }

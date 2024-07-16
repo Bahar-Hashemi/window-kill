@@ -11,8 +11,8 @@ import javafx.event.EventHandler;
 abstract public class BossWatch extends Watch {
     protected final SmileyFace face;
     protected final SmileyHand leftHand, rightHand;
-    public BossWatch(int duration, EventHandler<ActionEvent> eventHandler, SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(duration, eventHandler);
+    public BossWatch(int duration, Runnable runnable, SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+        super(duration, runnable);
         this.face = face;
         this.leftHand = leftHand;
         this.rightHand = rightHand;

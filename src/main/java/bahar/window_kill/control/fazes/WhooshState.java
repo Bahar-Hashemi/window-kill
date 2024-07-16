@@ -2,7 +2,7 @@ package bahar.window_kill.control.fazes;
 
 import bahar.window_kill.control.Constants;
 import bahar.window_kill.control.GameController;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -27,7 +27,7 @@ public class WhooshState extends GameState {
     @Override
     public void play() {
         super.play();
-        SoundLoader.WHOOSH.play();
+        SoundUtil.WHOOSH.play();
     }
 
 }

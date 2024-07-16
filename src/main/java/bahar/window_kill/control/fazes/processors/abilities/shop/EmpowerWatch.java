@@ -1,11 +1,13 @@
-package bahar.window_kill.control.fazes.processors.abilities;
+package bahar.window_kill.control.fazes.processors.abilities.shop;
+
+import bahar.window_kill.control.fazes.processors.abilities.AbilityWatch;
 
 import static bahar.window_kill.control.Deck.user;
 
 public class EmpowerWatch extends AbilityWatch {
     long spawnDuration;
     public EmpowerWatch() {
-        super(30, event -> {});
+        super(30, () -> {}, "Empower", 75);
         setCycleCount(333);
     }
 
@@ -20,10 +22,5 @@ public class EmpowerWatch extends AbilityWatch {
     protected void onEnd() {
         super.onEnd();
         user.getEpsilon().setSpawnDuration(spawnDuration);
-    }
-
-    @Override
-    public String getName() {
-        return "empower";
     }
 }

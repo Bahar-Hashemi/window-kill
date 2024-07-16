@@ -1,9 +1,7 @@
 package bahar.window_kill.model.entities.generators.shooters;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.SpawnStrategy;
-import bahar.window_kill.control.loader.SoundLoader;
-import bahar.window_kill.model.Watch;
-import bahar.window_kill.model.boards.GameBoard;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.entities.Collectable;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.LootDropper;
@@ -67,16 +65,16 @@ public class Omenoct extends ShooterEntity implements LootDropper {
     @Override
     public void move(double width, double height) {
         int speed = 5;
-        if (lockStrategy == 0 && Math.abs(view.getLayoutY()) > speed)
+        if (lockStrategy == 0 && Math.abs(view.getLayoutY()) + 2 > speed)
             view.setLayoutY(view.getLayoutY() + (view.getLayoutY() > 0? -1: 1) * speed);
 
-        else if (lockStrategy == 1 && Math.abs(view.getLayoutX() - width) + 0.5 > speed)
+        else if (lockStrategy == 1 && Math.abs(view.getLayoutX() - width) + 2 > speed)
             view.setLayoutX(view.getLayoutX() + (view.getLayoutX() > width? -1: 1) * speed);
 
-        else if (lockStrategy == 2 && (view.getLayoutY() - height ) > speed)
+        else if (lockStrategy == 2 && Math.abs(view.getLayoutY() - height) + 2 > speed)
             view.setLayoutY(view.getLayoutY() + (view.getLayoutY() > height? -1: 1) * speed);
 
-        else if (lockStrategy == 3 && Math.abs(view.getLayoutX()) > speed)
+        else if (lockStrategy == 3 && Math.abs(view.getLayoutX()) + 2 > speed)
             view.setLayoutX(view.getLayoutX() + (view.getLayoutX() > 0? -1: 1) * speed);
     }
 
@@ -87,7 +85,7 @@ public class Omenoct extends ShooterEntity implements LootDropper {
 
     @Override
     public void shout() {
-        SoundLoader.HIT.play();
+        SoundUtil.HIT.play();
     }
 
     @Override

@@ -1,14 +1,8 @@
 package bahar.window_kill.view;
 
-import bahar.window_kill.control.Constants;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class GameLauncher extends Application {
@@ -16,7 +10,7 @@ public class GameLauncher extends Application {
         launch();
     }
     public void start(Stage stage) {
-        SoundLoader.BACKGROUND.play();
+        SoundUtil.BACKGROUND.play();
         MainStage.newScene();
         Pane pane = PaneBuilder.MAIN_MENU_PANE.generatePane();
         MainStage.add(pane);

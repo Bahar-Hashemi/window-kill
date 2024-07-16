@@ -1,26 +1,14 @@
 package bahar.window_kill.model.entities;
 
-import bahar.window_kill.control.fazes.processors.strategies.strategies.SpawnStrategy;
-import bahar.window_kill.control.fazes.processors.strategies.strategies.Strategy;
-import bahar.window_kill.control.loader.SoundLoader;
-import bahar.window_kill.model.Watch;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.boards.GameBoard;
-import bahar.window_kill.model.entities.BoardOwner;
-import bahar.window_kill.model.entities.Entity;
-import bahar.window_kill.model.entities.attackers.Bullet;
-import javafx.animation.Interpolator;
-import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
-import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.chart.Axis;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Sphere;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class BlackOrb extends Entity implements BoardOwner, LootDropper{
@@ -74,6 +62,16 @@ public class BlackOrb extends Entity implements BoardOwner, LootDropper{
         if (gameBoard != null)
             gameBoard.setLayoutY(y - 75);
     }
+    public void setLayoutX(double x) {
+        super.setLayoutX(x);
+        if (gameBoard != null)
+            gameBoard.setLayoutX(x - 75);
+    }
+    public void setLayoutY(double y) {
+        super.setLayoutY(y);
+        if (gameBoard != null)
+            gameBoard.setLayoutY(y - 75);
+    }
 
     @Override
     public void aggress() {
@@ -81,7 +79,7 @@ public class BlackOrb extends Entity implements BoardOwner, LootDropper{
 
     @Override
     public void shout() {
-        SoundLoader.HIT.play();
+        SoundUtil.HIT.play();
     }
 
     @Override

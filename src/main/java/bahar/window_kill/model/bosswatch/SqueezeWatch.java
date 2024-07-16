@@ -1,6 +1,6 @@
 package bahar.window_kill.model.bosswatch;
 
-import bahar.window_kill.control.GameUtil;
+import bahar.window_kill.control.util.GameUtil;
 import bahar.window_kill.model.boards.MainBoard;
 import bahar.window_kill.model.entities.generators.shooters.SmileyFace;
 import bahar.window_kill.model.entities.generators.shooters.SmileyHand;
@@ -11,12 +11,12 @@ import javafx.event.EventHandler;
 public class SqueezeWatch extends BossWatch {
     static int counter = 0;
     public SqueezeWatch(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(30, makeEventHandler(face, leftHand, rightHand), face, leftHand, rightHand);
+        super(30, makeRunnable(face, leftHand, rightHand), face, leftHand, rightHand);
         setCycleCount(200);
         counter = 0;
     }
-    private static EventHandler<ActionEvent> makeEventHandler(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        return event -> {
+    private static Runnable makeRunnable(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+        return () -> {
             counter++;
             double change = (counter > 100)? -1: 1;
             leftHand.setSceneX(leftHand.getSceneX() + change);

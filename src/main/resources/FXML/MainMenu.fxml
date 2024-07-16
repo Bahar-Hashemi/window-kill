@@ -9,11 +9,11 @@
    <children>
       <Button layoutX="90.0" layoutY="440.0" mnemonicParsing="false" onAction="#onExit" prefHeight="49.0" prefWidth="151.0" text="Exit" />
       <Button layoutX="90.0" layoutY="380.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="TUTORIAL" />
-      <Button layoutX="90.0" layoutY="320.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="SETTINGS" />
-      <Button layoutX="90.0" layoutY="260.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="SKILL TREE" />
+      <Button layoutX="90.0" layoutY="320.0" mnemonicParsing="false" onAction="#onSettings" prefHeight="49.0" prefWidth="151.0" text="SETTINGS" />
+      <Button layoutX="90.0" layoutY="260.0" mnemonicParsing="false" onAction="#onSkillTree" prefHeight="49.0" prefWidth="151.0" text="SKILL TREE" />
       <Button layoutX="90.0" layoutY="200.0" mnemonicParsing="false" onAction="#onNewGame" prefHeight="49.0" prefWidth="151.0" text="NEW GAME" />
-      <Label fx:id="byteCoin" layoutX="59.0" layoutY="67.0" prefHeight="36.0" prefWidth="266.0" text="" />
-      <Label fx:id="highScore" layoutX="59.0" layoutY="115.0" prefHeight="36.0" prefWidth="266.0" text="" />
+      <Label layoutX="59.0" layoutY="67.0" prefHeight="36.0" prefWidth="266.0" text="" fx:id="xpLabel" />
+      <Label fx:id="highScoreLabel" layoutX="59.0" layoutY="115.0" prefHeight="36.0" prefWidth="266.0" text="" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffcf1f" height="18.0" layoutX="40.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="19.0" />
       <Rectangle arcWidth="5.0" fill="WHITE" height="18.0" layoutX="40.0" layoutY="76.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="19.0" />
    </children>

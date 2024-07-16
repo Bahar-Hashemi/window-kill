@@ -1,12 +1,12 @@
 package bahar.window_kill.control.fazes.processors;
 
 import bahar.window_kill.control.Constants;
-import bahar.window_kill.control.GameUtil;
+import bahar.window_kill.control.Deck;
+import bahar.window_kill.control.util.GameUtil;
 
 import static bahar.window_kill.control.Deck.*;
 
 public class BoardsProcessor extends GameProcessor {
-
     @Override
     public void run() {
         shrinkMainBoard();
@@ -29,18 +29,20 @@ public class BoardsProcessor extends GameProcessor {
         }
     }
     private static void shrinkMainBoard() {
-        double minusWidth = Math.min((mainBoard.getWidth() - Constants.MINIMUM_WIDTH) / 2, 0.3);
-        double minusHeight = Math.min((mainBoard.getHeight() - Constants.MINIMUM_HEIGHT) / 2, 0.3);
+        double minusWidth = Math.min((mainBoard.getWidth() - Constants.MINIMUM_WIDTH) / 2, shrink);
+        double minusHeight = Math.min((mainBoard.getHeight() - Constants.MINIMUM_HEIGHT) / 2, shrink);
         mainBoard.setIndependentDimensions(mainBoard.getLayoutX() + minusWidth / 2, mainBoard.getLayoutY() + minusHeight / 2, mainBoard.getWidth() - 2 * minusWidth , mainBoard.getHeight() - 2 * minusHeight);
     }
-    public static void updateMainBoardLabel() { //todo complete here
+    public static void updateMainBoardLabel() {
         mainBoard.labelsToFront();
         mainBoard.setHP((int) user.getEpsilon().getHP());
         mainBoard.setXP((int) user.getEpsilon().getXp());
         mainBoard.setWave(wave);
-        String abilitiesString = "";
+        StringBuilder abilitiesString = new StringBuilder();
+        if (coolDown / 1000 > 0)
+            abilitiesString.append("cooldown: ").append(coolDown / 1000).append("s\n");
         for (int i = 0; i < abilities.size(); i++)
-            abilitiesString += abilities.get(i).getName() + "\n";
-        mainBoard.setAbilities(abilitiesString);
+            abilitiesString.append(abilities.get(i).getName()).append("\n");
+        mainBoard.setAbilities(abilitiesString.toString());
     }
 }

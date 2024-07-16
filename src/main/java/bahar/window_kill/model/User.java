@@ -13,14 +13,14 @@ public class User {
     private boolean shooting = false;
     private double mouseX, mouseY;
     private boolean hasPauseRequest = false;
+    private boolean hasDefenseRequest = false;
+    private boolean hasAttackRequest = false;
     final private Epsilon epsilon;
     public User(Epsilon epsilon) {
         this.epsilon = epsilon;
     }
-    public void killRequest() {
-        killWish = true;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> killWish = false));
-        timeline.play();
+    public void setKillWish(boolean killWish) {
+        this.killWish = killWish;
     }
     public boolean hasKillWish() {
         return killWish;
@@ -102,5 +102,21 @@ public class User {
             epsilon.setGunDirectionY(dy / chord);
             epsilon.aggress();
         }
+    }
+
+    public boolean hasDefenseRequest() {
+        return hasDefenseRequest;
+    }
+
+    public void setDefenseRequest(boolean hasDefenseRequest) {
+        this.hasDefenseRequest = hasDefenseRequest;
+    }
+
+    public boolean hasAttackRequest() {
+        return hasAttackRequest;
+    }
+
+    public void setAttackRequest(boolean hasAttackRequest) {
+        this.hasAttackRequest = hasAttackRequest;
     }
 }

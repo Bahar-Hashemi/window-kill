@@ -1,0 +1,65 @@
+.root {
+    -fx-opacity: 0.8;
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+}
+.label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "cooper black";
+    -fx-font-size: 16px;
+    -fx-padding: 8 15;
+}
+.button {
+    -fx-font-family: "cooper black";
+    -fx-font-size: 14px;
+    -fx-background-color: #18191A;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 20; /* Makes the button round */
+    -fx-padding: 8 15; /* Adjust padding as needed */
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+}
+.button:hover {
+    -fx-background-color: #282828;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+.button:pressed {
+    -fx-background-color: #202020;
+}
+.slider .track{
+    -fx-background-color: #202020;
+}
+/* Speed Control Styles */
+#speedLabel {
+    -fx-text-fill: #006400; /* Red text for speed label */
+    -fx-font-size: 14px;
+}
+
+#speedSlider .thumb {
+    -fx-background-color: #006400; /* Red track and thumb for speed slider */
+}
+
+/* Difficulty Control Styles */
+#difficultyLabel {
+    -fx-text-fill: #8B0000; /* Green text for difficulty label */
+    -fx-font-size: 14px;
+}
+
+#difficultySlider .thumb {
+    -fx-background-color: #8B0000; /* Green track and thumb for difficulty slider */
+}
+
+/* Volume Control Styles */
+#volumeLabel {
+    -fx-text-fill: gold; /* Blue text for volume label */
+    -fx-font-size: 14px;
+}
+
+#volumeSlider .thumb {
+    -fx-background-color: gold; /* Blue track and thumb for volume slider */
+}
+#settingsLabel {
+        -fx-font-size: 25px;
+}

@@ -1,8 +1,11 @@
 package bahar.window_kill.view.controller;
 
 import bahar.window_kill.control.GameController;
+import bahar.window_kill.control.util.FileUtil;
+import bahar.window_kill.model.data.Development;
 import bahar.window_kill.view.MainStage;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
+import bahar.window_kill.view.PaneBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -13,9 +16,9 @@ import javafx.util.Duration;
 
 public class MainMenuController {
     public Pane pane;
-    String byteCoinString = "XP: 2000";
-    String highScoreString = "High-Score: 1384";
-    public Label byteCoin, highScore;
+    String xpString;
+    String highScoreString;
+    public Label xpLabel, highScoreLabel;
     Timeline timeline;
     @FXML
     public void initialize() {
@@ -24,22 +27,25 @@ public class MainMenuController {
         writeLabels();
     }
     private void writeLabels() {
+        Development development = FileUtil.readDevelopment();
+        xpString = "xp: " + development.getXp();
+        highScoreString = "High-Score: " + development.getHighScore();
         int[] tickPass = {0};
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.25), event -> {
             tickPass[0]++;
             if (tickPass[0] > 1) {
-                byteCoin.setText(byteCoinString.substring(0, Math.min(byteCoinString.length(), byteCoin.getText().length() + 1)));
-                highScore.setText(highScoreString.substring(0, Math.min(highScoreString.length(), highScore.getText().length() + 1)));
-                SoundLoader.HIT.play();
+                xpLabel.setText(xpString.substring(0, Math.min(xpString.length(), xpLabel.getText().length() + 1)));
+                highScoreLabel.setText(highScoreString.substring(0, Math.min(highScoreString.length(), highScoreLabel.getText().length() + 1)));
+                SoundUtil.HIT.play();
             }
         }));
-        timeline.setCycleCount(1 + Math.max(byteCoinString.length(), highScoreString.length()));
+        timeline.setCycleCount(1 + Math.max(xpString.length(), highScoreString.length()));
 
         timeline.play();
     }
     public void stopTimeline() {
-        byteCoin.setText(byteCoinString);
-        highScore.setText(highScoreString);
+        xpLabel.setText(xpString);
+        highScoreLabel.setText(highScoreString);
         timeline.stop();
     }
     @FXML
@@ -51,5 +57,19 @@ public class MainMenuController {
         stopTimeline();
         MainStage.newScene();
         GameController.run();
+    }
+
+    public void onSkillTree(ActionEvent actionEvent) {
+        stopTimeline();
+        MainStage.newScene();
+        Pane pane = PaneBuilder.SKILL_TREE_PANE.generatePane();
+        MainStage.add(pane);
+    }
+
+    public void onSettings(ActionEvent actionEvent) {
+        stopTimeline();
+        MainStage.newScene();
+        Pane pane = PaneBuilder.SETTINGS_PANE.generatePane();
+        MainStage.add(pane);
     }
 }

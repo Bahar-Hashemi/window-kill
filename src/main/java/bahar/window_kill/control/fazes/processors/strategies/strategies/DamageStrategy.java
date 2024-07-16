@@ -3,13 +3,14 @@ package bahar.window_kill.control.fazes.processors.strategies.strategies;
 import bahar.window_kill.control.fazes.processors.BoardsProcessor;
 import bahar.window_kill.model.entities.BlackOrb;
 import bahar.window_kill.model.entities.Entity;
-import bahar.window_kill.control.GameUtil;
+import bahar.window_kill.control.util.GameUtil;
 import bahar.window_kill.model.entities.attackers.AttackerArchmire;
 import bahar.window_kill.model.entities.attackers.AttackerEntity;
 import bahar.window_kill.model.entities.attackers.BlackOrbLaser;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import bahar.window_kill.model.entities.generators.SpawnerArchmire;
 import bahar.window_kill.model.entities.generators.shooters.Epsilon;
+import bahar.window_kill.model.entities.generators.shooters.MiniEpsilon;
 
 import static bahar.window_kill.control.Deck.*;
 
@@ -37,6 +38,8 @@ public class DamageStrategy extends Strategy {
                 continue;
             if (attacker instanceof BlackOrbLaser && (entity instanceof BlackOrb || entity instanceof BlackOrbLaser))
                 continue;
+            if (entity instanceof MiniEpsilon)
+                continue;
             if (GameUtil.commonArea((Entity) attacker, entity) > 10) {
                 entity.setHP(entity.getHP() - attacker.getDamage());
                 entity.shout();
@@ -45,8 +48,13 @@ public class DamageStrategy extends Strategy {
         }
     }
     private void attackEpsilon(AttackerEntity attacker) {
-        if (GameUtil.commonArea((Entity) attacker, user.getEpsilon()) > 10 &&
-                (!(attacker instanceof Bullet) || ((Bullet) attacker).getSource() != user.getEpsilon())) {
+        if (attacker instanceof Bullet bullet) {
+            if (bullet.getSource() == user.getEpsilon())
+                return;
+            if (bullet.getSource() instanceof MiniEpsilon)
+                return;
+        }
+        if (GameUtil.commonArea((Entity) attacker, user.getEpsilon()) > 10){
             user.getEpsilon().setHP(user.getEpsilon().getHP() - attacker.getDamage());
             user.getEpsilon().shout();
             onAct((Entity) attacker);

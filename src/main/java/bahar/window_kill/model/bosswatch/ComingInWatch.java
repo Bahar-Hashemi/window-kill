@@ -9,11 +9,11 @@ import javafx.event.EventHandler;
 
 public class ComingInWatch extends BossWatch {
     public ComingInWatch(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(60, makeEventHandler(face, leftHand, rightHand), face, leftHand, rightHand);
+        super(60, makeRunnable(face, leftHand, rightHand), face, leftHand, rightHand);
         setCycleCount(300);
     }
-    private static EventHandler<ActionEvent> makeEventHandler(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        return event -> {
+    private static Runnable makeRunnable(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+        return () -> {
             face.setSceneLocation(face.getSceneX(), face.getSceneY() + 1);
             leftHand.setSceneLocation(leftHand.getSceneX() + 1, leftHand.getSceneY());
             rightHand.setSceneLocation(rightHand.getSceneX() - 1, rightHand.getSceneY());

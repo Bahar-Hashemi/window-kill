@@ -1,7 +1,7 @@
 package bahar.window_kill.model.entities.attackers;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.DamageStrategy;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.entities.Collectable;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.LootDropper;
@@ -52,7 +52,7 @@ public class Trigorath extends Entity implements LootDropper, AttackerEntity {
     }
 
     public void shout() {
-        SoundLoader.HIT.play();
+        SoundUtil.HIT.play();
     }
 
     @Override

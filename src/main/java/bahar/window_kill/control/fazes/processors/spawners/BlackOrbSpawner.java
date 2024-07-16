@@ -1,31 +1,21 @@
-package bahar.window_kill.control.fazes.processors.strategies.spawners;
+package bahar.window_kill.control.fazes.processors.spawners;
 
 import bahar.window_kill.control.Constants;
-import bahar.window_kill.control.GameUtil;
-import bahar.window_kill.model.Watch;
 import bahar.window_kill.model.entities.BlackOrb;
-import bahar.window_kill.model.entities.BoardOwner;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.attackers.BlackOrbLaser;
-import bahar.window_kill.view.MainStage;
-import javafx.animation.ScaleTransition;
-import javafx.animation.Transition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.transform.Scale;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static bahar.window_kill.control.Deck.*;
 
-public class BlackOrbSpawner extends Watch {
+public class BlackOrbSpawner extends Spawner {
     static double centerX, centerY;
     static ArrayList<BlackOrb> blackOrbs = new ArrayList<>();
     static double radius;
     public BlackOrbSpawner() {
-        super(500, createEventHandler());
+        super(500, createRunnable());
         setCycleCount(findCycle());
     }
     private static void makeBlackOrbs() {
@@ -48,8 +38,8 @@ public class BlackOrbSpawner extends Watch {
         centerY = random.nextDouble(Constants.SCREEN_HEIGHT / 4, Constants.SCREEN_HEIGHT * 3 / 4);
         radius = random.nextDouble(150, 250);
     }
-    private static EventHandler<ActionEvent> createEventHandler() {
-        return event -> {
+    private static Runnable createRunnable() {
+        return () -> {
             int index = findIndex();
             if (index == 0)
                 makeConstants();
@@ -71,17 +61,5 @@ public class BlackOrbSpawner extends Watch {
                 addEntity(blackOrbLaser);
                 blackOrbLaser.setSceneLocation(blackOrb.getSceneX(), blackOrb.getSceneY());
             }
-    }
-    private static void addEntity(Entity entity) {
-        if (entity instanceof BoardOwner) {
-            BoardOwner boardOwner = (BoardOwner) entity;
-            MainStage.add(boardOwner.getBoard()); gameBoards.add(boardOwner.getBoard());
-            MainStage.add(entity.getView()); entities.add(entity);
-            boardOwner.getBoard().toBack();
-        } else {
-            mainBoard.add(entity.getView());
-            entities.add(entity);
-        }
-        GameUtil.placeOutsideBoard(entity, mainBoard);
     }
 }

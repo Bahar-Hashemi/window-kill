@@ -2,16 +2,21 @@ package bahar.window_kill.control.fazes.processors;
 
 import bahar.window_kill.control.Constants;
 import bahar.window_kill.control.Deck;
-import bahar.window_kill.control.GameUtil;
-import bahar.window_kill.model.boards.GameBoard;
+import bahar.window_kill.control.GameController;
+import bahar.window_kill.control.fazes.RestartingState;
+import bahar.window_kill.control.util.GameUtil;
+import bahar.window_kill.control.fazes.PlayingState;
+import bahar.window_kill.control.util.reader.SaveUtil;
 import bahar.window_kill.model.entities.BoardOwner;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.LootDropper;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import bahar.window_kill.view.MainStage;
-import bahar.window_kill.view.PaneBuilder;
+import bahar.window_kill.view.controller.SaveController;
 import javafx.geometry.Bounds;
 import javafx.scene.layout.Pane;
+
+import java.util.Scanner;
 
 import static bahar.window_kill.control.Deck.*;
 
@@ -31,9 +36,14 @@ public class DeathProcessor extends GameProcessor {
                 entity.setHP(0);
     }
     private void checkEpsilonHealth() {
-        if (user.getEpsilon().getHP() < 0) { //todo correct here
-            MainStage.newScene();
-            MainStage.add(PaneBuilder.GAME_OVER_PANE.generatePane());
+        if (user.getEpsilon().getHP() < 0) {
+            if (save != null) {
+                (new SaveUtil()).read(new Scanner(save));
+                GameController.setGameState(new RestartingState());
+                save = null;
+            }
+            else
+                PlayingState.endGame();
         }
     }
     private void checkEntitiesHealth() {

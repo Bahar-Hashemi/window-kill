@@ -11,11 +11,9 @@ import javafx.animation.Timeline;
 
 import java.util.ArrayList;
 
-import static bahar.window_kill.control.Deck.mainBoard;
-import static bahar.window_kill.control.Deck.user;
+import static bahar.window_kill.control.Deck.*;
 
 public class GameController {
-    static Timeline gameTimeLine, whooshTimeLine;
     private static GameState gameState;
     static public void run() {
         makeDeck();
@@ -23,14 +21,12 @@ public class GameController {
         setGameState(new WhooshState());
     }
     private static void addControls() {
-        mainBoard.setControlStrategy(new WASDStrategy(mainBoard));
+        mainBoard.setControlStrategy(settings.getControlStrategy());
         mainBoard.requestUserControl(user);
     }
     private static void makeDeck() {
-        Deck.entities = new ArrayList<>();
-        mainBoard = new MainBoard(100, 0, 1);
+        Deck.newDeck();
         mainBoard.setDimensions(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 4, Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);
-        user = new User(new Epsilon());
         MainStage.add(mainBoard);
         mainBoard.add(user.getEpsilon().getView());
         user.getEpsilon().setSceneLocation(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);

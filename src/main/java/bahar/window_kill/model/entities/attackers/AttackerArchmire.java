@@ -15,8 +15,8 @@ public class AttackerArchmire extends Entity implements LootDropper, AttackerEnt
     private int damage = 10;
     public AttackerArchmire() {
         super(makeView(), 10, false, new DamageStrategy());
-        opacityWatch = new Watch(30, actionEvent -> {view.setOpacity(view.getOpacity() - 0.003);});
-        damageWatch = new Watch(800, actionEvent -> {setHP(getHP() - 2); setDamage(getDamage() - 2); strategy.act(this);});
+        opacityWatch = new Watch(30, () -> {view.setOpacity(view.getOpacity() - 0.003);});
+        damageWatch = new Watch(800, () -> {setHP(getHP() - 2); setDamage(getDamage() - 2); strategy.act(this);});
     }
     private static Node makeView() {
         Path path = new Path();

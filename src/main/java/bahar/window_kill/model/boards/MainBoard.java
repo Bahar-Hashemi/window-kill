@@ -1,12 +1,11 @@
 package bahar.window_kill.model.boards;
 
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.User;
 import bahar.window_kill.model.boards.controller.ControlStrategy;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 public class MainBoard extends GameBoard {
     private final Label HPLabel, XPLabel, waveLabel, abilitiesLabel;
@@ -44,7 +43,7 @@ public class MainBoard extends GameBoard {
         this.controlStrategy = controlStrategy;
     }
     public void requestUserControl(User user) {
-        controlStrategy.requestUserControl(user);
+        controlStrategy.requestUserControl(this, user);
     }
     public void setHP(int HP) {
         HPLabel.setText("HP: " + HP);
@@ -59,6 +58,7 @@ public class MainBoard extends GameBoard {
         abilitiesLabel.setText(abilities);
     }
     public void shout() {
-        SoundLoader.WALLHIT.play();
+        SoundUtil.WALLHIT.play();
     }
+
 }

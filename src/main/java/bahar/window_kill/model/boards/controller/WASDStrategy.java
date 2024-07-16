@@ -5,11 +5,10 @@ import bahar.window_kill.model.User;
 import bahar.window_kill.model.boards.MainBoard;
 
 public class WASDStrategy extends ControlStrategy {
-    public WASDStrategy(MainBoard mainBoard) {
-        super(mainBoard);
+    public WASDStrategy() {
     }
 
-    public void requestUserControl(User user) {
+    public void requestUserControl(MainBoard mainBoard, User user) {
         mainBoard.requestFocus();
         mainBoard.setOnKeyPressed(keyEvent -> {
             switch (keyEvent.getCode()) {
@@ -17,7 +16,10 @@ public class WASDStrategy extends ControlStrategy {
                 case A -> user.setLeftRequest(true);
                 case S -> user.setDownRequest(true);
                 case D -> user.setRightRequest(true);
-                case Q -> user.killRequest();
+                case Q -> {
+                    if (keyEvent.isControlDown())
+                        user.setKillWish(true);
+                }
             }
         });
         mainBoard.setOnKeyReleased(keyEvent -> {
@@ -27,6 +29,9 @@ public class WASDStrategy extends ControlStrategy {
                 case S -> user.setDownRequest(false);
                 case D -> user.setRightRequest(false);
                 case E -> user.setPauseRequest(!user.hasPauseRequest());
+                case Q -> user.setKillWish(false);
+                case R -> user.setDefenseRequest(true); //resist
+                case F -> user.setAttackRequest(true); //fight
             }
         });
         mainBoard.setOnMousePressed(mouseEvent -> {

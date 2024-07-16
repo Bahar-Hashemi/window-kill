@@ -6,7 +6,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public enum PaneBuilder {
-    MAIN_MENU_PANE("MainMenu.fxml", 1), PAUSE_PANE("PauseMenu.fxml", 0.7), GAME_OVER_PANE("GameOver.fxml", 0.9);
+    MAIN_MENU_PANE("MainMenu.fxml", 1), PAUSE_PANE("PauseMenu.fxml", 0.7), GAME_OVER_PANE("GameOver.fxml", 0.8),
+    SKILL_TREE_PANE("SkillTree.fxml", 1), SETTINGS_PANE("Settings.fxml", 1), SAVE_PANE("SavePane.fxml", 0.7),;
     final String name;
     final double opacity;
     PaneBuilder(String name, double opacity) {
@@ -28,7 +29,7 @@ public enum PaneBuilder {
             return pane;
         } catch (Exception e) {
             System.err.println(name + "can't be made!");
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

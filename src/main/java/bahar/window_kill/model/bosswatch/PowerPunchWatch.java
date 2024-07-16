@@ -1,27 +1,24 @@
 package bahar.window_kill.model.bosswatch;
 
 import bahar.window_kill.control.Deck;
-import bahar.window_kill.control.GameUtil;
+import bahar.window_kill.control.util.GameUtil;
 import bahar.window_kill.model.boards.MainBoard;
 import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 import bahar.window_kill.model.entities.generators.shooters.SmileyFace;
 import bahar.window_kill.model.entities.generators.shooters.SmileyHand;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
-import java.util.Random;
 
 public class PowerPunchWatch extends BossWatch { //todo correct powerPunch later
     static int counter = 0;
     public PowerPunchWatch(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(30, makeEventHandler(face, leftHand, rightHand), face, leftHand, rightHand);
+        super(30, makeRunnable(face, leftHand, rightHand), face, leftHand, rightHand);
         counter = 0;
         setCycleCount(60);
     }
 
-    private static EventHandler<ActionEvent> makeEventHandler(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        return event -> {
+    private static Runnable makeRunnable(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+        return () -> {
             counter++;
             double change = (counter > 30)? -12: 12;
             leftHand.setSceneX(leftHand.getSceneX() + change);

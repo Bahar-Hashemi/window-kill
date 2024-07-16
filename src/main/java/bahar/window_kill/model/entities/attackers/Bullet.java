@@ -37,7 +37,7 @@ public class Bullet extends Entity implements AttackerEntity {
 
     @Override
     public void move(double noUseX, double noUseY) {
-        double SPEED = 10;
+        double SPEED = 17;
         setSceneY(getSceneY() + directionY * SPEED);
         setSceneX(getSceneX() + directionX * SPEED);
     }

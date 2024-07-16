@@ -1,9 +1,10 @@
-package bahar.window_kill.control;
+package bahar.window_kill.view.controller;
 
-import bahar.window_kill.control.fazes.processors.abilities.*;
+import bahar.window_kill.control.Deck;
 import bahar.window_kill.control.fazes.processors.BoardsProcessor;
-import bahar.window_kill.control.loader.ImageLoader;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.fazes.processors.abilities.shop.*;
+import bahar.window_kill.control.util.ImageUtil;
+import bahar.window_kill.control.util.SoundUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -32,25 +33,25 @@ public class PauseMenuController {
         processButtonsDisable();
     }
     private void makeOnHovers() {
-        makeButton(healButton, healImage, ImageLoader.HEAL, ImageLoader.HEAL_HOVER);
-        makeButton(banishButton, banishImage, ImageLoader.BANISH, ImageLoader.BANISH_HOVER);
-        makeButton(empowerButton, empowerImage, ImageLoader.EMPOWER, ImageLoader.EMPOWER_HOVER);
-        makeButton(dismayButton, dismayImage, ImageLoader.DISMAY, ImageLoader.DISMAY_HOVER);
-        makeButton(slumberButton, slumberImage, ImageLoader.SLUMBER, ImageLoader.SLUMBER_HOVER);
-        makeButton(thunderButton, thunderImage, ImageLoader.THUNDER, ImageLoader.THUNDER_HOVER);
+        makeButton(healButton, healImage, ImageUtil.HEAL, ImageUtil.HEAL_HOVER);
+        makeButton(banishButton, banishImage, ImageUtil.BANISH, ImageUtil.BANISH_HOVER);
+        makeButton(empowerButton, empowerImage, ImageUtil.EMPOWER, ImageUtil.EMPOWER_HOVER);
+        makeButton(dismayButton, dismayImage, ImageUtil.DISMAY, ImageUtil.DISMAY_HOVER);
+        makeButton(slumberButton, slumberImage, ImageUtil.SLUMBER, ImageUtil.SLUMBER_HOVER);
+        makeButton(thunderButton, thunderImage, ImageUtil.THUNDER, ImageUtil.THUNDER_HOVER);
     }
-    private void makeButton(Button button, ImageView buttonImage, ImageLoader image, ImageLoader onHover) {
+    private void makeButton(Button button, ImageView buttonImage, ImageUtil image, ImageUtil onHover) {
         button.setOnMouseEntered(e -> buttonImage.setImage(onHover.getImage()));
         button.setOnMouseExited(e -> buttonImage.setImage(image.getImage()));
     }
     private void updateVolume() {
-        volumeLabel.setText("Volume: " + (int) SoundLoader.getVolume());
-        volumeSlider.setValue(SoundLoader.getVolume());
+        volumeLabel.setText("Volume: " + (int) SoundUtil.getVolume());
+        volumeSlider.setValue(SoundUtil.getVolume());
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                 volumeLabel.setText("Volume: " + (int) volumeSlider.getValue());
-                SoundLoader.setVolume(volumeSlider.getValue());
+                SoundUtil.setVolume(volumeSlider.getValue());
             }
         });
     }
@@ -101,12 +102,14 @@ public class PauseMenuController {
     public void onSlumber(ActionEvent actionEvent) {
         abilities.add(new SlumberWatch());
         user.getEpsilon().setXp(user.getEpsilon().getXp() - 150);
+        Deck.coolDown += 10 * 1000;
         afterButtonPress();
     }
 
     public void onThunder(ActionEvent actionEvent) {
         abilities.add(new ThunderWatch());
         user.getEpsilon().setXp(user.getEpsilon().getXp() - 200);
+        coolDown += 120 * 1000;
         afterButtonPress();
     }
 }

@@ -1,9 +1,7 @@
 package bahar.window_kill.model.entities.attackers;
 
-import bahar.window_kill.control.GameUtil;
+import bahar.window_kill.control.util.GameUtil;
 import bahar.window_kill.control.fazes.processors.strategies.strategies.DamageStrategy;
-import bahar.window_kill.control.fazes.processors.strategies.strategies.Strategy;
-import bahar.window_kill.model.entities.Barricados;
 import bahar.window_kill.model.entities.BlackOrb;
 import bahar.window_kill.model.entities.Entity;
 import javafx.scene.Node;

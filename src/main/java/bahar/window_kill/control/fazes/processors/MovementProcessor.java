@@ -3,7 +3,7 @@ package bahar.window_kill.control.fazes.processors;
 import bahar.window_kill.control.Deck;
 import bahar.window_kill.model.entities.Collectable;
 import bahar.window_kill.model.entities.Entity;
-import bahar.window_kill.control.GameUtil;
+import bahar.window_kill.control.util.GameUtil;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 import bahar.window_kill.model.entities.generators.shooters.Omenoct;
@@ -15,7 +15,6 @@ import static bahar.window_kill.control.Deck.mainBoard;
 import static bahar.window_kill.control.Deck.user;
 
 public class MovementProcessor extends GameProcessor {
-    static boolean isLocked = false;
     public void run() {
         processEpsilonMovement();
         processImpacts();
@@ -35,7 +34,7 @@ public class MovementProcessor extends GameProcessor {
         double epsilonX = Deck.user.getEpsilon().getSceneX();
         double epsilonY = (int) Deck.user.getEpsilon().getSceneY();
         for (Entity entity: Deck.entities) {
-            if (isLocked && !(entity instanceof Bullet && ((Bullet) entity).getSource() == user.getEpsilon()))
+            if (Deck.isLocked && !(entity instanceof Bullet && ((Bullet) entity).getSource() == user.getEpsilon()))
                 continue;
             if (entity instanceof Omenoct)
                 entity.move(mainBoard.getWidth(), mainBoard.getHeight());
@@ -79,11 +78,5 @@ public class MovementProcessor extends GameProcessor {
             epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() - 10);
         if (epsilon.getSceneY() + 6 > mainBoard.getLayoutY() + mainBoard.getHeight())
             epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() + 10);
-    }
-    public static void setLocked(boolean isLocked) {
-        MovementProcessor.isLocked = isLocked;
-    }
-    public static boolean getLocked() {
-        return isLocked;
     }
 }

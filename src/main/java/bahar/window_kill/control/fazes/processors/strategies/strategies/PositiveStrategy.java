@@ -1,6 +1,6 @@
 package bahar.window_kill.control.fazes.processors.strategies.strategies;
 
-import bahar.window_kill.control.GameUtil;
+import bahar.window_kill.control.util.GameUtil;
 import bahar.window_kill.model.entities.Collectable;
 import bahar.window_kill.model.entities.Entity;
 

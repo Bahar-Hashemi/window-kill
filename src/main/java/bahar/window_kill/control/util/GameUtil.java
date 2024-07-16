@@ -1,4 +1,4 @@
-package bahar.window_kill.control;
+package bahar.window_kill.control.util;
 
 import bahar.window_kill.model.boards.GameBoard;
 import bahar.window_kill.model.entities.Entity;

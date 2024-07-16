@@ -25,9 +25,13 @@ public class SmileyBrain {
         leftHand.setSceneLocation(-100, Constants.SCREEN_HEIGHT / 2);
         rightHand.setSceneLocation(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT / 2);
         watches.add(new ComingInWatch(face, leftHand, rightHand));
-        attackController = new Watch(10000, event -> canAttack = true);
+        attackController = new Watch(10000, () -> canAttack = true);
     }
     public void act(Epsilon epsilon, MainBoard mainBoard) {
+        if (face.getHP() <= 0) {
+            leftHand.setHP(0);
+            rightHand.setHP(0);
+        }
         for (BossWatch watch: watches)
             watch.call();
         for (int i = watches.size() - 1; i >= 0; i--)
@@ -54,5 +58,8 @@ public class SmileyBrain {
                 throw new RuntimeException(e);
             }
         }
+    }
+    public double getHP() {
+        return face.getHP() + leftHand.getHP() + rightHand.getHP();
     }
 }

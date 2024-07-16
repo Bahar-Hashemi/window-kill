@@ -1,7 +1,7 @@
 package bahar.window_kill.model.entities.generators.shooters;
 
 import bahar.window_kill.control.fazes.processors.strategies.strategies.SpawnStrategy;
-import bahar.window_kill.control.loader.SoundLoader;
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.model.Watch;
 import bahar.window_kill.model.boards.GameBoard;
 import bahar.window_kill.model.entities.BoardOwner;
@@ -13,9 +13,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     Watch gunWatch;
@@ -78,7 +75,7 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
 
     @Override
     public void shout() {
-        SoundLoader.HIT.play();
+        SoundUtil.HIT.play();
     }
     public void setSceneX(double x) {
         super.setSceneX(x);
@@ -87,6 +84,16 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     }
     public void setSceneY(double y) {
         super.setSceneY(y);
+        if (gameBoard != null)
+            gameBoard.setLayoutY(y - 50);
+    }
+    public void setLayoutX(double x) {
+        super.setLayoutX(x);
+        if (gameBoard != null)
+            gameBoard.setLayoutX(x - 50);
+    }
+    public void setLayoutY(double y) {
+        super.setLayoutY(y);
         if (gameBoard != null)
             gameBoard.setLayoutY(y - 50);
     }
