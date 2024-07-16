@@ -5,9 +5,12 @@ import bahar.window_kill.control.fazes.processors.abilities.AbilityWatch;
 import bahar.window_kill.control.util.GameUtil;
 import bahar.window_kill.model.boards.MainBoard;
 import bahar.window_kill.model.data.Settings;
+import bahar.window_kill.model.entities.BlackOrb;
 import bahar.window_kill.model.entities.BoardOwner;
+import bahar.window_kill.model.entities.Collectable;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.attackers.BlackOrbLaser;
+import bahar.window_kill.model.entities.attackers.Bullet;
 import bahar.window_kill.view.MainStage;
 
 import java.util.ArrayList;
@@ -44,11 +47,17 @@ public class SaveUtil {
         }
         n = sc.nextInt();
         entities = new ArrayList<>();
+        ArrayList<BlackOrb> blackOrbs = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             Entity entity = (new EntityUtil()).read(sc);
             addEntity(entity);
-        } //this is all I have
-    }
+            if (entity instanceof BlackOrb)
+                blackOrbs.add((BlackOrb) entity);
+        }
+        for (int i = 0; i < blackOrbs.size(); i++)
+            for (int j = 0; j < i; j++)
+                addEntity(new BlackOrbLaser(blackOrbs.get(i), blackOrbs.get(j)));
+    } //this is all I have
 
     public String write() {
         StringBuilder sb = new StringBuilder();
@@ -64,7 +73,7 @@ public class SaveUtil {
             sb.append((new WatchUtil()).write(abilityWatch)).append("\n");
         sb.append(entities.size()).append("\n");
         for (Entity entity: entities)
-            if (!(entity instanceof BlackOrbLaser))
+            if (!(entity instanceof BlackOrbLaser) && !(entity instanceof Bullet) && !(entity instanceof Collectable))
                 sb.append((new EntityUtil()).write(entity)).append("\n");
         return sb.toString();
     }
