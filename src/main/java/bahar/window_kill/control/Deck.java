@@ -41,6 +41,6 @@ public class Deck {
         clock = 0;
     } //pr = clock / 100 * xp / hp
     public static int getPR() {
-        return (int) (clock / 500 * user.getEpsilon().getXp() / user.getEpsilon().getHP());
+        return (int) (Math.sqrt(clock / 50000.0 * user.getEpsilon().getXp() * user.getEpsilon().getHP()));
     }
 }

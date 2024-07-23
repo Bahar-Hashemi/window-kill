@@ -22,7 +22,7 @@ public class SaveController {
     public void initialize() {
         xpLabel.setText("XP: " + user.getEpsilon().getXp());
         savingLabel.setText("Saving Price: " + getPR());
-        notSavingLabel.setText("Not Saving XP: " + (getPR() / 10));
+        notSavingLabel.setText("Not Saving XP: " + (getPR() / 5));
         if (user.getEpsilon().getXp() < getPR())
             saveButton.setDisable(true);
         root.setLayoutX(Constants.SCREEN_WIDTH / 6);
@@ -30,14 +30,14 @@ public class SaveController {
     }
 
     public void onSave(ActionEvent actionEvent) {
-        user.getEpsilon().setHP(user.getEpsilon().getHP() + 10);
         user.getEpsilon().setXp(user.getEpsilon().getXp() - getPR());
+        user.getEpsilon().setHP(user.getEpsilon().getHP() + 10);
         save = (new SaveUtil()).write();
         GameController.setGameState(new RestartingState());
     }
 
     public void onNotSave(ActionEvent actionEvent) {
-        user.getEpsilon().setXp(user.getEpsilon().getXp() + getPR() / 10);
+        user.getEpsilon().setXp(user.getEpsilon().getXp() + getPR() / 5);
         GameController.setGameState(new RestartingState());
     }
 }

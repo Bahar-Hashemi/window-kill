@@ -34,7 +34,7 @@ public class MovementProcessor extends GameProcessor {
         double epsilonX = Deck.user.getEpsilon().getSceneX();
         double epsilonY = (int) Deck.user.getEpsilon().getSceneY();
         for (Entity entity: Deck.entities) {
-            if (Deck.isLocked && !(entity instanceof Bullet && ((Bullet) entity).getSource() == user.getEpsilon()))
+            if (Deck.isLocked && !(entity instanceof Bullet && !((Bullet) entity).isTraverser()))
                 continue;
             if (entity instanceof Omenoct)
                 entity.move(mainBoard.getWidth(), mainBoard.getHeight());

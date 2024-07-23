@@ -4,10 +4,7 @@ import bahar.window_kill.control.fazes.processors.BoardsProcessor;
 import bahar.window_kill.model.entities.BlackOrb;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.control.util.GameUtil;
-import bahar.window_kill.model.entities.attackers.AttackerArchmire;
-import bahar.window_kill.model.entities.attackers.AttackerEntity;
-import bahar.window_kill.model.entities.attackers.BlackOrbLaser;
-import bahar.window_kill.model.entities.attackers.Bullet;
+import bahar.window_kill.model.entities.attackers.*;
 import bahar.window_kill.model.entities.generators.SpawnerArchmire;
 import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 import bahar.window_kill.model.entities.generators.shooters.MiniEpsilon;
@@ -27,12 +24,12 @@ public class DamageStrategy extends Strategy {
 
     }
     private void attackEnemies(AttackerEntity attacker) {
-        if (attacker instanceof Bullet && !(((Bullet) attacker).getSource() instanceof Epsilon))
+        if (attacker instanceof Bullet && ((Bullet) attacker).isTraverser())
+            return;
+        if (attacker instanceof Trigorath || attacker instanceof Squarantine)
             return;
         for (Entity entity: entities) {
             if (entity instanceof AttackerArchmire)
-                continue;
-            if (entity == attacker || ((attacker instanceof Bullet) && ((Bullet) attacker).getSource() == entity))
                 continue;
             if (attacker instanceof AttackerArchmire && entity instanceof SpawnerArchmire)
                 continue;
@@ -40,6 +37,8 @@ public class DamageStrategy extends Strategy {
                 continue;
             if (entity instanceof MiniEpsilon)
                 continue;
+            if (attacker instanceof Bullet && entity instanceof Bullet)
+                return;
             if (GameUtil.commonArea((Entity) attacker, entity) > 10) {
                 entity.setHP(entity.getHP() - attacker.getDamage());
                 entity.shout();
@@ -48,12 +47,8 @@ public class DamageStrategy extends Strategy {
         }
     }
     private void attackEpsilon(AttackerEntity attacker) {
-        if (attacker instanceof Bullet bullet) {
-            if (bullet.getSource() == user.getEpsilon())
-                return;
-            if (bullet.getSource() instanceof MiniEpsilon)
-                return;
-        }
+        if (attacker instanceof Bullet && !((Bullet) attacker).isTraverser())
+            return;
         if (GameUtil.commonArea((Entity) attacker, user.getEpsilon()) > 10){
             user.getEpsilon().setHP(user.getEpsilon().getHP() - attacker.getDamage());
             user.getEpsilon().shout();

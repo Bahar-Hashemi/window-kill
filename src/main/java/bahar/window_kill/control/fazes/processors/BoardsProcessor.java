@@ -11,6 +11,15 @@ public class BoardsProcessor extends GameProcessor {
     public void run() {
         shrinkMainBoard();
         updateMainBoardLabel();
+        mainBoardInBounds();
+    }
+    private static void mainBoardInBounds() {
+        mainBoard.setLayoutY(Math.max(0, mainBoard.getLayoutY()));
+        mainBoard.setLayoutX(Math.max(0, mainBoard.getLayoutX()));
+        if (mainBoard.getWidth() + mainBoard.getLayoutX() > Constants.SCREEN_WIDTH)
+            mainBoard.lockWidth(Constants.SCREEN_WIDTH - mainBoard.getLayoutX());
+        if (mainBoard.getHeight() + mainBoard.getLayoutY() > Constants.SCREEN_HEIGHT)
+            mainBoard.lockHeight(Constants.SCREEN_HEIGHT - mainBoard.getLayoutY());
     }
     public static void requestMainBoardChangeInBounds(double x, double y, double width, double height) {
         double myX = mainBoard.getLayoutX(), myY = mainBoard.getLayoutY();
@@ -31,7 +40,8 @@ public class BoardsProcessor extends GameProcessor {
     private static void shrinkMainBoard() {
         double minusWidth = Math.min((mainBoard.getWidth() - Constants.MINIMUM_WIDTH) / 2, shrink);
         double minusHeight = Math.min((mainBoard.getHeight() - Constants.MINIMUM_HEIGHT) / 2, shrink);
-        mainBoard.setIndependentDimensions(mainBoard.getLayoutX() + minusWidth / 2, mainBoard.getLayoutY() + minusHeight / 2, mainBoard.getWidth() - 2 * minusWidth , mainBoard.getHeight() - 2 * minusHeight);
+        mainBoard.setIndependentDimensions(mainBoard.getLayoutX() + minusWidth, mainBoard.getLayoutY() + minusHeight,
+                mainBoard.getWidth() - 2 * minusWidth , mainBoard.getHeight() - 2 * minusHeight);
     }
     public static void updateMainBoardLabel() {
         mainBoard.labelsToFront();

@@ -26,22 +26,22 @@ public class SpawnProcessor extends GameProcessor {
     }
     private void makeWatches() {
         int difficulty = 100 / settings.getDifficulty();
-        makeWatch(0, 5000 * difficulty, 4, new Class<?>[]{Trigorath.class, Squarantine.class});
-        makeWatch(1, 4000 * difficulty, 50, new Class<?>[]{Trigorath.class, Squarantine.class});
-        makeWatch(2, 8000 * difficulty, 50, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
-        makeWatch(3, 6000 * difficulty, 60, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
+        makeWatch(0, 1250 * difficulty, 40, new Class<?>[]{Trigorath.class, Squarantine.class});
+        makeWatch(1, 1000 * difficulty, 50, new Class<?>[]{Trigorath.class, Squarantine.class});
+        makeWatch(2, 1500 * difficulty, 50, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
+        makeWatch(3, 1300 * difficulty, 60, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
 
-        makeWatch(4, 8000 * difficulty, 50, new Class<?>[]{
+        makeWatch(4, 1500 * difficulty, 50, new Class<?>[]{
                 Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(5, 9500 * difficulty, 50, new Class<?>[]{
+        makeWatch(5, 2000 * difficulty, 3, new Class<?>[]{
                 Wyrm.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(6, 9500 * difficulty, 60, new Class<?>[]{
+        makeWatch(6, 1500 * difficulty, 60, new Class<?>[]{
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class});
-        makeWatch(7, 9500 * difficulty, 50, new Class<?>[]{
+        makeWatch(7, 1500 * difficulty, 50, new Class<?>[]{
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(8, 9500 * difficulty, 40, new Class<?>[]{
+        makeWatch(8, 1500 * difficulty, 40, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(9, 9000 * difficulty, 40, new Class<?>[]{
+        makeWatch(9, 1500 * difficulty, 40, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
         currentWatches.add(entitySpawners[Deck.wave]); //todo think more about here!
     }

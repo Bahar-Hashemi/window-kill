@@ -60,5 +60,12 @@ public class MainBoard extends GameBoard {
     public void shout() {
         SoundUtil.WALLHIT.play();
     }
+    public void clear() {
+        for (int i = getChildren().size() - 1; i >= 0; i--) {
+            Node node = getChildren().get(i);
+            if (!(node instanceof Pane))
+                getChildren().remove(node);
+        }
+    }
 
 }

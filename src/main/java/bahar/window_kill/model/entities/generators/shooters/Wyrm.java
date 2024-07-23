@@ -19,7 +19,7 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     GameBoard gameBoard;
     Circle iris;
     public Wyrm() {
-        super(makeView(), 12, true, new SpawnStrategy(1000));
+        super(makeView(), 30, true, new SpawnStrategy(1000));
         makeIris();
         byBoard();
         setBulletDamage(5);
@@ -99,7 +99,7 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     }
     @Override
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 5, Color.CRIMSON, getBulletDamage(), gunDirectionX, gunDirectionY, this, true);
+        return new Bullet(getBulletDamage(), 5, Color.CRIMSON, getBulletDamage(), gunDirectionX, gunDirectionY, true);
     }
 
     @Override

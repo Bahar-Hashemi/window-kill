@@ -100,7 +100,7 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
 
     @Override
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 5, Color.YELLOW, getBulletDamage(), gunDirectionX, gunDirectionY, this, true);
+        return new Bullet(getBulletDamage(), 5, Color.YELLOW, getBulletDamage(), gunDirectionX, gunDirectionY, true);
     }
 
     @Override

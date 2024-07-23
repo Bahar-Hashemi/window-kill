@@ -15,6 +15,8 @@ import static bahar.window_kill.control.Deck.gameBoards;
 
 public class GameUtil {
     public static double commonArea(Entity first, Entity second) {
+        if (distance(first, second) > 70)
+            return 0;
         double totalCommonArea = 0;
         for (Node firstNode : getNodesFromView(first.getView())) {
             Shape firstShape = (Shape) firstNode;
@@ -64,6 +66,11 @@ public class GameUtil {
     public static void setSceneLocation(Node node, double x, double y) {
         setSceneX(node, x);
         setSceneY(node, y);
+    }
+    public static double distance(Entity first, Entity second) {
+        double dx = first.getSceneX() - second.getSceneX();
+        double dy = first.getSceneY() - second.getSceneY();
+        return Math.sqrt(dx * dx + dy * dy);
     }
     public static boolean isInOneBoard(Entity entity) {
         Bounds boundsInScene = entity.getView().localToScene(entity.getView().getBoundsInLocal());

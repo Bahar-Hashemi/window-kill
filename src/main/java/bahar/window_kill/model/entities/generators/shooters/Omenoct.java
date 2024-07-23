@@ -90,7 +90,7 @@ public class Omenoct extends ShooterEntity implements LootDropper {
 
     @Override
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 3, Color.RED, getBulletDamage(), gunDirectionX, gunDirectionY, this, true);
+        return new Bullet(getBulletDamage(), 3, Color.RED, getBulletDamage(), gunDirectionX, gunDirectionY, true);
     }
 
     @Override

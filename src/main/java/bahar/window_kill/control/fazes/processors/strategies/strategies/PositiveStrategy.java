@@ -13,7 +13,7 @@ public class PositiveStrategy extends Strategy {
             System.err.println("Illegal entity inserted");
             return;
         }
-        if (GameUtil.commonArea(collectable, user.getEpsilon()) > 10) {
+        if (GameUtil.distance(collectable, user.getEpsilon()) < 10) {
             user.getEpsilon().setXp(collectable.getXp() + user.getEpsilon().getXp());
             onAct(source);
         }

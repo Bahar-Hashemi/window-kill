@@ -86,7 +86,7 @@ public class Nechropic extends ShooterEntity implements LootDropper {
 
     @Override
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 3, Color.web("#640000"), getBulletDamage(), gunDirectionX, gunDirectionY, this, true);
+        return new Bullet(getBulletDamage(), 3, Color.web("#640000"), getBulletDamage(), gunDirectionX, gunDirectionY, true);
     }
     private void ascent(double targetX, double targetY) {
         //

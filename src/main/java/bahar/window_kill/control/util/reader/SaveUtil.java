@@ -1,5 +1,6 @@
 package bahar.window_kill.control.util.reader;
 
+import bahar.window_kill.Main;
 import bahar.window_kill.control.Deck;
 import bahar.window_kill.control.fazes.processors.abilities.AbilityWatch;
 import bahar.window_kill.control.util.GameUtil;
@@ -30,12 +31,11 @@ public class SaveUtil {
         user.getEpsilon().setHP(sc.nextDouble());
         user.getEpsilon().setLayoutX(sc.nextDouble()); user.getEpsilon().setLayoutY(sc.nextDouble());
         // make mainBoard
-        mainBoard = new MainBoard((int) user.getEpsilon().getHP(), user.getEpsilon().getXp(), wave);
         mainBoard.setIndependentDimensions(layoutX, layoutY, width, height);
-        mainBoard.add(user.getEpsilon().getView());
         MainStage.add(mainBoard);
-        mainBoard.setControlStrategy(settings.getControlStrategy());
-        mainBoard.requestUserControl(user);
+        mainBoard.setXP(user.getEpsilon().getXp()); mainBoard.setHP((int) user.getEpsilon().getHP());
+        mainBoard.clear();
+        mainBoard.add(user.getEpsilon().getView());
         mainBoard.requestFocus();
         //read abilities
         abilities = new ArrayList<>();
@@ -71,11 +71,18 @@ public class SaveUtil {
         sb.append(abilities.size()).append("\n");
         for (AbilityWatch abilityWatch: abilities)
             sb.append((new WatchUtil()).write(abilityWatch)).append("\n");
-        sb.append(entities.size()).append("\n");
+        sb.append(countEntities()).append("\n");
         for (Entity entity: entities)
             if (!(entity instanceof BlackOrbLaser) && !(entity instanceof Bullet) && !(entity instanceof Collectable))
-                sb.append((new EntityUtil()).write(entity)).append("\n");
+                sb.append((new EntityUtil()).write(entity)).append("\n"); //todo correct here
         return sb.toString();
+    }
+    private int countEntities() {
+        int count = 0;
+        for (Entity entity: entities)
+            if (!(entity instanceof BlackOrbLaser) && !(entity instanceof Bullet) && !(entity instanceof Collectable))
+                count++; //todo correct here!
+        return count;
     }
     protected static void addEntity(Entity entity) { //hopefully this will work
         if (entity instanceof BoardOwner) {

@@ -27,7 +27,7 @@ public class MiniEpsilon extends ShooterEntity {
         return circle;
     }
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 2, Color.rgb(255, 255, 255, 0.6), getBulletDamage(), gunDirectionX, gunDirectionY, this, false);
+        return new Bullet(getBulletDamage(), 2, Color.rgb(255, 255, 255, 0.6), getBulletDamage(), gunDirectionX, gunDirectionY, false);
     }
     public double getDifX() {
         return difX;

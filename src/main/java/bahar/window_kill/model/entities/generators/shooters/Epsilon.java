@@ -35,7 +35,7 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
         return xp;
     }
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 3.5, Color.WHITE, getBulletDamage(), gunDirectionX, gunDirectionY, this, false);
+        return new Bullet(getBulletDamage(), 3.5, Color.WHITE, getBulletDamage(), gunDirectionX, gunDirectionY, false);
     }
     public void setColor(Color color) {
         ((Circle) view).setStroke(color);

@@ -1,6 +1,8 @@
 package bahar.window_kill;
 
+import bahar.window_kill.control.util.SoundUtil;
 import bahar.window_kill.view.GameLauncher;
+import javafx.scene.paint.Color;
 
 
 public class Main {

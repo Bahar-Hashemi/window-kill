@@ -133,5 +133,5 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
     public Entity makeBullet() {
         double x = new Random().nextDouble(-1, 1);
         double y = Math.sqrt(1 - x * x);
-        return new Bullet(getBulletDamage(), 5, Color.YELLOW, getBulletDamage(), x, y, this, true);    }
+        return new Bullet(getBulletDamage(), 5, Color.YELLOW, getBulletDamage(), x, y, true);    }
 }

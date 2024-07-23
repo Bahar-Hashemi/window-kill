@@ -36,7 +36,7 @@ public class DeathProcessor extends GameProcessor {
                 entity.setHP(0);
     }
     private void checkEpsilonHealth() {
-        if (user.getEpsilon().getHP() < 0) {
+        if (user.getEpsilon().getHP() <= 0) {
             if (save != null) {
                 (new SaveUtil()).read(new Scanner(save));
                 GameController.setGameState(new RestartingState());

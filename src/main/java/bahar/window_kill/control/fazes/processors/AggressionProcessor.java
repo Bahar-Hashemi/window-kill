@@ -1,7 +1,9 @@
 package bahar.window_kill.control.fazes.processors;
 
+import bahar.window_kill.model.entities.Collectable;
 import bahar.window_kill.model.entities.Entity;
 import bahar.window_kill.model.entities.BlackOrb;
+import bahar.window_kill.model.entities.attackers.BlackOrbLaser;
 import bahar.window_kill.model.entities.attackers.Bullet;
 import bahar.window_kill.model.entities.generators.shooters.MiniEpsilon;
 import bahar.window_kill.model.entities.generators.shooters.ShooterEntity;
@@ -13,7 +15,7 @@ import static bahar.window_kill.control.Deck.*;
 public class AggressionProcessor extends GameProcessor {
     private static Entity getEnemy() {
         for (Entity entity: entities)
-            if (!(entity instanceof Bullet) && !(entity instanceof MiniEpsilon))
+            if (!(entity instanceof Bullet) && !(entity instanceof MiniEpsilon) && !(entity instanceof Collectable) && !(entity instanceof BlackOrbLaser) && entity.getHP() > 0)
                 return entity;
         return null;
     }
@@ -32,7 +34,7 @@ public class AggressionProcessor extends GameProcessor {
                     miniEpsilon.setGunDirection(0, -1);
                 miniEpsilon.aggress();
             }
-            if (isLocked && !(entity instanceof Bullet && ((Bullet) entity).getSource() == user.getEpsilon()))
+            if (isLocked && !(entity instanceof Bullet && !((Bullet) entity).isTraverser()))
                 continue;
             if (entity instanceof ShooterEntity shooterEntity)
                 shooterEntity.target(user.getEpsilon());
