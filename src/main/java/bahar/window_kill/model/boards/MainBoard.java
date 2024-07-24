@@ -11,6 +11,7 @@ public class MainBoard extends GameBoard {
     private final Label HPLabel, XPLabel, waveLabel, abilitiesLabel;
     private final VBox labels;
     private ControlStrategy controlStrategy;
+    public double shrink;
     public MainBoard(int HPValue, int XPValue, int waveNumber) {
         super(true);
         labels = new VBox(); labels.setSpacing(2);

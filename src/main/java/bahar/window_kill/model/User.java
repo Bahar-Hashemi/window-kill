@@ -1,11 +1,17 @@
 package bahar.window_kill.model;
 
+import bahar.window_kill.control.fazes.processors.abilities.AbilityWatch;
+import bahar.window_kill.model.boards.MainBoard;
+import bahar.window_kill.model.data.Development;
+import bahar.window_kill.model.data.Settings;
 import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
 
 public class User {
     private boolean hasUpRequest = false, hasLeftRequest = false, hasDownRequest = false, hasRightRequest = false;
@@ -16,6 +22,12 @@ public class User {
     private boolean hasDefenseRequest = false;
     private boolean hasAttackRequest = false;
     final private Epsilon epsilon;
+    public static MainBoard mainBoard;
+    public Development development;
+    public Settings settings;
+    public long coolDown;
+    int xp = 0;
+    public ArrayList<AbilityWatch> abilities;
     public User(Epsilon epsilon) {
         this.epsilon = epsilon;
     }
@@ -118,5 +130,11 @@ public class User {
 
     public void setAttackRequest(boolean hasAttackRequest) {
         this.hasAttackRequest = hasAttackRequest;
+    }
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+    public int getXp() {
+        return xp;
     }
 }

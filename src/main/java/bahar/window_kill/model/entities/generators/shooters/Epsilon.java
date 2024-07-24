@@ -12,7 +12,6 @@ import javafx.scene.shape.Circle;
 
 public class Epsilon extends ShooterEntity implements AttackerEntity {
     private static final double radius = 10;
-    int xp = 0;
     int damage = 0;
     final int SPEED;
     public Epsilon(int speed) {
@@ -27,12 +26,6 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
         circle.setRadius(Epsilon.radius);
         circle.setStrokeWidth(3);
         return circle;
-    }
-    public void setXp(int xp) {
-        this.xp = xp;
-    }
-    public int getXp() {
-        return xp;
     }
     public Entity makeBullet() {
         return new Bullet(getBulletDamage(), 3.5, Color.WHITE, getBulletDamage(), gunDirectionX, gunDirectionY, false);

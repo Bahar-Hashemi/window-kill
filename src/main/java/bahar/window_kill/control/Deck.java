@@ -13,34 +13,32 @@ import bahar.window_kill.model.entities.generators.shooters.Epsilon;
 import java.util.ArrayList;
 
 public class Deck {
-    public static MainBoard mainBoard;
-    public static User user;
-    public static ArrayList<Entity> entities;
-    public static ArrayList<GameBoard> gameBoards;
-    public static ArrayList<AbilityWatch> abilities;
-    public static int wave;
-    public static long coolDown;
-    public static boolean isLocked;
-    public static double shrink;
-    public static Development development;
-    public static Settings settings;
-    public static long clock;
-    public static String save = null;
-    public static void newDeck() {
-        development = FileUtil.readDevelopment();
-        settings = FileUtil.readSettings();
+    public ArrayList<User> users;
+    public ArrayList<Entity> entities;
+    public ArrayList<GameBoard> gameBoards;
+    public int wave;
+    public boolean isLocked;
+    public long clock;
+    public String save = null;
+    public Deck() {
         entities = new ArrayList<>();
         gameBoards = new ArrayList<>();
-        abilities = new ArrayList<>();
-        user = new User(new Epsilon(settings.getSpeed()));
-        mainBoard = new MainBoard((int) user.getEpsilon().getHP(), 0, wave);
+        users = new ArrayList<>();
         wave = 0;
-        coolDown = 0;
         isLocked = false;
-        shrink = 0.3;
         clock = 0;
     } //pr = clock / 100 * xp / hp
-    public static int getPR() {
-        return (int) (Math.sqrt(clock / 50000.0 * user.getEpsilon().getXp() * user.getEpsilon().getHP()));
+    public int getPR() {
+        double result = 0;
+        for (User user: users)
+            result += (1 / 0.3 * getHPPrice(user.getEpsilon().getHP()) + 2 / 0.3 * getWavePrice(wave)) * user.getXp();
+        return (int) result;
+    }
+    private double getHPPrice(double hp) {
+        hp = Math.min(100, hp);
+        return hp * hp / 100 / 100;
+    }
+    private double getWavePrice(int wave) {
+        return wave * wave / 100.0;
     }
 }
