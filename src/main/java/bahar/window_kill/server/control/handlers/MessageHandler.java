@@ -22,5 +22,14 @@ abstract public class MessageHandler {
             return false;
         }
     }
+    protected boolean sendObject(DataOutputStream sendBuffer, Object object) {
+        String messageString = gsonAgent.toJson(object);
+        try {
+            sendBuffer.writeUTF(messageString);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     abstract public boolean handle(DataOutputStream sendBuffer, ClientMessage clientMessage);
 }

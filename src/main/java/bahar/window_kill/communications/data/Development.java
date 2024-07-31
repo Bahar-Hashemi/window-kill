@@ -102,7 +102,7 @@ public class Development {
         }
     }
     public static Development getFirstState() {
-        return new Development(0, 0, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED, State.LOCKED}, new State[]{State.UNLOCKED, State.UNLOCKED, State.LOCKED});
+        return new Development(0, 0, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED, State.LOCKED}, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED});
     }
     public String toJson() {
         Gson gson = new Gson();
@@ -111,7 +111,6 @@ public class Development {
 
     // Method to create Development object from JSON string
     public static Development fromJson(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, Development.class);
+        return getFirstState();
     }
 }

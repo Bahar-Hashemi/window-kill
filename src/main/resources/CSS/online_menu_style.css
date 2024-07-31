@@ -36,6 +36,7 @@
     -fx-prompt-text-fill: #999999;
     -fx-border-color: transparent;
     -fx-border-width: 0 0 1 0; /* Adds bottom border */
+    -fx-background-radius: 10;
 }
 
 /* Labels */

@@ -1,8 +1,7 @@
 package bahar.window_kill.client.control.connection;
 
-import bahar.window_kill.communications.messages.client.ChangeStateMessage;
-import bahar.window_kill.communications.messages.client.LoginMessage;
-import bahar.window_kill.communications.messages.client.SignupMessage;
+import bahar.window_kill.communications.data.TableUser;
+import bahar.window_kill.communications.messages.client.*;
 import bahar.window_kill.communications.messages.server.RegisterAnswer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -133,5 +132,20 @@ public class TCPClient {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public TableUser getMe(String username) {
+        RequestDataMessage requestDataMessage = new RequestDataMessage(RequestedDataType.ME, username);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(requestDataMessage));
+            TableUser user = gsonAgent.fromJson(
+                    receiveResponse(), TableUser.class);
+            endConnection();
+            return user;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -1,7 +1,9 @@
 package bahar.window_kill.client.view.controller.online;
 
+import bahar.window_kill.client.control.connection.TCPClient;
 import bahar.window_kill.client.control.states.processors.abilities.AbilityWatch;
 import bahar.window_kill.client.control.util.FileUtil;
+import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.view.MainStage;
 import bahar.window_kill.client.view.PaneBuilder;
 import bahar.window_kill.communications.data.Development;
@@ -21,7 +23,7 @@ public class OnlineSkillsController extends OnlineController {
     }
     @Override
     public void initialize() {
-        development = FileUtil.readDevelopment();
+        development = User.getInstance().development;
         makeData();
     }
     private void makeData() {
@@ -75,10 +77,9 @@ public class OnlineSkillsController extends OnlineController {
         button.setStyle("-fx-border-color: " + color);
     }
     public void run() {
-
     }
     private void sendUpdatesToServer() {
-
+        System.out.println("Sending updates to server");
     }
 
 }

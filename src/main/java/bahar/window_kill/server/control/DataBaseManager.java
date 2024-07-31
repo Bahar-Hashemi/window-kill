@@ -99,7 +99,7 @@ public class DataBaseManager {
         return null;
     }
     public void addUser(TableUser tableUser) {
-        String query = "INSERT INTO users (username, password, state, squad, messages, development) VALUES ('" + tableUser.getUsername() + "', '" + tableUser.getPassword() + "', '" + tableUser.getState() + "', '" + tableUser.getSquad() + "', '" + tableUser.getMessages() + "', '" + tableUser.getDevelopment() + "')";
+        String query = "INSERT INTO users (username, password, state, squad, messages, development) VALUES ('" + tableUser.getUsername() + "', '" + tableUser.getPassword() + "', '" + tableUser.getState() + "', '" + tableUser.getSquad() + "', '" + tableUser.getMessages() + "', '" + tableUser.getDevelopment().toJson() + "')";
         try {
             statement.executeUpdate(query);
         } catch (SQLException e) {
@@ -111,7 +111,7 @@ public class DataBaseManager {
                 "', state = '" + tableUser.getState() +
                 "', squad = '" + tableUser.getSquad() +
                 "', messages = '" + tableUser.getMessages() +
-                "', development = '" + tableUser.getDevelopment() +
+                "', development = '" + tableUser.getDevelopment().toJson() +
                 "' WHERE username = '" + tableUser.getUsername() + "'";
         try {
             statement.executeUpdate(query);

@@ -1,13 +1,7 @@
 package bahar.window_kill.server.control;
 
-import bahar.window_kill.communications.messages.client.ChangeStateMessage;
-import bahar.window_kill.communications.messages.client.ClientMessage;
-import bahar.window_kill.communications.messages.client.LoginMessage;
-import bahar.window_kill.communications.messages.client.SignupMessage;
-import bahar.window_kill.server.control.handlers.ChangeStateHandler;
-import bahar.window_kill.server.control.handlers.LoginHandler;
-import bahar.window_kill.server.control.handlers.MessageHandler;
-import bahar.window_kill.server.control.handlers.SignupHandler;
+import bahar.window_kill.communications.messages.client.*;
+import bahar.window_kill.server.control.handlers.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,6 +29,7 @@ public class TCPWorker extends Thread {
         result.add(new LoginHandler());
         result.add(new SignupHandler());
         result.add(new ChangeStateHandler());
+        result.add(new DataRequestHandler());
         return result;
     }
 
@@ -67,6 +62,7 @@ public class TCPWorker extends Thread {
                 case LOGIN -> gsonAgent.fromJson(clientStr, LoginMessage.class);
                 case SIGNUP -> gsonAgent.fromJson(clientStr, SignupMessage.class);
                 case STATE_CHANGE -> gsonAgent.fromJson(clientStr, ChangeStateMessage.class);
+                case REQUEST_DATA -> gsonAgent.fromJson(clientStr, RequestDataMessage.class);
                 default -> null;
             };
         }
