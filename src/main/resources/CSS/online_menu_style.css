@@ -1,0 +1,173 @@
+.root {
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+}
+.pane {
+    -fx-background-color: #000000;
+}
+
+/* Buttons */
+.button {
+    -fx-font-family: "cooper black";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-color: #18191A;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 10; /* Makes the button round */
+    -fx-padding: 8 15; /* Adjust padding as needed */
+}
+.button:hover {
+    -fx-background-color: #282828;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.button:pressed {
+    -fx-background-color: #202020;
+}
+
+/* Text Fields */
+.text-field {
+    -fx-font-family: "cooper black";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-color: #333333;
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #999999;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 1 0; /* Adds bottom border */
+}
+
+/* Labels */
+.label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "cooper black";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 8 15;
+}
+
+.scroll-pane, .scroll-pane * {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-bar, .scroll-bar * {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+/* Ensuring any borders or effects are also transparent */
+.scroll-pane, .scroll-bar, .scroll-bar .thumb, .scroll-bar .track {
+    -fx-border-color: transparent;
+    -fx-effect: null;
+}
+/* TabPane */
+.tab-pane {
+    -fx-background-color: #2b2b2b; /* Dark background for TabPane */
+    -fx-border-color: #3a3a3a;
+    -fx-border-radius: 10;
+}
+
+/* Tab */
+.tab {
+    -fx-font-family: "cooper black";
+    -fx-background-color: #0f0f0f; /* Dark gray background for tabs */
+    -fx-text-fill: #d3d3d3; /* Light gray text for unselected tabs */
+    -fx-padding: 8 15;
+    -fx-background-radius: 10 10 0 0; /* Rounded top corners */
+    -fx-focus-color: transparent; /* Remove blue focus ring */
+    -fx-faint-focus-color: transparent; /* Remove faint focus ring */
+}
+
+.tab:hover {
+    -fx-background-color: #4a4a4a; /* Slightly lighter gray on hover */
+}
+
+.tab:selected {
+    -fx-background-color: #6a6a6a; /* Darker gray for selected tab */
+    -fx-text-fill: orange; /* Change text color to red for selected tab */
+}
+.tab:selected .tab-label {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Tab Header */
+.tab-pane .tab-header-area {
+    -fx-background-color: #2b2b2b; /* Dark background for tab header area */
+    -fx-border-color: #3a3a3a;
+    -fx-border-radius: 10 10 0 0; /* Rounded top corners */
+}
+
+/* Tab Content Area */
+.tab-content-area {
+    -fx-background-color: #000000; /* Dark gray background for content area */
+    -fx-text-fill: #ffffff; /* White text for content area */
+    -fx-padding: 10;
+    -fx-border-color: #3a3a3a;
+    -fx-border-radius: 0 0 10 10; /* Rounded bottom corners */
+}
+/* MenuBar */
+.menu-bar {
+    -fx-background-color: #2b2b2b; /* Dark background for MenuBar */
+    -fx-text-fill: #ffffff; /* White text for MenuBar */
+    -fx-border-color: #3a3a3a;
+    -fx-border-radius: 10;
+}
+
+/* Menu */
+.menu {
+    -fx-background-color: #2b2b2b; /* Dark background for Menu */
+    -fx-text-fill: #ffffff; /* White text for Menu */
+}
+
+.menu:hover {
+    -fx-background-color: #3a3a3a; /* Slightly lighter gray on hover */
+}
+.tab-header-background{
+    -fx-background-color: #141414;
+}
+
+/* MenuItem */
+.menu-item {
+    -fx-background-color: #2b2b2b; /* Dark background for MenuItem */
+    -fx-text-fill: #d3d3d3; /* Light gray text for MenuItem */
+}
+
+.menu-item:hover {
+    -fx-background-color: #4a4a4a; /* Slightly lighter gray on hover */
+    -fx-text-fill: #ffffff; /* White text on hover */
+}
+.list-view {
+    -fx-background-color: #000000; /* Black background for ListView */
+    -fx-text-fill: #ffffff; /* White text for ListView */
+    -fx-border-color: #3a3a3a;
+    -fx-border-radius: 10;
+    -fx-border-width: 3;
+}
+.list-cell {
+    -fx-font-family: "cooper black";
+    -fx-background-color: transparent; /* Dark gray background for list items */
+    -fx-text-fill: #d3d3d3; /* Light gray text for list items */
+    -fx-padding: 8 15;
+    -fx-background-radius: 5; /* Rounded corners for list items */
+}
+
+.list-cell:hover {
+}
+
+.list-cell:selected {
+    -fx-text-fill: orange; /* Change text color to orange for selected item */
+}
+#messageLabel {
+    -fx-font-size: 12px;
+    -fx-text-fill: #FF0000;
+}

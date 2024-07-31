@@ -31,11 +31,14 @@
     -fx-font-family: "cooper black";
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-    -fx-background-color: #333333;
+    -fx-background-color: #1a1a1a;
     -fx-text-fill: #FFFFFF;
     -fx-prompt-text-fill: #999999;
     -fx-border-color: transparent;
     -fx-border-width: 0 0 1 0; /* Adds bottom border */
+}
+.text-field:focused {
+    -fx-background-color: #2a2a2a; /* Lighter background color when focused */
 }
 
 /* Labels */
@@ -46,4 +49,20 @@
     -fx-font-weight: bold;
     -fx-font-size: 16px;
     -fx-padding: 8 15;
+}
+
+#topicLabel {
+    -fx-font-size: 28px;
+}
+#errorLabel {
+    -fx-font-size: 12px;
+    -fx-text-fill: #FF0000;
+}
+#signupLabel {
+    -fx-underline: true;
+    -fx-text-fill: gray;
+    -fx-font-size: 16px;
+}
+.password-field {
+    -fx-font-size: 12px; /* Smaller font size */
 }

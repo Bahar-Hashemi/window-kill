@@ -1,0 +1,33 @@
+package bahar.window_kill.client.control.states.processors.spawners;
+
+import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.control.util.GameUtil;
+import bahar.window_kill.client.view.MainStage;
+import bahar.window_kill.client.model.Watch;
+import bahar.window_kill.client.model.boards.MainBoard;
+import bahar.window_kill.client.model.entities.BoardOwner;
+import bahar.window_kill.client.model.entities.Entity;
+
+import java.util.Random;
+
+public class Spawner extends Watch {
+    protected final Deck deck;
+    public Spawner(int duration, Runnable runnable, Deck deck) {
+        super(duration, runnable);
+        this.deck = deck;
+    }
+    protected static void addEntity(Entity entity, Deck deck) {
+        if (entity instanceof BoardOwner) {
+            BoardOwner boardOwner = (BoardOwner) entity;
+            MainStage.add(boardOwner.getBoard()); deck.gameBoards.add(boardOwner.getBoard());
+            MainStage.add(entity.getView()); deck.addEntity(entity);
+            boardOwner.getBoard().toBack();
+            GameUtil.placeOutsideBoard(entity, deck.users.get(0).mainBoard);
+        } else {
+            MainBoard mainBoard = deck.users.get(new Random().nextInt(deck.users.size())).mainBoard;
+            mainBoard.add(entity.getView());
+            deck.addEntity(entity);
+            GameUtil.placeOutsideBoard(entity, mainBoard);
+        }
+    }
+}

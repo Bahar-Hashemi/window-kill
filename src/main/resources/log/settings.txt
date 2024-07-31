@@ -1,4 +1,4 @@
-9
-49
-15
-bahar.window_kill.model.boards.controller.WASDStrategy
+10
+50
+100
+bahar.window_kill.client.model.boards.controller.WASDStrategy

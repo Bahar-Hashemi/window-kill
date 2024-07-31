@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="386.0" spacing="20.0" stylesheets="@../CSS/game_over_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.view.controller.GameOverController">
+<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="386.0" spacing="20.0" stylesheets="@../CSS/game_over_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.client.view.controller.GameOverController">
    <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" lineSpacing="10.0" prefHeight="254.0" prefWidth="347.0" text="GAME&#10;OVER&#10;" textAlignment="CENTER" textFill="#ff0000">
       <font>
          <Font name="Cooper Black" size="76.0" />

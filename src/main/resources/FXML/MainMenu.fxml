@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<Pane fx:id="pane" maxHeight="555.0" maxWidth="331.0" minHeight="555.0" minWidth="331.0" prefHeight="555.0" prefWidth="331.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.view.controller.MainMenuController">
+<Pane fx:id="pane" maxHeight="555.0" maxWidth="331.0" minHeight="555.0" minWidth="331.0" prefHeight="555.0" prefWidth="331.0" stylesheets="@../CSS/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.client.view.controller.MainMenuController">
    <children>
       <Button layoutX="90.0" layoutY="440.0" mnemonicParsing="false" onAction="#onExit" prefHeight="49.0" prefWidth="151.0" text="Exit" />
-      <Button layoutX="90.0" layoutY="380.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="151.0" text="TUTORIAL" />
+      <Button layoutX="90.0" layoutY="380.0" mnemonicParsing="false" onAction="#onSquad" prefHeight="49.0" prefWidth="151.0" text="SQUAD" />
       <Button layoutX="90.0" layoutY="320.0" mnemonicParsing="false" onAction="#onSettings" prefHeight="49.0" prefWidth="151.0" text="SETTINGS" />
       <Button layoutX="90.0" layoutY="260.0" mnemonicParsing="false" onAction="#onSkillTree" prefHeight="49.0" prefWidth="151.0" text="SKILL TREE" />
       <Button layoutX="90.0" layoutY="200.0" mnemonicParsing="false" onAction="#onNewGame" prefHeight="49.0" prefWidth="151.0" text="NEW GAME" />
