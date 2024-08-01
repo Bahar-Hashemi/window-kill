@@ -2,8 +2,8 @@ package bahar.window_kill.server.control.handlers;
 
 import bahar.window_kill.communications.data.Development;
 import bahar.window_kill.communications.messages.client.ClientMessage;
-import bahar.window_kill.communications.messages.client.SignupMessage;
-import bahar.window_kill.communications.messages.server.RegisterAnswer;
+import bahar.window_kill.communications.messages.client.register.SignupMessage;
+import bahar.window_kill.communications.messages.server.GeneralAnswer;
 import bahar.window_kill.server.control.DataBaseManager;
 import bahar.window_kill.communications.data.TableUser;
 
@@ -19,16 +19,16 @@ public class SignupHandler extends MessageHandler {
         if (!(clientMessage instanceof SignupMessage signupMessage))
             return false;
         if (!signupMessage.getPassword().equals(signupMessage.getRepeatedPassword())) {
-            sendMessage(sendBuffer, new RegisterAnswer(false, "passwords do not match!"));
+            sendMessage(sendBuffer, new GeneralAnswer(false, "passwords do not match!"));
             return true;
         }
         if (DataBaseManager.getInstance().hasUser(signupMessage.getUsername())) {
-            sendMessage(sendBuffer, new RegisterAnswer(false, "username already exists"));
+            sendMessage(sendBuffer, new GeneralAnswer(false, "username already exists"));
             return true;
         }
         TableUser tableUser = new TableUser(signupMessage.getUsername(), signupMessage.getPassword(), "online", null, null, Development.getFirstState());
         DataBaseManager.getInstance().addUser(tableUser);
-        sendMessage(sendBuffer, new RegisterAnswer(true, "signup successful!"));
+        sendMessage(sendBuffer, new GeneralAnswer(true, "signup successful!"));
         return true;
     }
 }

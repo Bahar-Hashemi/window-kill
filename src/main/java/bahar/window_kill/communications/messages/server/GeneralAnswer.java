@@ -1,10 +1,10 @@
 package bahar.window_kill.communications.messages.server;
 
-public class RegisterAnswer extends ServerAnswer {
+public class GeneralAnswer extends ServerAnswer {
     private boolean accept;
     private String message;
-    public RegisterAnswer(boolean accept, String message) {
-        super(ServerAnswerType.REGISTER);
+    public GeneralAnswer(boolean accept, String message) {
+        super(ServerAnswerType.GENERAL);
         this.accept = accept;
         this.message = message;
     }

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,8 +23,18 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Label layoutX="102.0" text="SQUADS" />
-                        <ListView layoutX="12.0" layoutY="35.0" prefHeight="380.0" prefWidth="282.0" />
-                        <Button layoutX="84.0" layoutY="436.0" mnemonicParsing="false" text="NEW SQUAD" />
+                        <ListView fx:id="globalSquads" layoutX="12.0" layoutY="35.0" prefHeight="364.0" prefWidth="282.0" />
+                        <VBox layoutX="5.0" layoutY="398.0" prefHeight="87.0" prefWidth="272.0">
+                           <children>
+                              <Label fx:id="messageLabel" text="Label" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="302.0" spacing="10.0">
+                                 <children>
+                                    <TextField fx:id="newSquadName" maxHeight="35.0" maxWidth="145.0" minHeight="0.0" minWidth="145.0" prefHeight="0.0" prefWidth="145.0" promptText="NEW NAME" HBox.hgrow="NEVER" />
+                                    <Button maxHeight="35.0" maxWidth="140.0" minHeight="35.0" minWidth="140.0" mnemonicParsing="false" onAction="#onNewSquad" prefHeight="35.0" prefWidth="140.0" text="NEW SQUAD" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
                   </AnchorPane>
               </content>
@@ -32,12 +43,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="-10.0" layoutY="-4.0" text="SQUAD NAME" />
-                        <Label layoutX="-10.0" layoutY="39.0" prefHeight="35.0" prefWidth="173.0" text="VAULT: " />
-                        <ListView layoutX="13.0" layoutY="133.0" prefHeight="91.0" prefWidth="280.0" />
+                        <Label fx:id="squadName" layoutX="-10.0" layoutY="-4.0" text="SQUAD NAME" />
+                        <Label fx:id="squadVault" layoutX="-10.0" layoutY="39.0" prefHeight="35.0" prefWidth="173.0" text="VAULT: " />
+                        <ListView fx:id="messagesBox" layoutX="13.0" layoutY="133.0" prefHeight="91.0" prefWidth="280.0" />
                         <Label layoutX="88.0" layoutY="97.0" text="MESSAGES" />
                         <Label layoutX="66.0" layoutY="257.0" text="TEAM MEMBERS" />
-                        <ListView layoutX="13.0" layoutY="293.0" prefHeight="179.0" prefWidth="280.0" />
+                        <ListView fx:id="teamMembersBox" layoutX="13.0" layoutY="293.0" prefHeight="179.0" prefWidth="280.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -45,13 +56,13 @@
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="307.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="307.0">
                            <children>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fff000" height="29.0" stroke="#fff000" strokeType="INSIDE" width="29.0" />
                               <Label text="XP: " fx:id="xpLabel" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="302.0" spacing="10.0">
+                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="302.0" spacing="10.0">
                            <children>
                               <Label text="ATTACK MECHANISMS" />
                               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -61,12 +72,12 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="150.0" prefWidth="304.0">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="91.0" prefWidth="290.0">
                            <content>
-                              <VBox fx:id="attackBox" prefHeight="132.0" prefWidth="303.0" spacing="13.0" />
+                              <VBox fx:id="attackBox" alignment="CENTER" prefHeight="96.0" prefWidth="304.0" spacing="13.0" />
                            </content>
                         </ScrollPane>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                        <HBox alignment="CENTER" prefHeight="51.0" prefWidth="307.0" spacing="10.0">
                            <children>
                               <Label text="DEFENSE MECHANISMS" />
                               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -76,9 +87,24 @@
                               </ImageView>
                            </children>
                         </HBox>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="111.0" prefWidth="307.0">
                            <content>
-                              <VBox fx:id="defenseBox" prefHeight="187.0" prefWidth="306.0" spacing="13.0" />
+                              <VBox fx:id="defenseBox" alignment="CENTER" prefHeight="99.0" prefWidth="306.0" spacing="13.0" />
+                           </content>
+                        </ScrollPane>
+                        <HBox alignment="CENTER" prefHeight="48.0" prefWidth="307.0" spacing="10.0">
+                           <children>
+                              <Label text="SQUAD GAME ABILITIES" />
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/squad.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="122.0" prefWidth="280.0">
+                           <content>
+                              <VBox fx:id="squadBox" alignment="CENTER" prefHeight="114.0" prefWidth="304.0" />
                            </content>
                         </ScrollPane>
                      </children></VBox>
@@ -88,11 +114,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="13.0" layoutY="95.0" prefHeight="122.0" prefWidth="280.0" />
-                        <Label layoutX="71.0" layoutY="59.0" text="GAME HISTORY" />
-                        <Label layoutX="62.0" layoutY="234.0" text="ENEMY MEMBERS" />
-                        <ListView layoutX="13.0" layoutY="270.0" prefHeight="201.0" prefWidth="280.0" />
-                        <Label fx:id="messageLabel" layoutX="13.0" layoutY="14.0" text="message:" />
+                        <ListView layoutX="13.0" layoutY="35.0" prefHeight="122.0" prefWidth="280.0" />
+                        <Label layoutX="71.0" text="GAME HISTORY" />
+                        <Label layoutX="62.0" layoutY="175.0" text="ENEMY MEMBERS" />
+                        <ListView layoutX="13.0" layoutY="210.0" prefHeight="201.0" prefWidth="280.0" />
+                        <Button layoutX="90.0" layoutY="436.0" mnemonicParsing="false" onAction="#onNewGame" text="NEW GAME" />
                      </children></AnchorPane>
               </content>
             </Tab>

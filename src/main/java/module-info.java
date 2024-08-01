@@ -23,4 +23,7 @@ module learningJavaFX {
     opens bahar.window_kill.communications.messages.server to com.google.gson;
     exports bahar.window_kill.client.control.states.processors.abilities.skills to com.google.gson;
     exports bahar.window_kill.client.control.states.processors.spawners;
+    opens bahar.window_kill.communications.messages.client.register to com.google.gson;
+    opens bahar.window_kill.communications.messages.client.data to com.google.gson;
+    opens bahar.window_kill.communications.messages.client.squads to com.google.gson;
 }

@@ -1,4 +1,7 @@
-package bahar.window_kill.communications.messages.client;
+package bahar.window_kill.communications.messages.client.register;
+
+import bahar.window_kill.communications.messages.client.ClientMessage;
+import bahar.window_kill.communications.messages.client.ClientMessageType;
 
 public class LoginMessage extends ClientMessage {
     private String username;

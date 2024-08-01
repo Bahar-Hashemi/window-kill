@@ -1,6 +1,6 @@
 package bahar.window_kill.server.control.handlers;
 
-import bahar.window_kill.communications.messages.client.ChangeStateMessage;
+import bahar.window_kill.communications.messages.client.data.ChangeStateMessage;
 import bahar.window_kill.communications.messages.client.ClientMessage;
 import bahar.window_kill.server.control.DataBaseManager;
 import bahar.window_kill.communications.data.TableUser;

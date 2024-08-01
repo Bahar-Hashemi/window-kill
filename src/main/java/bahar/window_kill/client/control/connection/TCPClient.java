@@ -1,8 +1,13 @@
 package bahar.window_kill.client.control.connection;
 
+import bahar.window_kill.communications.data.Development;
+import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
-import bahar.window_kill.communications.messages.client.*;
-import bahar.window_kill.communications.messages.server.RegisterAnswer;
+import bahar.window_kill.communications.messages.client.data.*;
+import bahar.window_kill.communications.messages.client.register.LoginMessage;
+import bahar.window_kill.communications.messages.client.register.SignupMessage;
+import bahar.window_kill.communications.messages.client.squads.NewSquadMessage;
+import bahar.window_kill.communications.messages.server.GeneralAnswer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -10,6 +15,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class TCPClient {
     private final String serverIP = "127.0.0.1";
@@ -90,13 +96,13 @@ public class TCPClient {
     }
 
 
-    public RegisterAnswer signupRequest(String username, String password, String repeatedPassword) {
+    public GeneralAnswer signupRequest(String username, String password, String repeatedPassword) {
         SignupMessage signupMessage = new SignupMessage(username, password, repeatedPassword);
         try {
             establishConnection();
             sendMessage(gsonAgent.toJson(signupMessage));
-            RegisterAnswer result = gsonAgent.fromJson(
-                    receiveResponse(), RegisterAnswer.class);
+            GeneralAnswer result = gsonAgent.fromJson(
+                    receiveResponse(), GeneralAnswer.class);
             endConnection();
             return result;
         }
@@ -105,13 +111,13 @@ public class TCPClient {
             return null;
         }
     }
-    public RegisterAnswer loginRequest(String username, String password) {
+    public GeneralAnswer loginRequest(String username, String password) {
         LoginMessage loginMessage = new LoginMessage(username, password);
         try {
             establishConnection();
             sendMessage(gsonAgent.toJson(loginMessage));
-            RegisterAnswer result = gsonAgent.fromJson(
-                    receiveResponse(), RegisterAnswer.class);
+            GeneralAnswer result = gsonAgent.fromJson(
+                    receiveResponse(), GeneralAnswer.class);
             endConnection();
             return result;
         }
@@ -142,6 +148,75 @@ public class TCPClient {
                     receiveResponse(), TableUser.class);
             endConnection();
             return user;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<String> getGlobe(String username) {
+        RequestDataMessage requestDataMessage = new RequestDataMessage(RequestedDataType.GLOBAL_SQUADS, username);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(requestDataMessage));
+            ArrayList<String> result = gsonAgent.fromJson(
+                    receiveResponse(), ArrayList.class);
+            endConnection();
+            return result;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public GeneralAnswer newSquad(String username, String newSquadName) {
+        NewSquadMessage newSquadMessage = new NewSquadMessage(username, newSquadName);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(newSquadMessage));
+            GeneralAnswer result = gsonAgent.fromJson(
+                    receiveResponse(), GeneralAnswer.class);
+            endConnection();
+            return result;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public void sendDevelopment(String username, Development development) {
+        SendDevelopmentMessage sendDevelopmentMessage = new SendDevelopmentMessage(username, development);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(sendDevelopmentMessage));
+            endConnection();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void sendSquad(String username, TableSquad tableSquad) {
+        SendSquadMessage sendSquadMessage = new SendSquadMessage(username, tableSquad);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(sendSquadMessage));
+            endConnection();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public TableSquad mySquad(String username) {
+        RequestDataMessage requestDataMessage = new RequestDataMessage(RequestedDataType.MY_SQUAD, username);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(requestDataMessage));
+            TableSquad squad = gsonAgent.fromJson(
+                    receiveResponse(), TableSquad.class);
+            endConnection();
+            return squad;
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -111,6 +111,7 @@ public class Development {
 
     // Method to create Development object from JSON string
     public static Development fromJson(String json) {
-        return getFirstState();
+        Gson gson = new Gson();
+        return gson.fromJson(json, Development.class);
     }
 }

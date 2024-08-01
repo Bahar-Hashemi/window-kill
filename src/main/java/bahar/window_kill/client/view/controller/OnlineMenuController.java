@@ -3,17 +3,19 @@ package bahar.window_kill.client.view.controller;
 import bahar.window_kill.client.control.connection.TCPClient;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.view.MainStage;
-import bahar.window_kill.client.view.PaneBuilder;
 import bahar.window_kill.client.view.controller.online.OnlineController;
 import bahar.window_kill.client.view.controller.online.OnlineSkillsController;
+import bahar.window_kill.client.view.controller.online.GlobeMenuController;
 import bahar.window_kill.client.view.controller.online.UpdateDataController;
-import bahar.window_kill.communications.data.Development;
+import bahar.window_kill.communications.data.TableUser;
+import bahar.window_kill.communications.messages.server.GeneralAnswer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -21,8 +23,14 @@ import java.util.ArrayList;
 
 public class OnlineMenuController {
     public AnchorPane pane;
-    public Label xpLabel;
-    public VBox attackBox, defenseBox;
+    public Label xpLabel, messageLabel;
+    public VBox attackBox, defenseBox, squadBox;
+    public TextField newSquadName;
+    public ListView<String> globalSquads;
+    public Label squadName;
+    public Label squadVault;
+    public ListView<String> messagesBox;
+    public ListView<TableUser> teamMembersBox;
     private ArrayList<OnlineController> controllers;
     public void initialize() {
         MainStage.requestCenterOnScreen(pane);
@@ -30,11 +38,14 @@ public class OnlineMenuController {
         for (OnlineController controller : controllers)
             controller.initialize();
         setUpTimeline();
+        //todo you may clean here!
+        messageLabel.setOpacity(0);
     }
     private void makeControllers() {
         controllers = new ArrayList<>();
         controllers.add(new UpdateDataController());
-        controllers.add(new OnlineSkillsController(xpLabel, defenseBox, attackBox));
+        controllers.add(new GlobeMenuController(globalSquads));
+        controllers.add(new OnlineSkillsController(xpLabel, defenseBox, attackBox, squadBox));
     }
     private void setUpTimeline() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> runControllers()));
@@ -46,4 +57,20 @@ public class OnlineMenuController {
             controller.run();
     }
 
+    public void onNewSquad(ActionEvent actionEvent) {
+        GeneralAnswer generalAnswer = new TCPClient().newSquad(User.getInstance().getUsername(), newSquadName.getText());
+        if (!generalAnswer.isAccept()) {
+            messageLabel.setOpacity(1);
+            messageLabel.setStyle("-fx-text-fill: red");
+            messageLabel.setText(generalAnswer.getMessage());
+        }
+        else {
+            messageLabel.setOpacity(1);
+            messageLabel.setStyle("-fx-text-fill: green");
+            messageLabel.setText(generalAnswer.getMessage());
+        }
+    }
+
+    public void onNewGame(ActionEvent actionEvent) { //todo complete here
+    }
 }

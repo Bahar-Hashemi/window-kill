@@ -6,6 +6,7 @@ import bahar.window_kill.client.control.util.FileUtil;
 import bahar.window_kill.client.model.boards.MainBoard;
 import bahar.window_kill.communications.data.Development;
 import bahar.window_kill.communications.data.Settings;
+import bahar.window_kill.communications.data.TableSquad;
 
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class User {
     private boolean hasDefenseRequest = false, hasAttackRequest = false;
     public ArrayList<AbilityWatch> abilities;
     public Development development;
+    public TableSquad tableSquad;
     public long coolDown;
 
     // get from server
@@ -173,5 +175,11 @@ public class User {
     }
     public void setState(String state) {
         this.state = state;
+    }
+    public Development getDevelopment() {
+        return this.development;
+    }
+    public void setDevelopment(Development development) {
+        this.development = development;
     }
 }

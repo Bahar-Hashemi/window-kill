@@ -73,7 +73,7 @@ public class MainMenuController {
         MainStage.add(pane);
     }
 
-    public void onSquad(ActionEvent actionEvent) {
+    public void onOnline(ActionEvent actionEvent) {
         stopTimeline();
         MainStage.newScene();
         MainStage.add(PaneBuilder.REGISTER_MENU_PANE.generatePane());

@@ -137,16 +137,6 @@
     -fx-background-color: #141414;
 }
 
-/* MenuItem */
-.menu-item {
-    -fx-background-color: #2b2b2b; /* Dark background for MenuItem */
-    -fx-text-fill: #d3d3d3; /* Light gray text for MenuItem */
-}
-
-.menu-item:hover {
-    -fx-background-color: #4a4a4a; /* Slightly lighter gray on hover */
-    -fx-text-fill: #ffffff; /* White text on hover */
-}
 .list-view {
     -fx-background-color: #000000; /* Black background for ListView */
     -fx-text-fill: #ffffff; /* White text for ListView */
@@ -171,4 +161,32 @@
 #messageLabel {
     -fx-font-size: 12px;
     -fx-text-fill: #FF0000;
+}
+
+.context-menu {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-padding: 8 15;
+    -fx-font-family: "cooper black";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-border-color: transparent;
+}
+.menu-item {
+    -fx-background-color: #18191A;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-padding: 8 15;
+    -fx-font-family: "cooper black";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-opacity: 0.7;
+}
+
+.menu-item:hover {
+    -fx-background-color: #282828;
+}
+
+.menu-item:pressed {
+    -fx-background-color: #202020;
 }

@@ -4,7 +4,7 @@ import bahar.window_kill.client.control.connection.TCPClient;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.view.PaneBuilder;
 import bahar.window_kill.client.view.MainStage;
-import bahar.window_kill.communications.messages.server.RegisterAnswer;
+import bahar.window_kill.communications.messages.server.GeneralAnswer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -22,7 +22,7 @@ public class SignupMenuController {
     }
 
     public void onSignUp(ActionEvent actionEvent) {
-        RegisterAnswer registerMessage = new TCPClient().signupRequest(usernameTextField.getText(), passwordField.getText(), repeatPasswordField.getText());
+        GeneralAnswer registerMessage = new TCPClient().signupRequest(usernameTextField.getText(), passwordField.getText(), repeatPasswordField.getText());
         if (!registerMessage.isAccept()) {
             errorLabel.setOpacity(1);
             errorLabel.setText(registerMessage.getMessage());

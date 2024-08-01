@@ -1,9 +1,11 @@
 package bahar.window_kill.server.control;
 
 import bahar.window_kill.communications.data.Development;
+import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DataBaseManager {
     private final String URL = "jdbc:mysql://127.0.0.1:3306/window_kill";
@@ -48,8 +50,8 @@ public class DataBaseManager {
                 "password VARCHAR(255) NOT NULL, " +
                 "development VARCHAR(255)," +
                 "state VARCHAR(255)," +
-                "squad VARCHAR(255)," +
-                "messages VARCHAR(1023), " +
+                "squad VARCHAR(255) DEFAULT '', " +
+                "messages VARCHAR(1023) DEFAULT '', " +
                 "CHECK (state IN ('online', 'offline', 'busy'))" +
                 ")";
         try {
@@ -63,11 +65,11 @@ public class DataBaseManager {
         String query = "CREATE TABLE squads (" +
                 "name VARCHAR(255) NOT NULL, " +
                 "owner VARCHAR(255) NOT NULL, " +
-                "game_history VARCHAR(1023), " +
-                "vault INT," +
-                "isPalioxisOn BIT, " +
-                "isAdonisOn BIT, " +
-                "isGefjonOn BIT " +
+                "game_history VARCHAR(1023) DEFAULT '', " +
+                "vault INT DEFAULT 0," +
+                "PalioxisState INT DEFAULT -1, " +
+                "AdonisState INT DEFAULT -1, " +
+                "GefjonState INT DEFAULT -1" +
                 ")";
         try {
             statement.executeUpdate(query);
@@ -99,7 +101,10 @@ public class DataBaseManager {
         return null;
     }
     public void addUser(TableUser tableUser) {
-        String query = "INSERT INTO users (username, password, state, squad, messages, development) VALUES ('" + tableUser.getUsername() + "', '" + tableUser.getPassword() + "', '" + tableUser.getState() + "', '" + tableUser.getSquad() + "', '" + tableUser.getMessages() + "', '" + tableUser.getDevelopment().toJson() + "')";
+        String squad = tableUser.getSquad();
+        if (squad == null)
+            squad = "";
+        String query = "INSERT INTO users (username, password, state, squad, messages, development) VALUES ('" + tableUser.getUsername() + "', '" + tableUser.getPassword() + "', '" + tableUser.getState() + "', '" + squad + "', '" + tableUser.getMessages() + "', '" + tableUser.getDevelopment().toJson() + "')";
         try {
             statement.executeUpdate(query);
         } catch (SQLException e) {
@@ -113,6 +118,96 @@ public class DataBaseManager {
                 "', messages = '" + tableUser.getMessages() +
                 "', development = '" + tableUser.getDevelopment().toJson() +
                 "' WHERE username = '" + tableUser.getUsername() + "'";
+        try {
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean hasSquad(String squadName) {
+        String query = "SELECT * FROM squads WHERE name = '" + squadName + "'";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next())
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void newSquad(String squadName, String username) {
+        String query = "INSERT INTO squads (name, owner) VALUES ('" + squadName + "', '" + username + "')";
+        try {
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public TableSquad getSquad(String squadName) {
+        String query = "SELECT * FROM squads WHERE name = '" + squadName + "'";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next()) {
+                return new TableSquad(
+                        rs.getString("name"),
+                        rs.getString("owner"),
+                        rs.getString("game_history"),
+                        rs.getInt("vault"),
+                        rs.getInt("PalioxisState"),
+                        rs.getInt("AdonisState"),
+                        rs.getInt("GefjonState")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public ArrayList<String> getSquadNames() {
+        ArrayList<String> squadNames = new ArrayList<>();
+        String query = "SELECT name FROM squads";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                squadNames.add(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return squadNames;
+    }
+    public ArrayList<TableUser> getSquadMembers(String squadName) {
+        ArrayList<TableUser> squadMembers = new ArrayList<>();
+        String query = "SELECT * FROM users WHERE squad = '" + squadName + "'";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                TableUser user = new TableUser(
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("state"),
+                        rs.getString("squad"),
+                        rs.getString("messages"),
+                        Development.fromJson(rs.getString("development"))
+                );
+                squadMembers.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return squadMembers;
+    }
+
+    public void updateSquad(TableSquad tableSquad) {
+        String query = "UPDATE squads SET owner = '" + tableSquad.getOwner() +
+                "', game_history = '" + tableSquad.getHistory() +
+                "', vault = " + tableSquad.getVault() +
+                ", PalioxisState = " + tableSquad.getPalioxisState() +
+                ", AdonisState = " + tableSquad.getAdonisState() +
+                ", GefjonState = " + tableSquad.getGefjonState() +
+                " WHERE name = '" + tableSquad.getName() + "'";
         try {
             statement.executeUpdate(query);
         } catch (SQLException e) {

@@ -1,6 +1,13 @@
 package bahar.window_kill.server.control;
 
 import bahar.window_kill.communications.messages.client.*;
+import bahar.window_kill.communications.messages.client.data.ChangeStateMessage;
+import bahar.window_kill.communications.messages.client.data.RequestDataMessage;
+import bahar.window_kill.communications.messages.client.data.SendDevelopmentMessage;
+import bahar.window_kill.communications.messages.client.data.SendSquadMessage;
+import bahar.window_kill.communications.messages.client.register.LoginMessage;
+import bahar.window_kill.communications.messages.client.register.SignupMessage;
+import bahar.window_kill.communications.messages.client.squads.NewSquadMessage;
 import bahar.window_kill.server.control.handlers.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,6 +37,9 @@ public class TCPWorker extends Thread {
         result.add(new SignupHandler());
         result.add(new ChangeStateHandler());
         result.add(new DataRequestHandler());
+        result.add(new NewSquadHandler());
+        result.add(new SendDevelopmentHandler());
+        result.add(new SendSquadHandler());
         return result;
     }
 
@@ -63,6 +73,9 @@ public class TCPWorker extends Thread {
                 case SIGNUP -> gsonAgent.fromJson(clientStr, SignupMessage.class);
                 case STATE_CHANGE -> gsonAgent.fromJson(clientStr, ChangeStateMessage.class);
                 case REQUEST_DATA -> gsonAgent.fromJson(clientStr, RequestDataMessage.class);
+                case NEW_SQUAD -> gsonAgent.fromJson(clientStr, NewSquadMessage.class);
+                case SEND_DEVELOPMENT -> gsonAgent.fromJson(clientStr, SendDevelopmentMessage.class);
+                case SEND_SQUAD -> gsonAgent.fromJson(clientStr, SendSquadMessage.class);
                 default -> null;
             };
         }

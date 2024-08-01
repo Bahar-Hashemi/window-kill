@@ -1,5 +1,6 @@
 package bahar.window_kill.server;
 
+import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.server.control.DataBaseManager;
 import bahar.window_kill.server.control.TCPWorkSpace;
 
