@@ -6,11 +6,9 @@ import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.data.UserMessage;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -45,9 +43,8 @@ public class SquadMenuController extends OnlineController {
             teamMembersBox.getItems().clear();
         else
             teamMembersBox.getItems().setAll(new TCPClient().mySquadMembers(User.getInstance().getUsername()));
-        ArrayList<UserMessage> messages = new TCPClient().getMe(User.getInstance().getUsername()).getMessages();
-        if (messages != null)
-            messagesBox.getItems().setAll(new TCPClient().getMe(User.getInstance().getUsername()).getMessages());
+        if (User.getInstance().getTableUser().getMessages() != null)
+            messagesBox.getItems().addAll(User.getInstance().getTableUser().getMessages());
     }
     private void makeData() {
         TableSquad squad = User.getInstance().tableSquad;
@@ -79,10 +76,41 @@ public class SquadMenuController extends OnlineController {
                     setGraphic(null);
                 } else {
                     Label label = new Label(item.toString());
+                    label.setStyle("-fx-font-size: 12px; -fx-text-fill: white;");
                     setGraphic(label);
+
+                    // Create context menu
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem acceptItem = new MenuItem("Accept");
+                    MenuItem rejectItem = new MenuItem("Reject");
+
+                    // Add event handlers for context menu items
+                    acceptItem.setOnAction(event -> handleAccept(item));
+                    rejectItem.setOnAction(event -> handleReject(item));
+
+                    contextMenu.getItems().addAll(acceptItem, rejectItem);
+
+                    // Show context menu on right-click
+                    setOnMouseClicked(event -> {
+                        if (event.getButton() == MouseButton.SECONDARY) {
+                            contextMenu.show(label, event.getScreenX(), event.getScreenY());
+                        }
+                    });
                 }
             }
         });
+    }
+
+    // Handle accept action
+    private void handleAccept(UserMessage item) {
+        messagesBox.getItems().remove(item);
+        // Implement accept logic here
+        System.out.println("Accepted: " + item);
+    }
+
+    // Handle reject action
+    private void handleReject(UserMessage item) {
+        messagesBox.getItems().remove(item);
     }
     private void setupTeamMembersBox() {
         teamMembersBox.setCellFactory(listView -> new ListCell<>() {

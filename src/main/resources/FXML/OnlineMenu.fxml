@@ -43,11 +43,11 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="squadName" layoutX="-10.0" layoutY="-4.0" text="SQUAD NAME" />
-                        <Label fx:id="squadVault" layoutX="-10.0" layoutY="39.0" prefHeight="35.0" prefWidth="173.0" text="VAULT: " />
+                        <Label fx:id="squadName" layoutX="13.0" layoutY="5.0" text="SQUAD NAME" />
+                        <Label fx:id="squadVault" layoutX="15.0" layoutY="41.0" prefHeight="35.0" prefWidth="173.0" text="VAULT: " />
                         <ListView fx:id="messagesBox" layoutX="13.0" layoutY="133.0" prefHeight="91.0" prefWidth="280.0" />
-                        <Label layoutX="88.0" layoutY="97.0" text="MESSAGES" />
-                        <Label layoutX="66.0" layoutY="257.0" text="TEAM MEMBERS" />
+                        <Label layoutX="15.0" layoutY="97.0" text="MESSAGES" />
+                        <Label layoutX="14.0" layoutY="257.0" text="TEAM MEMBERS" />
                         <ListView fx:id="teamMembersBox" layoutX="13.0" layoutY="293.0" prefHeight="179.0" prefWidth="280.0" />
                      </children></AnchorPane>
             </content>

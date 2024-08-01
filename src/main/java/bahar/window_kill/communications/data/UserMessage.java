@@ -1,6 +1,5 @@
 package bahar.window_kill.communications.data;
 
-import bahar.window_kill.client.model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -10,9 +9,11 @@ import java.util.ArrayList;
 public class UserMessage {
     UserMessageType type;
     String messageData;
-    public UserMessage(UserMessageType type, String messageData) {
+    String senderName;
+    public UserMessage(UserMessageType type, String senderName, String messageData) {
         this.type = type;
         this.messageData = messageData;
+        this.senderName = senderName;
     }
     public String toJson() {
         Gson gson = new Gson();
@@ -31,12 +32,35 @@ public class UserMessage {
         if (type == UserMessageType.MEMBERSHIP_ACCEPTED)
             return "You've been accepted to '" + messageData + "' squad!";
         if (type == UserMessageType.MEMBERSHIP_REQUEST)
-            return "User '" + messageData + "' wants to join your squad!";
+            return "User '" + senderName + "' wants to join your squad!";
         if (type == UserMessageType.MONOMACHIA_REQUEST)
-            return "User '" + messageData + "' has a 'Monomachia' request!";
+            return "User '" + senderName + "' has a 'Monomachia' request!";
         if (type == UserMessageType.COLLOSEUM_REQUEST)
-            return "User '" + messageData + "' has a 'Colloseum' request!";
+            return "User '" + senderName + "' has a 'Colloseum' request!";
         return "Unknown message type!";
     }
 
+    public UserMessageType getType() {
+        return type;
+    }
+
+    public void setType(UserMessageType type) {
+        this.type = type;
+    }
+
+    public String getMessageData() {
+        return messageData;
+    }
+
+    public void setMessageData(String messageData) {
+        this.messageData = messageData;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
 }

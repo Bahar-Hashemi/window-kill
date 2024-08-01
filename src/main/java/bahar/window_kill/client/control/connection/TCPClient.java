@@ -239,9 +239,10 @@ public class TCPClient {
         return null;
     }
     public void sendUserMessage(UserMessage userMessage) {
+        SendMessageMessage sendMessageMessage = new SendMessageMessage(userMessage);
         try {
             establishConnection();
-            sendMessage(gsonAgent.toJson(userMessage));
+            sendMessage(gsonAgent.toJson(sendMessageMessage));
             endConnection();
         }
         catch (Exception e) {

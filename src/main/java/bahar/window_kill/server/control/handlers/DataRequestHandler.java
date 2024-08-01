@@ -28,6 +28,8 @@ public class DataRequestHandler extends MessageHandler {
     private void returnMe(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
         TableUser tableUser = DataBaseManager.getInstance().getUser(requestDataMessage.getUsername());
         sendObject(sendBuffer, tableUser);
+        tableUser.setMessages(null);
+        DataBaseManager.getInstance().updateUser(tableUser);
     }
     private void returnGlobe(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
         ArrayList<String> squads = DataBaseManager.getInstance().getSquadNames();

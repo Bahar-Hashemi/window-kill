@@ -1,6 +1,5 @@
 package bahar.window_kill.communications.data;
 
-import bahar.window_kill.communications.data.Development;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

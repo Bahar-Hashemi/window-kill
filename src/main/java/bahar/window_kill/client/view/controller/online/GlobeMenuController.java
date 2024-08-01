@@ -2,6 +2,8 @@ package bahar.window_kill.client.view.controller.online;
 
 import bahar.window_kill.client.control.connection.TCPClient;
 import bahar.window_kill.client.model.User;
+import bahar.window_kill.communications.data.UserMessage;
+import bahar.window_kill.communications.data.UserMessageType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
@@ -50,10 +52,12 @@ public class GlobeMenuController extends OnlineController {
         requestToJoin.setOnAction(event -> {
             String selectedSquad = globalSquads.getSelectionModel().getSelectedItem();
             if (selectedSquad != null) {
-                // Handle the join request logic here
-                System.out.println("Request to join squad: " + selectedSquad);
-                // You can replace the above line with the actual logic to send the join request
+                String squadName = findSquadName(selectedSquad);
+                new TCPClient().sendUserMessage(new UserMessage(UserMessageType.MEMBERSHIP_REQUEST, User.getInstance().getUsername(), squadName));
             }
         });
+    }
+    private static String findSquadName(String squad) {
+        return squad.substring(0, squad.lastIndexOf("(") - 1);
     }
 }
