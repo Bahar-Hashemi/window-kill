@@ -3,11 +3,9 @@ package bahar.window_kill.client.view.controller;
 import bahar.window_kill.client.control.connection.TCPClient;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.view.MainStage;
-import bahar.window_kill.client.view.controller.online.OnlineController;
-import bahar.window_kill.client.view.controller.online.OnlineSkillsController;
-import bahar.window_kill.client.view.controller.online.GlobeMenuController;
-import bahar.window_kill.client.view.controller.online.UpdateDataController;
+import bahar.window_kill.client.view.controller.online.*;
 import bahar.window_kill.communications.data.TableUser;
+import bahar.window_kill.communications.data.UserMessage;
 import bahar.window_kill.communications.messages.server.GeneralAnswer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -29,7 +27,7 @@ public class OnlineMenuController {
     public ListView<String> globalSquads;
     public Label squadName;
     public Label squadVault;
-    public ListView<String> messagesBox;
+    public ListView<UserMessage> messagesBox;
     public ListView<TableUser> teamMembersBox;
     private ArrayList<OnlineController> controllers;
     public void initialize() {
@@ -46,6 +44,7 @@ public class OnlineMenuController {
         controllers.add(new UpdateDataController());
         controllers.add(new GlobeMenuController(globalSquads));
         controllers.add(new OnlineSkillsController(xpLabel, defenseBox, attackBox, squadBox));
+        controllers.add(new SquadMenuController(squadName, squadVault, messagesBox, teamMembersBox));
     }
     private void setUpTimeline() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> runControllers()));

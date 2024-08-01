@@ -21,6 +21,8 @@ public class DataRequestHandler extends MessageHandler {
             returnGlobe(sendBuffer, requestDataMessage);
         if (requestDataMessage.getRequestedDataType() == RequestedDataType.MY_SQUAD)
             returnMySquad(sendBuffer, requestDataMessage);
+        if (requestDataMessage.getRequestedDataType() == RequestedDataType.MY_SQUAD_MEMBERS)
+            returnMyTeamMates(sendBuffer, requestDataMessage);
         return true;
     }
     private void returnMe(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
@@ -39,5 +41,10 @@ public class DataRequestHandler extends MessageHandler {
         TableUser tableUser = DataBaseManager.getInstance().getUser(requestDataMessage.getUsername());
         TableSquad squad = DataBaseManager.getInstance().getSquad(tableUser.getSquad());
         sendObject(sendBuffer, squad);
+    }
+    private void returnMyTeamMates(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
+        TableUser tableUser = DataBaseManager.getInstance().getUser(requestDataMessage.getUsername());
+        ArrayList<TableUser> users = DataBaseManager.getInstance().getSquadMembers(tableUser.getSquad());
+        sendObject(sendBuffer, users);
     }
 }

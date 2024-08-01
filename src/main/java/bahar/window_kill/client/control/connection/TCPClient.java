@@ -3,6 +3,7 @@ package bahar.window_kill.client.control.connection;
 import bahar.window_kill.communications.data.Development;
 import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
+import bahar.window_kill.communications.data.UserMessage;
 import bahar.window_kill.communications.messages.client.data.*;
 import bahar.window_kill.communications.messages.client.register.LoginMessage;
 import bahar.window_kill.communications.messages.client.register.SignupMessage;
@@ -144,8 +145,7 @@ public class TCPClient {
         try {
             establishConnection();
             sendMessage(gsonAgent.toJson(requestDataMessage));
-            TableUser user = gsonAgent.fromJson(
-                    receiveResponse(), TableUser.class);
+            TableUser user = new Gson().fromJson(receiveResponse(), TableUser.class);
             endConnection();
             return user;
         }
@@ -222,5 +222,30 @@ public class TCPClient {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public ArrayList<TableUser> mySquadMembers(String username) {
+        RequestDataMessage requestDataMessage = new RequestDataMessage(RequestedDataType.MY_SQUAD_MEMBERS, username);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(requestDataMessage));
+            ArrayList<TableUser> teamMates = TableUser.fromJsonArray(receiveResponse());
+            endConnection();
+            return teamMates;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public void sendUserMessage(UserMessage userMessage) {
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(userMessage));
+            endConnection();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

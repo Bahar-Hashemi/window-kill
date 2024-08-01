@@ -1,12 +1,17 @@
 package bahar.window_kill.communications.data;
 
 import bahar.window_kill.communications.data.Development;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class TableUser {
     private String username, password, state, squad;
-    private String messages;
+    private ArrayList<UserMessage> messages;
     private Development development;
-    public TableUser(String username, String password, String state, String squad, String messages, Development development) {
+    public TableUser(String username, String password, String state, String squad, ArrayList<UserMessage> messages, Development development) {
         this.username = username;
         this.password = password;
         this.state = state;
@@ -47,11 +52,11 @@ public class TableUser {
         this.squad = squad;
     }
 
-    public String getMessages() {
+    public ArrayList<UserMessage> getMessages() {
         return messages;
     }
 
-    public void setMessages(String messages) {
+    public void setMessages(ArrayList<UserMessage> messages) {
         this.messages = messages;
     }
 
@@ -61,5 +66,10 @@ public class TableUser {
 
     public void setDevelopment(Development development) {
         this.development = development;
+    }
+    public static ArrayList<TableUser> fromJsonArray(String json) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<TableUser>>(){}.getType();
+        return gson.fromJson(json, type);
     }
 }

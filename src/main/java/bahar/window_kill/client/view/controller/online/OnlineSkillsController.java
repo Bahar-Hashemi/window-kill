@@ -16,8 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class OnlineSkillsController extends OnlineController {
-    private Label xpLabel;
-    private VBox defenseBox, attackBox, squadBox;
+    private final Label xpLabel;
+    private final VBox defenseBox, attackBox, squadBox;
     private Development development;
     public OnlineSkillsController(Label xpLabel, VBox defenseBox, VBox attackBox, VBox squadBox) {
         this.xpLabel = xpLabel;

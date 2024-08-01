@@ -18,6 +18,7 @@ public class UpdateDataController extends OnlineController {
     private void updateData() {
         TableUser user = new TCPClient().getMe(User.getInstance().getUsername());
         TableSquad squad = new TCPClient().mySquad(User.getInstance().getUsername());
+        User.getInstance().setTableUser(user);
         User.getInstance().development = user.getDevelopment();
         User.getInstance().tableSquad = squad;
     }

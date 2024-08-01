@@ -3,6 +3,8 @@ package bahar.window_kill.server.control;
 import bahar.window_kill.communications.data.Development;
 import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
+import bahar.window_kill.communications.data.UserMessage;
+import com.google.gson.Gson;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class DataBaseManager {
                 "development VARCHAR(255)," +
                 "state VARCHAR(255)," +
                 "squad VARCHAR(255) DEFAULT '', " +
-                "messages VARCHAR(1023) DEFAULT '', " +
+                "messages VARCHAR(2047) DEFAULT 'null', " +
                 "CHECK (state IN ('online', 'offline', 'busy'))" +
                 ")";
         try {
@@ -93,7 +95,7 @@ public class DataBaseManager {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             if (rs.next()) {
-                return new TableUser(rs.getString("username"), rs.getString("password"), rs.getString("state"), rs.getString("squad"), rs.getString("messages"), Development.fromJson(rs.getString("development")));
+                return new TableUser(rs.getString("username"), rs.getString("password"), rs.getString("state"), rs.getString("squad"), UserMessage.fromJsonArray(rs.getString("messages")), Development.fromJson(rs.getString("development")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,7 +106,10 @@ public class DataBaseManager {
         String squad = tableUser.getSquad();
         if (squad == null)
             squad = "";
-        String query = "INSERT INTO users (username, password, state, squad, messages, development) VALUES ('" + tableUser.getUsername() + "', '" + tableUser.getPassword() + "', '" + tableUser.getState() + "', '" + squad + "', '" + tableUser.getMessages() + "', '" + tableUser.getDevelopment().toJson() + "')";
+        String messages = new Gson().toJson(tableUser.getMessages());
+        if (messages == null)
+            messages = "";
+        String query = "INSERT INTO users (username, password, state, squad, messages, development) VALUES ('" + tableUser.getUsername() + "', '" + tableUser.getPassword() + "', '" + tableUser.getState() + "', '" + squad + "', '" + messages + "', '" + tableUser.getDevelopment().toJson() + "')";
         try {
             statement.executeUpdate(query);
         } catch (SQLException e) {
@@ -112,10 +117,12 @@ public class DataBaseManager {
         }
     }
     public void updateUser(TableUser tableUser) {
+        String squad = (tableUser.getSquad() == null)? "": tableUser.getSquad();
+        String messages = new Gson().toJson(tableUser.getMessages());
         String query = "UPDATE users SET password = '" + tableUser.getPassword() +
                 "', state = '" + tableUser.getState() +
-                "', squad = '" + tableUser.getSquad() +
-                "', messages = '" + tableUser.getMessages() +
+                "', squad = '" + squad +
+                "', messages = '" + messages +
                 "', development = '" + tableUser.getDevelopment().toJson() +
                 "' WHERE username = '" + tableUser.getUsername() + "'";
         try {
@@ -189,7 +196,7 @@ public class DataBaseManager {
                         rs.getString("password"),
                         rs.getString("state"),
                         rs.getString("squad"),
-                        rs.getString("messages"),
+                        UserMessage.fromJsonArray(rs.getString("messages")),
                         Development.fromJson(rs.getString("development"))
                 );
                 squadMembers.add(user);

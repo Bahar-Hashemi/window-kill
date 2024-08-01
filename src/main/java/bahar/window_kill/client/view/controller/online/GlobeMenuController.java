@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 
 public class GlobeMenuController extends OnlineController {
-    private ListView<String> globalSquads;
+    private final ListView<String> globalSquads;
 
     public GlobeMenuController(ListView<String> globalSquads) {
         this.globalSquads = globalSquads;
