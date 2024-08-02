@@ -10,15 +10,15 @@ public class AbilityWatch extends Watch {
     final int price;
     protected final Game game;
     protected final User user;
-    public AbilityWatch(Game game, User user, int duration, Runnable runnable, String name, int price) {
-        super(duration, runnable);
+    public AbilityWatch(Game game, User user, int duration, String name, int price) {
+        super(duration);
         this.name = name;
         this.price = price;
         this.game = game;
         this.user = user;
     }
     protected void onEnd() {
-//        user.abilities.remove(this);
+        user.abilities.remove(this);
     }
     public String getName() {
         return name;

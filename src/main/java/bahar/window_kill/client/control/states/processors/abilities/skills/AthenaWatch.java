@@ -1,15 +1,17 @@
 package bahar.window_kill.client.control.states.processors.abilities.skills;
 
 import bahar.window_kill.client.control.states.processors.abilities.AbilityWatch;
+import bahar.window_kill.client.model.Game;
+import bahar.window_kill.client.model.User;
 
 public class AthenaWatch extends AbilityWatch {
-    public AthenaWatch() {
-        super(30, () -> {}, "Athena", 1200);
+    public AthenaWatch(Game game, User user) {
+        super(game, user, 30, "Athena", 1200);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        Deck.shrink *= 0.8;
+        user.mainBoard.shrink *= 0.8;
     }
 }
