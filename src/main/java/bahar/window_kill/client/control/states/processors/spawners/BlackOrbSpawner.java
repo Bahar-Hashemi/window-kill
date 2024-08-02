@@ -1,7 +1,7 @@
 package bahar.window_kill.client.control.states.processors.spawners;
 
 import bahar.window_kill.client.control.Constants;
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.entities.BlackOrb;
 import bahar.window_kill.client.model.entities.Entity;
 import bahar.window_kill.client.model.entities.attackers.BlackOrbLaser;
@@ -13,22 +13,22 @@ public class BlackOrbSpawner extends Spawner {
     static double centerX, centerY;
     static ArrayList<BlackOrb> blackOrbs = new ArrayList<>();
     static double radius;
-    public BlackOrbSpawner(Deck deck) {
-        super(500, createRunnable(deck), deck);
-        setCycleCount(findCycle(deck));
+    public BlackOrbSpawner(Game game) {
+        super(500, createRunnable(game), game);
+        setCycleCount(findCycle(game));
     }
-    private static void makeBlackOrbs(Deck deck) {
+    private static void makeBlackOrbs(Game game) {
         blackOrbs = new ArrayList<>();
-        for (Entity entity: deck.entities)
+        for (Entity entity: game.entities)
             if (entity instanceof BlackOrb)
                 blackOrbs.add((BlackOrb) entity);
     }
-    private static int findIndex(Deck deck) {
-        makeBlackOrbs(deck);
+    private static int findIndex(Game game) {
+        makeBlackOrbs(game);
         return blackOrbs.size();
     }
-    private static int findCycle(Deck deck) {
-        return 5 - findIndex(deck);
+    private static int findCycle(Game game) {
+        return 5 - findIndex(game);
     }
     private static void makeConstants() {
         Random random = new Random();
@@ -36,9 +36,9 @@ public class BlackOrbSpawner extends Spawner {
         centerY = random.nextDouble(Constants.SCREEN_HEIGHT / 4, Constants.SCREEN_HEIGHT * 3 / 4);
         radius = random.nextDouble(150, 250);
     }
-    private static Runnable createRunnable(Deck deck) {
+    private static Runnable createRunnable(Game game) {
         return () -> {
-            int index = findIndex(deck);
+            int index = findIndex(game);
             if (index == 0)
                 makeConstants();
             double theta = 2 * Math.PI / 5;
@@ -46,17 +46,17 @@ public class BlackOrbSpawner extends Spawner {
             double y = centerY + radius * Math.sin(index * theta);
             BlackOrb blackOrb = new BlackOrb();
             blackOrbs.add(blackOrb);
-            addEntity(blackOrb, deck);
+            addEntity(blackOrb, game);
             blackOrb.setSceneLocation(x, y);
-            makeLaser(blackOrb, deck);
+            makeLaser(blackOrb, game);
         };
     }
-    private static void makeLaser(BlackOrb blackOrb, Deck deck) {
-        makeBlackOrbs(deck);
+    private static void makeLaser(BlackOrb blackOrb, Game game) {
+        makeBlackOrbs(game);
         for (BlackOrb orb: blackOrbs)
             if (orb != blackOrb) {
                 BlackOrbLaser blackOrbLaser = new BlackOrbLaser(blackOrb, orb);
-                addEntity(blackOrbLaser, deck);
+                addEntity(blackOrbLaser, game);
                 blackOrbLaser.setSceneLocation(blackOrb.getSceneX(), blackOrb.getSceneY());
             }
     }

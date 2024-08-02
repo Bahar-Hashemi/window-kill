@@ -1,6 +1,6 @@
 package bahar.window_kill.client.control.states;
 
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.util.SoundUtil;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.boards.MainBoard;
@@ -14,18 +14,18 @@ import javafx.util.Duration;
 
 public class RestartingState extends GameState {
     static Color[] colors = new Color[] {Color.GREEN, Color.GREENYELLOW, Color.ORANGE, Color.RED};
-    public RestartingState(Deck deck) {
-        super(deck, makeTimeLine(deck));
+    public RestartingState(Game game) {
+        super(game, makeTimeLine(game));
     }
-    private static Timeline makeTimeLine(Deck deck) {
+    private static Timeline makeTimeLine(Game game) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            for (User user: deck.users)
+            for (User user: game.users)
                 handleMainBoard(user.mainBoard);
             SoundUtil.DAMAGE.play();
         }));
         timeline.setCycleCount(3);
         timeline.setOnFinished(e -> {
-            deck.setGameState(new PlayingState(deck));
+            game.setGameState(new PlayingState(game));
         });
         return timeline;
     }
@@ -46,14 +46,14 @@ public class RestartingState extends GameState {
     @Override
     public void play() {
         super.play();
-        for (User user: deck.users)
+        for (User user: game.users)
             user.mainBoard.setCountDown(makeLabel(user.mainBoard));
     }
 
     @Override
     public void stop() {
         super.stop();
-        for (User user: deck.users)
+        for (User user: game.users)
             user.mainBoard.removeCountDown();
     }
 }

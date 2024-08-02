@@ -1,6 +1,6 @@
 package bahar.window_kill.client.model.entities;
 
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.states.processors.strategies.strategies.Strategy;
 import bahar.window_kill.client.control.states.processors.strategies.movements.ImpactStrategy;
 import javafx.scene.Node;
@@ -10,18 +10,18 @@ abstract public class Entity {
     protected final ImpactStrategy impactStrategy;
     protected final Node view;
     protected Strategy strategy;
-    protected Deck deck;
+    protected Game game;
     protected Entity(Node view, int HP, boolean canImpact, Strategy strategy) {
         this.view = view;
         this.HP = HP;
         impactStrategy = new ImpactStrategy(canImpact);
         this.strategy = strategy;
     }
-    public void setDeck(Deck deck) {
-        this.deck = deck;
+    public void setDeck(Game game) {
+        this.game = game;
     }
-    public void getDeck(Deck deck) {
-        this.deck = deck;
+    public void getDeck(Game game) {
+        this.game = game;
     }
     public void setLayoutX(double x) {
         view.setLayoutX(x);

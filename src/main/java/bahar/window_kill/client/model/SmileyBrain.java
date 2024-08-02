@@ -27,19 +27,19 @@ public class SmileyBrain {
         watches.add(new ComingInWatch(face, leftHand, rightHand));
         attackController = new Watch(10000, () -> canAttack = true);
     }
-    public void act(Deck deck) {
+    public void act(Game game) {
         if (face.getHP() <= 0) {
             leftHand.setHP(0);
             rightHand.setHP(0);
         }
         for (BossWatch watch: watches)
-            watch.call(deck.clock);
+            watch.call(game.clock);
         for (int i = watches.size() - 1; i >= 0; i--)
             if (watches.get(i).getCycleCount() == 0)
                 watches.remove(i);
-        attackController.call(deck.clock);
+        attackController.call(game.clock);
         if (canAttack) {
-            for (User user: deck.users)
+            for (User user: game.users)
                 attack(user.getEpsilon(), user.mainBoard);
             canAttack = false;
         }

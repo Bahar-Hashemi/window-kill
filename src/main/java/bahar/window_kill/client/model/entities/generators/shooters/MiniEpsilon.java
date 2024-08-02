@@ -40,7 +40,7 @@ public class MiniEpsilon extends ShooterEntity {
     @Override
     public void move() {
         double speed = 6;
-        User user = GameUtil.findMyUser(this, deck);
+        User user = GameUtil.findMyUser(this, game);
         double dx = user.getEpsilon().getSceneX() + difX - getSceneX();
         double dy = user.getEpsilon().getSceneY() + difY - getSceneY();
         double chord = Math.sqrt(dx * dx + dy * dy);
@@ -50,7 +50,7 @@ public class MiniEpsilon extends ShooterEntity {
     }
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     @Override

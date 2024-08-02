@@ -42,7 +42,7 @@ public class Bullet extends Entity implements AttackerEntity {
 
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     public void shout() {

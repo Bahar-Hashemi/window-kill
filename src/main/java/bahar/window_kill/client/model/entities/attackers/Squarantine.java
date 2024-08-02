@@ -42,7 +42,7 @@ public class Squarantine extends Entity implements LootDropper, AttackerEntity  
             impactStrategy.act(this);
             return;
         }
-        User user = GameUtil.findMyUser(this, deck);
+        User user = GameUtil.findMyUser(this, game);
         double dx = user.getEpsilon().getSceneX() - getSceneX();
         double dy = user.getEpsilon().getSceneY() - getSceneY();
         double chord = Math.sqrt(dx * dx + dy * dy);
@@ -56,7 +56,7 @@ public class Squarantine extends Entity implements LootDropper, AttackerEntity  
 
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     public void shout() {

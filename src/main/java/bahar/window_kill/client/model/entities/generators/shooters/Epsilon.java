@@ -41,7 +41,7 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
             impactStrategy.act(this);
             return;
         }
-        User user = GameUtil.findMyUser(this, deck);
+        User user = GameUtil.findMyUser(this, game);
         if (user.hasLeftRequest())
             setSceneX(getSceneX() - SPEED);
         if (user.hasRightRequest())
@@ -54,7 +54,7 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
 
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     @Override

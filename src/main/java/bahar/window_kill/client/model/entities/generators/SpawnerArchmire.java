@@ -51,7 +51,7 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
     @Override
     public void move() {
         double speed = 3;
-        User user = GameUtil.findMyUser(this, deck);
+        User user = GameUtil.findMyUser(this, game);
         double dx = user.getEpsilon().getSceneX() - getSceneX() + previousX;
         double dy = user.getEpsilon().getSceneY() - getSceneY() + previousY;
         double chord = Math.sqrt(dx * dx + dy * dy);
@@ -67,7 +67,7 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
     }
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     @Override

@@ -61,7 +61,7 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
     @Override
     public void aggress() {
         if (strategy != null)
-            strategy.act(this, deck);
+            strategy.act(this, game);
     }
 
     @Override

@@ -36,9 +36,9 @@ public class Collectable extends Entity {
 
     @Override
     public void move() {
-        User user = GameUtil.findMyUser(this, deck);
+        User user = GameUtil.findMyUser(this, game);
         if (user == null)
-            user = deck.users.get(new Random().nextInt(deck.users.size()));
+            user = game.users.get(new Random().nextInt(game.users.size()));
         double targetX = user.getEpsilon().getSceneX();
         double targetY = user.getEpsilon().getSceneY();
         double speed = 10;
@@ -50,7 +50,7 @@ public class Collectable extends Entity {
     }
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
 

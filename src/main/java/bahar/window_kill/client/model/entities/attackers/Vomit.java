@@ -14,7 +14,7 @@ public class Vomit extends Entity implements AttackerEntity {
     public Vomit() {
         super(makeView(), 10, false, new DamageStrategy());
         opacityWatch = new Watch(30, () -> {view.setOpacity(view.getOpacity() - 0.003);});
-        damageWatch = new Watch(100, () -> {setHP(getHP() - 4); setDamage(getDamage() - 4); strategy.act(this, deck);});
+        damageWatch = new Watch(100, () -> {setHP(getHP() - 4); setDamage(getDamage() - 4); strategy.act(this, game);});
     }
     private static Node makeView() {
         Path path = new Path();
@@ -48,12 +48,12 @@ public class Vomit extends Entity implements AttackerEntity {
     }
     @Override
     public void move() {
-        opacityWatch.call(deck.clock);
+        opacityWatch.call(game.clock);
     }
 
     @Override
     public void aggress() {
-        damageWatch.call(deck.clock);
+        damageWatch.call(game.clock);
     }
 
     @Override

@@ -82,7 +82,7 @@ public class Omenoct extends ShooterEntity implements LootDropper {
     }
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     @Override

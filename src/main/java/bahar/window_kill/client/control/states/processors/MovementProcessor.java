@@ -1,7 +1,7 @@
 package bahar.window_kill.client.control.states.processors;
 
 
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.boards.MainBoard;
@@ -14,8 +14,8 @@ import bahar.window_kill.client.model.entities.generators.shooters.SmileyHand;
 import java.util.ArrayList;
 
 public class MovementProcessor extends GameProcessor {
-    public MovementProcessor(Deck deck) {
-        super(deck);
+    public MovementProcessor(Game game) {
+        super(game);
     }
 
     public void run() {
@@ -25,7 +25,7 @@ public class MovementProcessor extends GameProcessor {
         checkOpacities();
     }
     private void checkOpacities() {
-        for (Entity entity: deck.entities)
+        for (Entity entity: game.entities)
             if ((entity instanceof Bullet && ((Bullet) entity).isTraverser()) || (entity instanceof Collectable)) {
                 if (GameUtil.isInOneBoard(entity))
                     entity.getView().setOpacity(1);
@@ -34,15 +34,15 @@ public class MovementProcessor extends GameProcessor {
             }
     }
     private void simpleMovement() {
-        for (Entity entity: deck.entities) {
-            if (deck.isLocked && !(entity instanceof Bullet && !((Bullet) entity).isTraverser()))
+        for (Entity entity: game.entities) {
+            if (game.isLocked && !(entity instanceof Bullet && !((Bullet) entity).isTraverser()))
                 continue;
             entity.move();
         }
     }
     private void processImpacts() {
-        ArrayList<Entity> newEntities = new ArrayList<>(deck.entities);
-        for (User user: deck.users)
+        ArrayList<Entity> newEntities = new ArrayList<>(game.entities);
+        for (User user: game.users)
             newEntities.add(user.epsilon);
         for (int i = newEntities.size() - 1; i >= 0; i--)
             for (int j = i - 1; j >= 0; j--) {
@@ -58,7 +58,7 @@ public class MovementProcessor extends GameProcessor {
             }
     }
     private void processEpsilonMovement() {
-        for (User user: deck.users) {
+        for (User user: game.users) {
             user.epsilon.move();
             makeEpsilonInBoard(user.epsilon, user.mainBoard);
         }

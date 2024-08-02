@@ -1,6 +1,6 @@
 package bahar.window_kill.client.control.states.processors.strategies.strategies;
 
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.util.SoundUtil;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.boards.MainBoard;
@@ -16,15 +16,15 @@ public class VomitStrategy extends Strategy {
         watch = new Watch(spawnDuration, () -> hasBullet = true);
     }
     @Override
-    public void act(Entity aggressionSource, Deck deck) {
-        watch.call(deck.clock);
+    public void act(Entity aggressionSource, Game game) {
+        watch.call(game.clock);
         if (!hasBullet)
             return;
         Entity bullet = new Vomit();
-        int index = new Random().nextInt(deck.users.size());
-        MainBoard mainBoard = deck.users.get(index).mainBoard;
+        int index = new Random().nextInt(game.users.size());
+        MainBoard mainBoard = game.users.get(index).mainBoard;
         mainBoard.getChildren().add(bullet.getView());
-        deck.addEntity(bullet);
+        game.addEntity(bullet);
         Random random = new Random();
         bullet.setSceneLocation(random.nextDouble(mainBoard.getLayoutX(), mainBoard.getLayoutX() + mainBoard.getWidth()),
                 random.nextDouble(mainBoard.getLayoutY(), mainBoard.getLayoutY() + mainBoard.getHeight()));

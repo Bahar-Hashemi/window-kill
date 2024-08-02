@@ -22,7 +22,7 @@ public class NewSquadHandler extends MessageHandler {
             return true;
         }
         TableUser tableUser = DataBaseManager.getInstance().getUser(newSquadMessage.getUsername());
-        if (!tableUser.getSquad().isEmpty()) {
+        if (!(tableUser.getSquad() == null)) {
             sendMessage(sendBuffer, new GeneralAnswer(false, "You are already in a squad"));
             return true;
         }

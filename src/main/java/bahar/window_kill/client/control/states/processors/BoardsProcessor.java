@@ -1,19 +1,19 @@
 package bahar.window_kill.client.control.states.processors;
 
 import bahar.window_kill.client.control.Constants;
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.boards.MainBoard;
 
 public class BoardsProcessor extends GameProcessor {
-    public BoardsProcessor(Deck deck) {
-        super(deck);
+    public BoardsProcessor(Game game) {
+        super(game);
     }
 
     @Override
     public void run() {
-        for (User user: deck.users) {
+        for (User user: game.users) {
             shrinkMainBoard(user.mainBoard);
             updateMainBoardLabel(user.mainBoard, user);
             mainBoardInBounds(user.mainBoard);
@@ -54,7 +54,7 @@ public class BoardsProcessor extends GameProcessor {
         mainBoard.labelsToFront();
         mainBoard.setHP((int) user.getEpsilon().getHP());
         mainBoard.setXP((int) user.getXp());
-        mainBoard.setWave(deck.wave);
+        mainBoard.setWave(game.wave);
         StringBuilder abilitiesString = new StringBuilder();
         if (user.coolDown / 1000 > 0)
             abilitiesString.append("cool down: ").append(user.coolDown / 1000).append("s\n");

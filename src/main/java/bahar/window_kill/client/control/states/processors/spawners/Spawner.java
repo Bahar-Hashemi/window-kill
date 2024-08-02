@@ -1,6 +1,6 @@
 package bahar.window_kill.client.control.states.processors.spawners;
 
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.view.MainStage;
 import bahar.window_kill.client.model.Watch;
@@ -11,22 +11,22 @@ import bahar.window_kill.client.model.entities.Entity;
 import java.util.Random;
 
 public class Spawner extends Watch {
-    protected final Deck deck;
-    public Spawner(int duration, Runnable runnable, Deck deck) {
+    protected final Game game;
+    public Spawner(int duration, Runnable runnable, Game game) {
         super(duration, runnable);
-        this.deck = deck;
+        this.game = game;
     }
-    protected static void addEntity(Entity entity, Deck deck) {
+    protected static void addEntity(Entity entity, Game game) {
         if (entity instanceof BoardOwner) {
             BoardOwner boardOwner = (BoardOwner) entity;
-            MainStage.add(boardOwner.getBoard()); deck.gameBoards.add(boardOwner.getBoard());
-            MainStage.add(entity.getView()); deck.addEntity(entity);
+            MainStage.add(boardOwner.getBoard()); game.gameBoards.add(boardOwner.getBoard());
+            MainStage.add(entity.getView()); game.addEntity(entity);
             boardOwner.getBoard().toBack();
-            GameUtil.placeOutsideBoard(entity, deck.users.get(0).mainBoard);
+            GameUtil.placeOutsideBoard(entity, game.users.get(0).mainBoard);
         } else {
-            MainBoard mainBoard = deck.users.get(new Random().nextInt(deck.users.size())).mainBoard;
+            MainBoard mainBoard = game.users.get(new Random().nextInt(game.users.size())).mainBoard;
             mainBoard.add(entity.getView());
-            deck.addEntity(entity);
+            game.addEntity(entity);
             GameUtil.placeOutsideBoard(entity, mainBoard);
         }
     }

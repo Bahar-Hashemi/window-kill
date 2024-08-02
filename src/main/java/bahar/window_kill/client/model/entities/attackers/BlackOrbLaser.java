@@ -49,7 +49,7 @@ public class BlackOrbLaser extends Entity implements AttackerEntity {
             terminal1.getBoard().getChildren().remove(terminal1View);
             terminal2.getBoard().getChildren().remove(terminal2View);
         }
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     @Override

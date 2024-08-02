@@ -2,7 +2,7 @@ package bahar.window_kill.client.control;
 
 import bahar.window_kill.client.control.states.WhooshState;
 import bahar.window_kill.client.control.util.FileUtil;
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.view.MainStage;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.boards.MainBoard;
@@ -13,8 +13,8 @@ public class GameController {
     public void newGame() {
         Settings settings = FileUtil.readSettings();
         User.newInstance(new Epsilon(settings.getSpeed()), new MainBoard(100, 0, 0));
-        Deck.newInstance();
-        Deck.getInstance().addUser(User.getInstance());
+        Game.newInstance();
+        Game.getInstance().addUser(User.getInstance());
         User.getInstance().mainBoard.setDimensions(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 4,
                  Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);
         User.getInstance().mainBoard.getChildren().add(User.getInstance().epsilon.getView());
@@ -23,6 +23,6 @@ public class GameController {
         //
         User.getInstance().mainBoard.setControlStrategy(User.getInstance().settings.getControlStrategy());
         User.getInstance().mainBoard.requestUserControl(User.getInstance()); //todo correct here
-        Deck.getInstance().setGameState(new WhooshState(Deck.getInstance()));
+        Game.getInstance().setGameState(new WhooshState(Game.getInstance()));
     }
 }

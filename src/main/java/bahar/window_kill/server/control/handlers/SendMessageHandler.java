@@ -18,8 +18,23 @@ public class SendMessageHandler extends MessageHandler {
             return false;
         if (sendMessageMessage.getUserMessage().getType() == UserMessageType.MEMBERSHIP_REQUEST)
             handleMembershipRequest(sendBuffer, sendMessageMessage);
+        if (sendMessageMessage.getUserMessage().getType() == UserMessageType.MEMBERSHIP_ACCEPTED)
+            handleMembershipAccepted(sendBuffer, sendMessageMessage);
+        if (sendMessageMessage.getUserMessage().getType() == UserMessageType.LEFT_SQUAD)
+            handleLeftSquad(sendBuffer, sendMessageMessage);
         return true;
     }
+
+    private void handleMembershipAccepted(DataOutputStream sendBuffer, SendMessageMessage sendMessageMessage) {
+        UserMessage userMessage = sendMessageMessage.getUserMessage();
+        TableUser tableUser = DataBaseManager.getInstance().getUser(userMessage.getMessageData());
+        if (tableUser.getSquad() != null)
+            return;
+        TableUser owner = DataBaseManager.getInstance().getUser(userMessage.getSenderName());
+        tableUser.setSquad(owner.getSquad());
+        DataBaseManager.getInstance().updateUser(tableUser);
+    }
+
     private void handleMembershipRequest(DataOutputStream sendBuffer, SendMessageMessage sendMessageMessage) {
         UserMessage userMessage = sendMessageMessage.getUserMessage();
         TableSquad tableSquad = DataBaseManager.getInstance().getSquad(userMessage.getMessageData());
@@ -28,5 +43,14 @@ public class SendMessageHandler extends MessageHandler {
             tableUser.setMessages(new ArrayList<>());
         tableUser.getMessages().add(userMessage);
         DataBaseManager.getInstance().updateUser(tableUser);
+    }
+    private void handleLeftSquad(DataOutputStream sendBuffer, SendMessageMessage sendMessageMessage) {
+        UserMessage userMessage = sendMessageMessage.getUserMessage();
+        TableUser tableUser = DataBaseManager.getInstance().getUser(userMessage.getSenderName());
+        tableUser.setSquad(null);
+        DataBaseManager.getInstance().updateUser(tableUser);
+        ArrayList<TableUser> users = DataBaseManager.getInstance().getSquadMembers(userMessage.getMessageData());
+        if (users == null || users.isEmpty())
+            DataBaseManager.getInstance().removeSquad(userMessage.getMessageData());
     }
 }

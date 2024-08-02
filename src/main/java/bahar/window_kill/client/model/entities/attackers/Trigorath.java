@@ -40,7 +40,7 @@ public class Trigorath extends Entity implements LootDropper, AttackerEntity {
             impactStrategy.act(this);
             return;
         }
-        User user = GameUtil.findMyUser(this, deck);
+        User user = GameUtil.findMyUser(this, game);
         double dx = user.getEpsilon().getSceneX() - getSceneX();
         double dy = user.getEpsilon().getSceneY() - getSceneY();
         setSceneY(getSceneY() + dy * speed);
@@ -49,7 +49,7 @@ public class Trigorath extends Entity implements LootDropper, AttackerEntity {
 
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     public void shout() {

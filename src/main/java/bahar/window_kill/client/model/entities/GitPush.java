@@ -39,7 +39,7 @@ public class GitPush extends Entity {
 
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     @Override

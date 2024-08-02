@@ -1,7 +1,5 @@
 package bahar.window_kill.client.control.util.reader;
 
-import bahar.window_kill.client.model.Deck;
-
 import java.util.Scanner;
 
 public class SaveUtil extends ModelUtil {

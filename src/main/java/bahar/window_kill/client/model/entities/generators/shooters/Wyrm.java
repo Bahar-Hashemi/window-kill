@@ -70,7 +70,7 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
 
     @Override
     public void aggress() {
-        strategy.act(this, deck);
+        strategy.act(this, game);
     }
 
     @Override

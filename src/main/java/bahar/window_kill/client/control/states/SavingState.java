@@ -1,7 +1,7 @@
 package bahar.window_kill.client.control.states;
 
 import bahar.window_kill.client.control.Constants;
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.view.MainStage;
 import bahar.window_kill.client.view.PaneBuilder;
 import javafx.animation.KeyFrame;
@@ -11,13 +11,13 @@ import javafx.util.Duration;
 
 public class SavingState extends GameState {
     Pane savePane;
-    public SavingState(Deck deck) {
-        super(deck, makeTimeLine(deck));
+    public SavingState(Game game) {
+        super(game, makeTimeLine(game));
         savePane = PaneBuilder.SAVE_PANE.generatePane();
     }
-    private static Timeline makeTimeLine(Deck deck) {
+    private static Timeline makeTimeLine(Game game) {
         Timeline saveTimeLine = new Timeline(new KeyFrame(new Duration(Constants.RESPOND_DURATION), actionEvent -> {
-            deck.users.get(0).mainBoard.requestFocus();
+            game.users.get(0).mainBoard.requestFocus();
         }));
         saveTimeLine.setCycleCount(-1);
         return saveTimeLine;

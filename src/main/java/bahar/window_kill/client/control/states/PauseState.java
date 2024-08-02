@@ -1,7 +1,7 @@
 package bahar.window_kill.client.control.states;
 
 import bahar.window_kill.client.control.Constants;
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.view.MainStage;
 import bahar.window_kill.client.view.PaneBuilder;
 import bahar.window_kill.client.model.User;
@@ -12,15 +12,15 @@ import javafx.util.Duration;
 
 public class PauseState extends GameState {
     Pane pausePane;
-    public PauseState(Deck deck) {
-        super(deck, makeTimeLine(deck));
+    public PauseState(Game game) {
+        super(game, makeTimeLine(game));
         pausePane = PaneBuilder.PAUSE_PANE.generatePane();
     }
-    private static Timeline makeTimeLine(Deck deck) {
+    private static Timeline makeTimeLine(Game game) {
         Timeline pauseTimeLine = new Timeline(new KeyFrame(new Duration(Constants.RESPOND_DURATION), actionEvent -> {
-            User user = deck.users.get(0);
+            User user = game.users.get(0);
             if (!user.hasPauseRequest())
-                deck.setGameState(new RestartingState(deck));
+                game.setGameState(new RestartingState(game));
             user.mainBoard.requestFocus();
         }));
         pauseTimeLine.setCycleCount(-1);

@@ -1,22 +1,22 @@
 package bahar.window_kill.client.control.states.processors;
 
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.states.PauseState;
 import bahar.window_kill.client.model.User;
 
 public class RequestProcessor extends GameProcessor {
-    public RequestProcessor(Deck deck) {
-        super(deck);
+    public RequestProcessor(Game game) {
+        super(game);
     }
 
     @Override
     public void run() {
-        for (User user: deck.users)
+        for (User user: game.users)
             handleRequest(user);
     }
     private void handleRequest(User user) {
         if (user.hasPauseRequest())
-            deck.setGameState(new PauseState(deck));
+            game.setGameState(new PauseState(game));
         if (user.hasKillWish())
             user.getEpsilon().setHP(-1 * (1E9 + 7));
         if (user.hasDefenseRequest() && user.getXp() > 100 && user.coolDown <= 0 && user.development.getActiveDefense() != null) {

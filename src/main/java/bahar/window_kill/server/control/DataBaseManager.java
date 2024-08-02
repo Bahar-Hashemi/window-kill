@@ -95,7 +95,9 @@ public class DataBaseManager {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             if (rs.next()) {
-                return new TableUser(rs.getString("username"), rs.getString("password"), rs.getString("state"), rs.getString("squad"), UserMessage.fromJsonArray(rs.getString("messages")), Development.fromJson(rs.getString("development")));
+                String squad = rs.getString("squad");
+                if (squad.isEmpty()) squad = null;
+                return new TableUser(rs.getString("username"), rs.getString("password"), rs.getString("state"), squad, UserMessage.fromJsonArray(rs.getString("messages")), Development.fromJson(rs.getString("development")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -215,6 +217,15 @@ public class DataBaseManager {
                 ", AdonisState = " + tableSquad.getAdonisState() +
                 ", GefjonState = " + tableSquad.getGefjonState() +
                 " WHERE name = '" + tableSquad.getName() + "'";
+        try {
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeSquad(String squadName) {
+        String query = "DELETE FROM squads WHERE name = '" + squadName + "'";
         try {
             statement.executeUpdate(query);
         } catch (SQLException e) {

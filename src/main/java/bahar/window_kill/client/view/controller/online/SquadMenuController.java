@@ -5,6 +5,7 @@ import bahar.window_kill.client.model.User;
 import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.data.UserMessage;
+import bahar.window_kill.communications.data.UserMessageType;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
@@ -53,6 +54,7 @@ public class SquadMenuController extends OnlineController {
             return;
         }
         makeSquad(squad);
+        setupSquadNameContextMenu();
         return;
     }
     private void makeNoSquad() {
@@ -104,8 +106,9 @@ public class SquadMenuController extends OnlineController {
     // Handle accept action
     private void handleAccept(UserMessage item) {
         messagesBox.getItems().remove(item);
-        // Implement accept logic here
-        System.out.println("Accepted: " + item);
+        if (item.getType() == UserMessageType.MEMBERSHIP_REQUEST) {
+            new TCPClient().sendUserMessage(new UserMessage(UserMessageType.MEMBERSHIP_ACCEPTED, User.getInstance().getUsername(), item.getSenderName()));
+        }
     }
 
     // Handle reject action
@@ -136,10 +139,10 @@ public class SquadMenuController extends OnlineController {
                             break;
                     }
                     Label label = new Label(item.getUsername());
-                    label.setStyle("-fx-font-size: 8px; -fx-text-fill: white;");
+                    label.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
                     if (item.getUsername().equals(User.getInstance().getUsername())) {
                         label.setText(label.getText() + " (you)");
-                        label.setStyle("-fx-font-weight: bold; -fx-text-fill: orange;");
+                        label.setStyle("-fx-font-size: 10px; -fx-text-fill: orange;");
                     }
                     label.setText(label.getText() + "    xp: " + item.getDevelopment().getXp());
                     hbox.getChildren().addAll(statusCircle, label);
@@ -147,5 +150,33 @@ public class SquadMenuController extends OnlineController {
                 }
             }
         });
+    }
+    private void setupSquadNameContextMenu() {
+        if (User.getInstance().tableSquad == null) {
+            squadName.setOnMouseClicked(null);
+            return;
+        }
+        // Create context menu
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem leaveSquadItem = new MenuItem("Leave Squad");
+
+        // Add event handler for the leave squad menu item
+        leaveSquadItem.setOnAction(event -> handleLeaveSquad());
+
+        contextMenu.getItems().add(leaveSquadItem);
+
+        // Show context menu on right-click
+        squadName.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                contextMenu.show(squadName, event.getScreenX(), event.getScreenY());
+            }
+        });
+    }
+
+    // Handle leave squad action
+    private void handleLeaveSquad() {
+        TableSquad squad = User.getInstance().tableSquad;
+        if (squad != null)
+            new TCPClient().sendUserMessage(new UserMessage(UserMessageType.LEFT_SQUAD, User.getInstance().getUsername(), squad.getName()));
     }
 }

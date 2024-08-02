@@ -60,8 +60,8 @@ public class Nechropic extends ShooterEntity implements LootDropper {
 
     @Override
     public void move() {
-        stateWatch.call(deck.clock);
-        User user = GameUtil.findMyUser(this, deck);
+        stateWatch.call(game.clock);
+        User user = GameUtil.findMyUser(this, game);
         double targetX = user.getEpsilon().getSceneX();
         double targetY = user.getEpsilon().getSceneY();
         if (statePointer == 0 && canAct) {
@@ -75,9 +75,9 @@ public class Nechropic extends ShooterEntity implements LootDropper {
     }
     @Override
     public void aggress() {
-        stateWatch.call(deck.clock);
+        stateWatch.call(game.clock);
         if (canAct && statePointer > 3 && statePointer < 20) {
-            strategy.act(this, deck);
+            strategy.act(this, game);
             SoundUtil.ENEMY_SHOOT.play();
             canAct = false;
         }

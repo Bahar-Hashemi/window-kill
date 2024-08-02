@@ -1,6 +1,6 @@
 package bahar.window_kill.client.control.util;
 
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.model.entities.Entity;
@@ -53,8 +53,8 @@ public class GameUtil {
 //            }
        return false;
     }
-    public static User findMyUser(Entity entity, Deck deck) {
-        for (User user : deck.users) {
+    public static User findMyUser(Entity entity, Game game) {
+        for (User user : game.users) {
             if (user.mainBoard == entity.getView().getParent())
                 return user;
         }

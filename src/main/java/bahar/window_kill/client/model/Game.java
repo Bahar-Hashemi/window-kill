@@ -1,13 +1,12 @@
 package bahar.window_kill.client.model;
 
 import bahar.window_kill.client.control.states.GameState;
-import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.model.entities.Entity;
 
 import java.util.ArrayList;
 
-public class Deck {
+public class Game {
     public ArrayList<User> users;
     public ArrayList<Entity> entities;
     public ArrayList<GameBoard> gameBoards;
@@ -16,8 +15,8 @@ public class Deck {
     public long clock;
     public String save = null;
     public GameState gameState;
-    public static Deck onlineInstance;
-    private Deck() {
+    public static Game onlineInstance;
+    private Game() {
         entities = new ArrayList<>();
         gameBoards = new ArrayList<>();
         users = new ArrayList<>();
@@ -27,9 +26,9 @@ public class Deck {
         onlineInstance = this;
     }
     public static void newInstance() {
-        onlineInstance = new Deck();
+        onlineInstance = new Game();
     }
-    public static Deck getInstance() {
+    public static Game getInstance() {
         return onlineInstance;
     }
     public void setGameState(GameState gameState) {

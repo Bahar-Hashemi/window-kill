@@ -37,7 +37,7 @@ public class Barricados extends Entity implements BoardOwner {
 
     @Override
     public void aggress() {
-        watch.call(deck.clock);
+        watch.call(game.clock);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package bahar.window_kill.client.control.states;
 
 import bahar.window_kill.client.control.Constants;
-import bahar.window_kill.client.model.Deck;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.states.processors.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,23 +12,23 @@ import java.util.ArrayList;
 public class PlayingState extends GameState {
     static ArrayList<GameProcessor> gameProcessors;
     static Timeline gameTimeLine;
-    PlayingState(Deck deck) {
-        super(deck, makeTimeLine(deck));
+    PlayingState(Game game) {
+        super(game, makeTimeLine(game));
         makeProcessors();
     }
     private void makeProcessors() {
         gameProcessors = new ArrayList<>();
-        gameProcessors.add(new RequestProcessor(deck));
-        gameProcessors.add(new AbilityProcessor(deck));
-        gameProcessors.add(new SpawnProcessor(deck));
-        gameProcessors.add(new BoardsProcessor(deck));
-        gameProcessors.add(new AggressionProcessor(deck));
-        gameProcessors.add(new MovementProcessor(deck)); //important: must be after Aggression processor
-        gameProcessors.add(new DeathProcessor(deck));
+        gameProcessors.add(new RequestProcessor(game));
+        gameProcessors.add(new AbilityProcessor(game));
+        gameProcessors.add(new SpawnProcessor(game));
+        gameProcessors.add(new BoardsProcessor(game));
+        gameProcessors.add(new AggressionProcessor(game));
+        gameProcessors.add(new MovementProcessor(game)); //important: must be after Aggression processor
+        gameProcessors.add(new DeathProcessor(game));
     }
-    private static Timeline makeTimeLine(Deck deck) {
+    private static Timeline makeTimeLine(Game game) {
         gameTimeLine = new Timeline(new KeyFrame(new Duration(Constants.RESPOND_DURATION), actionEvent -> {
-            deck.clock += (long) Constants.RESPOND_DURATION;
+            game.clock += (long) Constants.RESPOND_DURATION;
             for (GameProcessor gameProcessor: gameProcessors)
                 gameProcessor.run();
         }));

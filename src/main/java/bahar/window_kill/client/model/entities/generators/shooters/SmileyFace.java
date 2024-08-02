@@ -93,7 +93,7 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
     @Override
     public void aggress() {
         if (strategy != null)
-            strategy.act(this, deck);
+            strategy.act(this, game);
     }
 
     @Override
