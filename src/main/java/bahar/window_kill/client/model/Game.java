@@ -5,6 +5,8 @@ import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.model.entities.Entity;
 
 import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Scanner;
 
 public class Game {
     public ArrayList<User> users;
@@ -57,5 +59,9 @@ public class Game {
     public void addUser(User user) {
         users.add(user);
         user.epsilon.setDeck(this);
+    }
+    public void readFromString(Scanner sc) {
+        wave = sc.nextInt();
+        System.out.println("Wave: " + wave);
     }
 }

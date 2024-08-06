@@ -3,7 +3,7 @@ package bahar.window_kill.client.model.entities.generators.shooters;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.entities.Entity;
 import bahar.window_kill.client.model.entities.attackers.Bullet;
-import bahar.window_kill.client.control.states.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;

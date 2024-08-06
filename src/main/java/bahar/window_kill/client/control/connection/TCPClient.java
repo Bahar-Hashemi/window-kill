@@ -5,6 +5,7 @@ import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.data.UserMessage;
 import bahar.window_kill.communications.messages.client.data.*;
+import bahar.window_kill.communications.messages.client.game.GameRequestMessage;
 import bahar.window_kill.communications.messages.client.register.LoginMessage;
 import bahar.window_kill.communications.messages.client.register.SignupMessage;
 import bahar.window_kill.communications.messages.client.squads.NewSquadMessage;
@@ -17,6 +18,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class TCPClient {
     private final String serverIP = "127.0.0.1";
@@ -248,5 +250,31 @@ public class TCPClient {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void sendGameRequest(boolean isSinglePlayer, String username, String additionalData) {
+        GameRequestMessage gameRequestMessage = new GameRequestMessage(isSinglePlayer, username, additionalData);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(gameRequestMessage));
+            endConnection();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    public String getGameData(String username) {
+        RequestDataMessage requestDataMessage = new RequestDataMessage(RequestedDataType.GAME_DATA, username);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(requestDataMessage));
+            String result = receiveResponse();
+            endConnection();
+            return result;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

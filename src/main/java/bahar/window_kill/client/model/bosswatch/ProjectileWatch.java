@@ -1,14 +1,15 @@
 package bahar.window_kill.client.model.bosswatch;
 
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.entities.generators.shooters.Epsilon;
 import bahar.window_kill.client.model.entities.generators.shooters.SmileyHand;
-import bahar.window_kill.client.control.states.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.model.boards.MainBoard;
 import bahar.window_kill.client.model.entities.generators.shooters.SmileyFace;
 
 public class ProjectileWatch extends BossWatch {
-    public ProjectileWatch(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(6000,() -> {}, face, leftHand, rightHand);
+    public ProjectileWatch(Game game, SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+        super(6000, game, face, leftHand, rightHand);
         setCycleCount(1);
     }
 

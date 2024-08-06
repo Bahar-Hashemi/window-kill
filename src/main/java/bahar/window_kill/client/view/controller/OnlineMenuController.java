@@ -1,5 +1,6 @@
 package bahar.window_kill.client.view.controller;
 
+import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.client.control.connection.TCPClient;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.view.MainStage;
@@ -70,6 +71,9 @@ public class OnlineMenuController {
         }
     }
 
-    public void onNewGame(ActionEvent actionEvent) { //todo complete here
+    public void onNewGame(ActionEvent actionEvent) {
+        new TCPClient().sendGameRequest(true, User.getInstance().getUsername(), "");
+        new GameController().newOnlineGame();
+        MainStage.newScene();
     }
 }

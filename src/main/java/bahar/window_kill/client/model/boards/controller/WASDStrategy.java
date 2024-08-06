@@ -2,6 +2,7 @@ package bahar.window_kill.client.model.boards.controller;
 
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.boards.MainBoard;
+import bahar.window_kill.communications.data.Development;
 
 public class WASDStrategy extends ControlStrategy {
     public WASDStrategy() {
@@ -29,8 +30,14 @@ public class WASDStrategy extends ControlStrategy {
                 case D -> user.setRightRequest(false);
                 case E -> user.setPauseRequest(!user.hasPauseRequest());
                 case Q -> user.setKillWish(false);
-                case R -> user.setDefenseRequest(true); //resist
-                case F -> user.setAttackRequest(true); //fight
+                case R -> {
+                    if (User.getInstance().coolDown <= 0 && User.getInstance().getDevelopment().getActiveDefense() != null)
+                        user.abilityRequests.add(User.getInstance().getDevelopment().getActiveDefense());
+                }
+                case F -> {
+                    if (User.getInstance().coolDown <= 0 && User.getInstance().getDevelopment().getActiveAttack() != null)
+                        user.abilityRequests.add(User.getInstance().getDevelopment().getActiveAttack());
+                } //fight
             }
         });
         mainBoard.setOnMousePressed(mouseEvent -> {

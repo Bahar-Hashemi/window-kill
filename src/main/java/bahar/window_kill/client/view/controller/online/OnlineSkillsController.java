@@ -1,11 +1,9 @@
 package bahar.window_kill.client.view.controller.online;
 
 import bahar.window_kill.client.control.connection.TCPClient;
-import bahar.window_kill.client.control.states.processors.abilities.AbilityWatch;
-import bahar.window_kill.client.control.util.FileUtil;
+import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityType;
+import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityWatch;
 import bahar.window_kill.client.model.User;
-import bahar.window_kill.client.view.MainStage;
-import bahar.window_kill.client.view.PaneBuilder;
 import bahar.window_kill.communications.data.Development;
 import bahar.window_kill.communications.data.TableSquad;
 import javafx.event.ActionEvent;
@@ -13,7 +11,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 public class OnlineSkillsController extends OnlineController {
     private final Label xpLabel;
@@ -64,20 +61,22 @@ public class OnlineSkillsController extends OnlineController {
             new TCPClient().sendSquad(User.getInstance().getUsername(), User.getInstance().tableSquad);
         }));
     }
-    private Button makeButton(Development.State[] states, AbilityWatch[] abilityWatches, int index) {
-        Button button = new Button("Writ of " + abilityWatches[index].getName());
+    private Button makeButton(Development.State[] states, AbilityType[] abilityTypes, int index) {
+        AbilityWatch watch = AbilityWatch.getAbilityByType(null, null, abilityTypes[index]);
+        Button button = new Button("Writ of " + abilityTypes[index]);
         switch (states[index]) {
             case LOCKED:
                 makeBorder("transparent", button);
-                button.setText(button.getText() + "   " + abilityWatches[index].getPrice());
+                button.setText(button.getText() + "   " + watch.getPrice());
                 button.setDisable(true);
                 break;
             case UNLOCKED:
                 makeBorder("transparent", button);
-                button.setText(button.getText() + "   " + abilityWatches[index].getPrice());
-                if (development.getXp() > abilityWatches[index].getPrice())
+                button.setText(button.getText() + "   " + watch.getPrice());
+                if (development.getXp() > watch.getPrice())
                     button.setOnAction(event -> {
-                        development.bye(states, abilityWatches, index);
+                        development.bye(states, abilityTypes, index);
+                        development.setXp(development.getXp() - watch.getPrice());
                         makeData();
                     });
                 else
@@ -93,11 +92,12 @@ public class OnlineSkillsController extends OnlineController {
             case BOUGHT:
                 makeBorder("white", button);
                 button.setOnAction(event -> {
-                    development.activate(states, abilityWatches, index);
+                    development.activate(states, abilityTypes, index);
                     makeData();
                 });
                 break;
         }
+        button.setPrefWidth(225);
         return button;
     }
     private void makeBorder(String color, Button button) {

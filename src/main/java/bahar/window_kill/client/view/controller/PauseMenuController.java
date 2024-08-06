@@ -1,7 +1,9 @@
 package bahar.window_kill.client.view.controller;
 
+import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityType;
 import bahar.window_kill.client.control.util.ImageUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import bahar.window_kill.client.model.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ public class PauseMenuController {
     public Slider volumeSlider;
     @FXML
     public ImageView healImage, banishImage, empowerImage, dismayImage, slumberImage, thunderImage;
+    private User user = User.getInstance();
     @FXML
     public void initialize() {
         makeOnHovers();
@@ -50,59 +53,59 @@ public class PauseMenuController {
         });
     }
     private void updateLabels() {
-//       HPLabel.setText("HP: " + user.getEpsilon().getHP());
-//        XPLabel.setText("XP: " + user.getXp());
+       HPLabel.setText("HP: " + user.getEpsilon().getHP());
+       XPLabel.setText("XP: " + user.getXp());
     }
     @FXML
     public void onHeal(ActionEvent actionEvent) {
-//        user.abilities.add(new HealWatch());
-//        user.setXp(user.getXp() - 50);
-//        afterButtonPress();
+        user.abilityRequests.add(AbilityType.HEAL);
+        user.setXp(user.getXp() - 50);
+        afterButtonPress();
     }
     private void afterButtonPress() {
         updateLabels();
         processButtonsDisable();
     }
     public void onEmpower(ActionEvent actionEvent) {
-//        user.abilities.add(new EmpowerWatch());
-//        user.setXp(user.getXp() - 75);
-//        afterButtonPress();
+        user.abilityRequests.add(AbilityType.EMPOWER);
+        user.setXp(user.getXp() - 75);
+        afterButtonPress();
     }
     public void processButtonsDisable() {
-//        processButtonsEnable(healButton, 50);
-//        processButtonsEnable(banishButton, 100);
-//        processButtonsEnable(empowerButton, 75);
-//        processButtonsEnable(dismayButton, 120);
-//        processButtonsEnable(slumberButton, 150);
-//        processButtonsEnable(thunderButton, 200);
+        processButtonsEnable(healButton, 50);
+        processButtonsEnable(banishButton, 100);
+        processButtonsEnable(empowerButton, 75);
+        processButtonsEnable(dismayButton, 120);
+        processButtonsEnable(slumberButton, 150);
+        processButtonsEnable(thunderButton, 200);
     }
     private void processButtonsEnable(Button button, int minimumXP) {
-//        if (user.getXp() < minimumXP || user.coolDown > 0)
-//            button.setDisable(true);
+        if (user.getXp() < minimumXP || user.coolDown > 0)
+            button.setDisable(true);
     }
     public void onBanish(ActionEvent actionEvent) {
-//        user.abilities.add(new BanishWatch());
-//        user.setXp(user.getXp() - 100);
-//        afterButtonPress();
+        user.abilityRequests.add(AbilityType.BANISH);
+        user.setXp(user.getXp() - 100);
+        afterButtonPress();
     }
 
     public void onDismay(ActionEvent actionEvent) {
-//        user.abilities.add(new DismayWatch());
-//        user.setXp(user.getXp() - 120);
-//        afterButtonPress();
+        user.abilityRequests.add(AbilityType.DISMAY);
+        user.setXp(user.getXp() - 120);
+        afterButtonPress();
     }
 
     public void onSlumber(ActionEvent actionEvent) {
-//        user.abilities.add(new SlumberWatch());
-//        user.setXp(user.getXp() - 150);
-//        user.coolDown += 10 * 1000;
-//        afterButtonPress();
+        user.abilityRequests.add(AbilityType.SLUMBER);
+        user.setXp(user.getXp() - 150);
+        user.coolDown += 10 * 1000;
+        afterButtonPress();
     }
 
     public void onThunder(ActionEvent actionEvent) {
-//        user.abilities.add(new ThunderWatch());
-//        user.setXp(user.getXp() - 200);
-//        user.coolDown += 120 * 1000;
-//        afterButtonPress();
+        user.abilityRequests.add(AbilityType.THUNDER);
+        user.setXp(user.getXp() - 200);
+        user.coolDown += 120 * 1000;
+        afterButtonPress();
     }
 }

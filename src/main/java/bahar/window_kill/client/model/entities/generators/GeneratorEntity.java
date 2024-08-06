@@ -1,8 +1,8 @@
 package bahar.window_kill.client.model.entities.generators;
 
 import bahar.window_kill.client.model.entities.Entity;
-import bahar.window_kill.client.control.states.processors.strategies.strategies.SpawnStrategy;
-import bahar.window_kill.client.control.states.processors.strategies.strategies.Strategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.Strategy;
 import javafx.scene.Node;
 
 public abstract class GeneratorEntity extends Entity {

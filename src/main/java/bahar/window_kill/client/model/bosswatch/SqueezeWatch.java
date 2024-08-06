@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.bosswatch;
 
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.boards.MainBoard;
 import bahar.window_kill.client.model.entities.generators.shooters.Epsilon;
 import bahar.window_kill.client.model.entities.generators.shooters.SmileyHand;
@@ -8,18 +9,19 @@ import bahar.window_kill.client.model.entities.generators.shooters.SmileyFace;
 
 public class SqueezeWatch extends BossWatch {
     static int counter = 0;
-    public SqueezeWatch(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(30, makeRunnable(face, leftHand, rightHand), face, leftHand, rightHand);
+    public SqueezeWatch(Game game, SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+        super(30, game, face, leftHand, rightHand);
         setCycleCount(200);
         counter = 0;
     }
-    private static Runnable makeRunnable(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        return () -> {
-            counter++;
-            double change = (counter > 100)? -1: 1;
-            leftHand.setSceneX(leftHand.getSceneX() + change);
-            rightHand.setSceneX(rightHand.getSceneX() - change);
-        };
+
+    @Override
+    protected void onCall() {
+        super.onCall();
+        counter++;
+        double change = (counter > 100)? -1: 1;
+        leftHand.setSceneX(leftHand.getSceneX() + change);
+        rightHand.setSceneX(rightHand.getSceneX() - change);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
-import bahar.window_kill.client.control.states.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.control.util.SoundUtil;
 import bahar.window_kill.client.model.boards.MainBoard;
 import bahar.window_kill.client.model.entities.Collectable;

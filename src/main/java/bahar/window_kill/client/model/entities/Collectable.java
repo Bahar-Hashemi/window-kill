@@ -1,7 +1,7 @@
 package bahar.window_kill.client.model.entities;
 
 import bahar.window_kill.client.model.User;
-import bahar.window_kill.client.control.states.processors.strategies.strategies.PositiveStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.PositiveStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
 import javafx.scene.Node;

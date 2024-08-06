@@ -1,5 +1,5 @@
 package bahar.window_kill.client.model.entities.attackers;
-import bahar.window_kill.client.control.states.processors.strategies.strategies.DamageStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.DamageStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
 import bahar.window_kill.client.model.User;

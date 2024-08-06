@@ -17,15 +17,20 @@ public class SmileyBrain {
     ArrayList<BossWatch> watches = new ArrayList<>();
     Watch attackController; boolean canAttack = false;
     private static Class<?>[] attackWatches = new Class[] {SlapWatch.class, ProjectileWatch.class, RapidFireWatch.class, SlapWatch.class, SqueezeWatch.class, VomitWatch.class};
-    public SmileyBrain(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+    public SmileyBrain(Game game, SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
         this.face = face;
         this.leftHand = leftHand;
         this.rightHand = rightHand;
         face.setSceneLocation(Constants.SCREEN_WIDTH / 2, -100);
         leftHand.setSceneLocation(-100, Constants.SCREEN_HEIGHT / 2);
         rightHand.setSceneLocation(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT / 2);
-        watches.add(new ComingInWatch(face, leftHand, rightHand));
-        attackController = new Watch(10000, () -> canAttack = true);
+        watches.add(new ComingInWatch(game, face, leftHand, rightHand));
+        attackController = new Watch(10000) {
+            @Override
+            protected void onCall() {
+                canAttack = true;
+            }
+        };
     }
     public void act(Game game) {
         if (face.getHP() <= 0) {

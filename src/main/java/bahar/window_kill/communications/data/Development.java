@@ -1,10 +1,7 @@
 package bahar.window_kill.communications.data;
 
-import bahar.window_kill.client.control.states.processors.abilities.AbilityWatch;
-import bahar.window_kill.client.control.states.processors.abilities.skills.*;
+import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityType;
 import com.google.gson.Gson;
-
-import java.lang.reflect.Constructor;
 
 public class Development {
 
@@ -14,7 +11,7 @@ public class Development {
     private int highScore;
     private int xp;
     private State[] defenseStates, attackStates;
-    private static AbilityWatch[] defenseWatch, attackWatch;
+    private static AbilityType[] defenseType, attackType;
     public Development(int highScore, int xp, State[] defenseStates, State[] attackStates) {
         this.highScore = highScore;
         this.xp = xp;
@@ -23,10 +20,10 @@ public class Development {
         makeWatches();
     }
     private static void makeWatches() {
-        if (defenseWatch == null)
-            defenseWatch = new AbilityWatch[]{new AcesoWatch(), new MelampusWatch(), new ChironWatch(), new AthenaWatch()};
-        if (attackWatch == null)
-            attackWatch = new AbilityWatch[]{new AresWatch(), new AstrapeWatch(), new CerberusWatch()};
+        if (defenseType == null)
+            defenseType = new AbilityType[]{AbilityType.ACESO, AbilityType.MELAMPUS, AbilityType.CHIRON, AbilityType.ATHENA};
+        if (attackType == null)
+            attackType = new AbilityType[]{AbilityType.ARES, AbilityType.ASTRAPE, AbilityType.CERBERUS};
     }
     public void setHighScore(int highScore) {
         this.highScore = highScore;
@@ -60,46 +57,35 @@ public class Development {
         return attackStates;
     }
 
-    public AbilityWatch[] getDefenseWatch() {
-        return defenseWatch;
+    public AbilityType[] getDefenseWatch() {
+        return defenseType;
     }
 
-    public AbilityWatch[] getAttackWatch() {
-        return attackWatch;
+    public AbilityType[] getAttackWatch() {
+        return attackType;
     }
-    public void bye(State[] states, AbilityWatch[] abilityWatches, int index) {
-        xp -= abilityWatches[index].getPrice();
+    public void bye(State[] states, AbilityType[] abilityTypes, int index) {
         states[index] = State.BOUGHT;
         if (index < states.length - 1)
             states[index + 1] = State.UNLOCKED;
     }
-    public void activate(State[] states, AbilityWatch[] abilityWatches, int index) {
+    public void activate(State[] states, AbilityType[] abilityTypes, int index) {
         for (int i = 0; i < states.length; i++)
             if (states[i] == State.ACTIVE)
                 states[i] = State.BOUGHT;
         states[index] = State.ACTIVE;
     }
-    public AbilityWatch getActiveDefense() {
+    public AbilityType getActiveDefense() {
         for (int i = 0; i < defenseStates.length; i++)
             if (defenseStates[i] == State.ACTIVE)
-                return makeWatch(defenseWatch[i]);
+                return defenseType[i];
         return null;
     }
-    public AbilityWatch getActiveAttack() {
+    public AbilityType getActiveAttack() {
         for (int i = 0; i < attackStates.length; i++)
             if (attackStates[i] == State.ACTIVE)
-                return makeWatch(attackWatch[i]);
+                return attackType[i];
         return null;
-    }
-    public AbilityWatch makeWatch(AbilityWatch abilityWatch) {
-        try {
-            Class<?> clazz = abilityWatch.getClass();
-            Constructor<?> constructor = clazz.getConstructor();
-            return (AbilityWatch) constructor.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
     public static Development getFirstState() {
         return new Development(0, 0, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED, State.LOCKED}, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED});

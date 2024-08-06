@@ -1,5 +1,10 @@
 package bahar.window_kill.client.view.controller;
 
+import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.client.control.states.offlline.RestartingState;
+import bahar.window_kill.client.control.util.reader.SaveUtil;
+import bahar.window_kill.client.model.Game;
+import bahar.window_kill.client.model.User;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,24 +15,24 @@ public class SaveController {
     public Button saveButton, notSaveButton;
     public VBox root;
     public void initialize() {
-//        xpLabel.setText("XP: " + user.getEpsilon().getXp());
-//        savingLabel.setText("Saving Price: " + getPR());
-//        notSavingLabel.setText("Not Saving XP: " + (getPR() / 5));
-//        if (user.getEpsilon().getXp() < getPR())
-//            saveButton.setDisable(true);
-//        root.setLayoutX(Constants.SCREEN_WIDTH / 6);
-//        root.setLayoutY(Constants.SCREEN_HEIGHT / 6);
+        xpLabel.setText("XP: " + User.getInstance().getXp());
+        savingLabel.setText("Saving Price: " + Game.getInstance().getPR());
+        notSavingLabel.setText("Not Saving XP: " + (Game.getInstance().getPR() / 5));
+        if (User.getInstance().getXp() < Game.getInstance().getPR())
+            saveButton.setDisable(true);
+        root.setLayoutX(Constants.SCREEN_WIDTH / 6);
+        root.setLayoutY(Constants.SCREEN_HEIGHT / 6);
     }
 
     public void onSave(ActionEvent actionEvent) {
-//        user.getEpsilon().setXp(user.getEpsilon().getXp() - getPR());
-//        user.getEpsilon().setHP(user.getEpsilon().getHP() + 10);
-//        save = (new SaveUtil()).write();
-//        GameController.setGameState(new RestartingState());
+        User.getInstance().setXp(User.getInstance().getXp() - Game.getInstance().getPR());
+        User.getInstance().getEpsilon().setHP(User.getInstance().getEpsilon().getHP() + 10);
+        Game.getInstance().save = (new SaveUtil()).write(Game.getInstance());
+        Game.getInstance().setGameState(new RestartingState(Game.getInstance()));
     }
 
     public void onNotSave(ActionEvent actionEvent) {
-//        user.getEpsilon().setXp(user.getEpsilon().getXp() + getPR() / 5);
-//        GameController.setGameState(new RestartingState());
+        User.getInstance().setXp(User.getInstance().getXp() + Game.getInstance().getPR() / 5);
+        Game.getInstance().setGameState(new RestartingState(Game.getInstance()));
     }
 }

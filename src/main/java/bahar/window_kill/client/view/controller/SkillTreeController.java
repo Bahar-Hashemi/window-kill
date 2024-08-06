@@ -1,8 +1,9 @@
 package bahar.window_kill.client.view.controller;
 
+import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityType;
 import bahar.window_kill.client.view.MainStage;
 import bahar.window_kill.client.view.PaneBuilder;
-import bahar.window_kill.client.control.states.processors.abilities.AbilityWatch;
+import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityWatch;
 import bahar.window_kill.client.control.util.FileUtil;
 import bahar.window_kill.communications.data.Development;
 import javafx.event.ActionEvent;
@@ -30,20 +31,22 @@ public class SkillTreeController {
         for (int i = 0; i < development.getAttackStates().length; i++)
             attackBox.getChildren().add(makeButton(development.getAttackStates(), development.getAttackWatch(), i));
     }
-    private Button makeButton(Development.State[] states, AbilityWatch[] abilityWatches, int index) {
-        Button button = new Button("Writ of " + abilityWatches[index].getName());
+    private Button makeButton(Development.State[] states, AbilityType[] abilityTypes, int index) {
+        AbilityWatch watch = AbilityWatch.getAbilityByType(null, null, abilityTypes[index]);
+        Button button = new Button("Writ of " + abilityTypes[index]);
         switch (states[index]) {
             case LOCKED:
                 makeBorder("transparent", button);
-                button.setText(button.getText() + "   " + abilityWatches[index].getPrice());
+                button.setText(button.getText() + "   " + watch.getPrice());
                 button.setDisable(true);
                 break;
             case UNLOCKED:
                 makeBorder("transparent", button);
-                button.setText(button.getText() + "   " + abilityWatches[index].getPrice());
-                if (development.getXp() > abilityWatches[index].getPrice())
+                button.setText(button.getText() + "   " + watch.getPrice());
+                if (development.getXp() > watch.getPrice())
                     button.setOnAction(event -> {
-                        development.bye(states, abilityWatches, index);
+                        development.bye(states, abilityTypes, index);
+                        development.setXp(development.getXp() - watch.getPrice());
                         makeData();
                     });
                 else
@@ -59,7 +62,7 @@ public class SkillTreeController {
             case BOUGHT:
                 makeBorder("white", button);
                 button.setOnAction(event -> {
-                    development.activate(states, abilityWatches, index);
+                    development.activate(states, abilityTypes, index);
                     makeData();
                 });
                 break;

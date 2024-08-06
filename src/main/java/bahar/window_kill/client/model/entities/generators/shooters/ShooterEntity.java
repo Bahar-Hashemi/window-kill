@@ -1,6 +1,6 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
-import bahar.window_kill.client.control.states.processors.strategies.strategies.Strategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.Strategy;
 import bahar.window_kill.client.model.entities.Entity;
 import bahar.window_kill.client.model.entities.generators.GeneratorEntity;
 import javafx.geometry.Point2D;

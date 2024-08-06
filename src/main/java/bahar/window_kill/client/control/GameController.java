@@ -1,6 +1,7 @@
 package bahar.window_kill.client.control;
 
-import bahar.window_kill.client.control.states.WhooshState;
+import bahar.window_kill.client.control.states.offlline.WhooshState;
+import bahar.window_kill.client.control.states.online.OnlinePlayingState;
 import bahar.window_kill.client.control.util.FileUtil;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.view.MainStage;
@@ -24,5 +25,10 @@ public class GameController {
         User.getInstance().mainBoard.setControlStrategy(User.getInstance().settings.getControlStrategy());
         User.getInstance().mainBoard.requestUserControl(User.getInstance()); //todo correct here
         Game.getInstance().setGameState(new WhooshState(Game.getInstance()));
+    }
+    public void newOnlineGame() {
+        Game.newInstance();
+        Game.getInstance().setGameState(new OnlinePlayingState(Game.getInstance()));
+        //todo we are done with you :))
     }
 }

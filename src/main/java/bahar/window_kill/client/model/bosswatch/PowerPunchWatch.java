@@ -1,5 +1,7 @@
 package bahar.window_kill.client.model.bosswatch;
 
+import bahar.window_kill.client.model.Game;
+import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.entities.generators.shooters.Epsilon;
 import bahar.window_kill.client.model.entities.generators.shooters.SmileyHand;
 import bahar.window_kill.client.control.util.GameUtil;
@@ -8,30 +10,33 @@ import bahar.window_kill.client.model.entities.generators.shooters.SmileyFace;
 
 public class PowerPunchWatch extends BossWatch { //todo correct powerPunch later
     static int counter = 0;
-    public PowerPunchWatch(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        super(30, makeRunnable(face, leftHand, rightHand), face, leftHand, rightHand);
+    public PowerPunchWatch(Game game, SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
+        super(30, game, face, leftHand, rightHand);
         counter = 0;
         setCycleCount(60);
     }
 
-    private static Runnable makeRunnable(SmileyFace face, SmileyHand leftHand, SmileyHand rightHand) {
-        return () -> {
-//            counter++;
-//            double change = (counter > 30)? -12: 12;
-//            leftHand.setSceneX(leftHand.getSceneX() + change);
-//            rightHand.setSceneX(rightHand.getSceneX() - change);
-//            //مقادیری تفمال
-//            boolean leftIntersect = GameUtil.intersects(Deck.mainBoard, leftHand.getBoard());
-//            boolean rightIntersect = GameUtil.intersects(Deck.mainBoard, rightHand.getBoard());
-//            if (leftIntersect && rightIntersect) {
-//                Deck.mainBoard.lockWidth(Deck.mainBoard.getWidth() - 10);
-//                Deck.mainBoard.IndependentMoveX(Deck.mainBoard.getLayoutX() + 5);
-//            }
-//            else if (leftIntersect)
-//                Deck.mainBoard.IndependentMoveX(Deck.mainBoard.getLayoutX() + 5);
-//            else if (rightIntersect)
-//                Deck.mainBoard.IndependentMoveX(Deck.mainBoard.getLayoutX() - 5);
-        };
+    @Override
+    protected void onCall() {
+        super.onCall();
+            counter++;
+            double change = (counter > 30)? -12: 12;
+            leftHand.setSceneX(leftHand.getSceneX() + change);
+            rightHand.setSceneX(rightHand.getSceneX() - change);
+            //مقادیری تفمال
+            for (User user: game.users) {
+                MainBoard mainBoard = user.mainBoard;
+                boolean leftIntersect = GameUtil.intersects(mainBoard, leftHand.getBoard());
+                boolean rightIntersect = GameUtil.intersects(mainBoard, rightHand.getBoard());
+                if (leftIntersect && rightIntersect) {
+                    mainBoard.lockWidth(mainBoard.getWidth() - 10);
+                    mainBoard.IndependentMoveX(mainBoard.getLayoutX() + 5);
+                }
+                else if (leftIntersect)
+                    mainBoard.IndependentMoveX(mainBoard.getLayoutX() + 5);
+                else if (rightIntersect)
+                    mainBoard.IndependentMoveX(mainBoard.getLayoutX() - 5);
+            }
     }
 
     @Override

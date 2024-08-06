@@ -6,6 +6,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Scanner;
+
 public class GameBoard extends Pane {
     protected boolean hovering;
     public GameBoard(boolean hovering) {
@@ -75,5 +77,11 @@ public class GameBoard extends Pane {
     }
     public boolean getHovering() {
         return hovering;
+    }
+    public void readFromString(Scanner sc) {
+        setHovering(sc.nextBoolean());
+        setLayoutX(sc.nextDouble());
+        setLayoutY(sc.nextDouble());
+        lockSize(sc.nextDouble(), sc.nextDouble());
     }
 }

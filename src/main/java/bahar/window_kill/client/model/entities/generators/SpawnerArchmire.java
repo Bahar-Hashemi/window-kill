@@ -6,7 +6,7 @@ import bahar.window_kill.client.model.entities.Collectable;
 import bahar.window_kill.client.model.entities.Entity;
 import bahar.window_kill.client.model.entities.LootDropper;
 import bahar.window_kill.client.model.entities.attackers.AttackerArchmire;
-import bahar.window_kill.client.control.states.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
 import javafx.scene.Node;

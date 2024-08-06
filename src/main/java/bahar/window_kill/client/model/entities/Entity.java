@@ -1,8 +1,8 @@
 package bahar.window_kill.client.model.entities;
 
 import bahar.window_kill.client.model.Game;
-import bahar.window_kill.client.control.states.processors.strategies.strategies.Strategy;
-import bahar.window_kill.client.control.states.processors.strategies.movements.ImpactStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.Strategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.movements.ImpactStrategy;
 import javafx.scene.Node;
 
 abstract public class Entity {
@@ -11,6 +11,7 @@ abstract public class Entity {
     protected final Node view;
     protected Strategy strategy;
     protected Game game;
+    protected String id;
     protected Entity(Node view, int HP, boolean canImpact, Strategy strategy) {
         this.view = view;
         this.HP = HP;

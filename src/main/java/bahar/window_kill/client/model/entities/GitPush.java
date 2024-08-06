@@ -1,6 +1,6 @@
 package bahar.window_kill.client.model.entities;
 
-import bahar.window_kill.client.control.states.processors.strategies.strategies.SaveStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SaveStrategy;
 import bahar.window_kill.client.control.util.ImageUtil;
 import javafx.animation.FadeTransition;
 import javafx.scene.Node;

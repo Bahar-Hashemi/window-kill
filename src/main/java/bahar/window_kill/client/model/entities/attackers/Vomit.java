@@ -1,6 +1,6 @@
 package bahar.window_kill.client.model.entities.attackers;
 
-import bahar.window_kill.client.control.states.processors.strategies.strategies.DamageStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.DamageStrategy;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.entities.Entity;
 import javafx.scene.Node;
@@ -13,8 +13,11 @@ public class Vomit extends Entity implements AttackerEntity {
     private int damage = 20;
     public Vomit() {
         super(makeView(), 10, false, new DamageStrategy());
-        opacityWatch = new Watch(30, () -> {view.setOpacity(view.getOpacity() - 0.003);});
-        damageWatch = new Watch(100, () -> {setHP(getHP() - 4); setDamage(getDamage() - 4); strategy.act(this, game);});
+        opacityWatch = new Watch(30) {protected void onCall(){view.setOpacity(view.getOpacity() - 0.003);}};
+        damageWatch = new Watch(500) {protected void onCall() {setHP(getHP() - 4); setDamage(getDamage() - 4); strategy.act(getMe(), game);}};
+    }
+    private Vomit getMe() {
+        return this;
     }
     private static Node makeView() {
         Path path = new Path();

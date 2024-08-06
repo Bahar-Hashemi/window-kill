@@ -15,7 +15,13 @@ public class Barricados extends Entity implements BoardOwner {
     Watch watch;
     public Barricados() {
         super(makeView(), 1000 * 1000 * 1000, true, null);
-        watch = new Watch(60 * 1000, () -> setHP(0));
+        watch = new Watch(60 * 1000) {
+            @Override
+            protected void onEnd() {
+                super.onEnd();
+                setHP(0);
+            }
+        };
         byBoard();
     }
     private static Node makeView() {

@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
+import java.util.Scanner;
+
 public class MainBoard extends GameBoard {
     private final Label HPLabel, XPLabel, waveLabel, abilitiesLabel;
     private final VBox labels;

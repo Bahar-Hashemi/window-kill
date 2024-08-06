@@ -28,8 +28,15 @@ public class KIJLStrategy extends ControlStrategy {
                 case L -> user.setRightRequest(false);
                 case O -> user.setPauseRequest(!user.hasPauseRequest());
                 case Q -> user.setKillWish(false);
-                case H -> user.setDefenseRequest(true); //heal
-                case U -> user.setAttackRequest(true); //fight
+                case H -> {
+                    if (User.getInstance().coolDown <= 0 && User.getInstance().getDevelopment().getActiveDefense() != null)
+                        user.abilityRequests.add(User.getInstance().getDevelopment().getActiveDefense());
+                } //heal
+                case U -> {
+                    if (User.getInstance().coolDown <= 0 && User.getInstance().getDevelopment().getActiveAttack() != null)
+                        user.abilityRequests.add(User.getInstance().getDevelopment().getActiveAttack());
+
+                } //fight
             }
         });
         mainBoard.setOnMousePressed(mouseEvent -> {

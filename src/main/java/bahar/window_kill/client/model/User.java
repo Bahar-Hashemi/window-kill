@@ -1,7 +1,8 @@
 package bahar.window_kill.client.model;
 
+import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityType;
 import bahar.window_kill.client.model.entities.generators.shooters.Epsilon;
-import bahar.window_kill.client.control.states.processors.abilities.AbilityWatch;
+import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityWatch;
 import bahar.window_kill.client.control.util.FileUtil;
 import bahar.window_kill.client.model.boards.MainBoard;
 import bahar.window_kill.communications.data.Development;
@@ -19,8 +20,8 @@ public class User {
     private boolean shooting = false;
     private double mouseX, mouseY;
     private boolean hasPauseRequest = false, killWish = false;
-    private boolean hasDefenseRequest = false, hasAttackRequest = false;
     public ArrayList<AbilityWatch> abilities;
+    public ArrayList<AbilityType> abilityRequests;
     public Development development;
     public TableSquad tableSquad;
     public TableUser tableUser;
@@ -33,21 +34,17 @@ public class User {
     public String state;
     int xp = 0;
     public static User onlineInstance;
-    private User(Epsilon epsilon, MainBoard mainBoard) {
+    public User(Epsilon epsilon, MainBoard mainBoard) {
         this.epsilon = epsilon;
         this.mainBoard = mainBoard;
         abilities = new ArrayList<>();
+        abilityRequests = new ArrayList<>();
         settings = FileUtil.readSettings();
         development = FileUtil.readDevelopment();
         state = "offline";
     }
     public static void newInstance(Epsilon epsilon, MainBoard mainBoard) {
-        if (onlineInstance == null)
-            onlineInstance = new User(epsilon, mainBoard);
-        else {
-            onlineInstance.epsilon = epsilon;
-            onlineInstance.mainBoard = mainBoard;
-        }
+        onlineInstance = new User(epsilon, mainBoard);
     }
     public static User getInstance() {
         if (onlineInstance == null)
@@ -137,22 +134,6 @@ public class User {
             epsilon.setGunDirectionY(dy / chord);
             epsilon.aggress();
         }
-    }
-
-    public boolean hasDefenseRequest() {
-        return hasDefenseRequest;
-    }
-
-    public void setDefenseRequest(boolean hasDefenseRequest) {
-        this.hasDefenseRequest = hasDefenseRequest;
-    }
-
-    public boolean hasAttackRequest() {
-        return hasAttackRequest;
-    }
-
-    public void setAttackRequest(boolean hasAttackRequest) {
-        this.hasAttackRequest = hasAttackRequest;
     }
     public void setXp(int xp) {
         this.xp = xp;

@@ -1,6 +1,6 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
-import bahar.window_kill.client.control.states.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
 import bahar.window_kill.client.model.User;
@@ -27,7 +27,13 @@ public class Nechropic extends ShooterEntity implements LootDropper {
         setBulletDamage(5);
     }
     private void makeWatches() {
-        stateWatch = new Watch(500, () -> {statePointer = (statePointer + 1) % 24; canAct = true;});
+        stateWatch = new Watch(500) {
+            @Override
+            protected void onCall() {
+                super.onCall();
+                statePointer = (statePointer + 1) % 24; canAct = true;
+            }
+        };
     }
     private static Node makeView() {
         Polygon polygon = new Polygon(
