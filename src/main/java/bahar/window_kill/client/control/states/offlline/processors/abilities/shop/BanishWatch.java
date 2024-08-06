@@ -16,7 +16,7 @@ public class BanishWatch extends AbilityWatch {
     protected void onStart() {
         super.onStart();
         for (Entity entity: game.entities)
-            entity.impactFrom(user.getEpsilon().getSceneX(), user.getEpsilon().getSceneY(), 100);
+            entity.impactFrom(user.getEpsilon().getX(), user.getEpsilon().getY(), 100);
     }
 
 }

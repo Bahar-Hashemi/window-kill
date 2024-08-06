@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.entities;
 
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.Strategy;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.movements.ImpactStrategy;
@@ -12,8 +13,8 @@ abstract public class Entity extends GameElement {
     protected Strategy strategy;
     protected Game game;
     protected String id;
-    protected Entity(String id, Node view, int HP, boolean canImpact, Strategy strategy) {
-        super(id, view);
+    protected Entity(String id, Node view, Bounds bounds, int HP, boolean canImpact, Strategy strategy) {
+        super(id, view, bounds);
         this.HP = HP;
         impactStrategy = new ImpactStrategy(canImpact);
         this.strategy = strategy;
@@ -31,12 +32,6 @@ abstract public class Entity extends GameElement {
         return view.getBoundsInParent().getCenterY() + view.getParent().getLayoutY();
     }
     public abstract void move();
-    public double getSceneX() {
-        return view.getParent().getLayoutX() + view.getLayoutX();
-    }
-    public double getSceneY() {
-        return view.getParent().getLayoutY() + view.getLayoutY();
-    }
     public double getHP() {
         return HP;
     }
@@ -57,12 +52,5 @@ abstract public class Entity extends GameElement {
     }
     public void impactFrom(double sourceX, double sourceY, int power) {
         impactStrategy.impact(sourceX, sourceY, this, power);
-    }
-
-    public double getLayoutX() {
-        return view.getLayoutX();
-    }
-    public double getLayoutY() {
-        return view.getLayoutY();
     }
 }

@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.entities;
 
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.PositiveStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
@@ -15,15 +16,14 @@ public class Collectable extends Entity {
     private static final int INF = (int) (1E9 + 7);
 
     public Collectable(String id, int xp, Color color) {
-        super(id, createView(color), INF, false, new PositiveStrategy() {
+        super(id, createView(color), new Bounds(-4, -4, 4, 4),
+                INF, false, new PositiveStrategy() {
             @Override
             public void onAct(Entity source) {
                 source.setHP(0);
             }
         });
         this.xp = xp;
-        this.setWidth(8);
-        this.setHeight(8);
     }
     private static Node createView(Color color) {
         Circle circle = new Circle();
@@ -41,14 +41,14 @@ public class Collectable extends Entity {
         User user = GameUtil.findMyUser(this, game);
         if (user == null)
             user = game.users.get(new Random().nextInt(game.users.size()));
-        double targetX = user.getEpsilon().getSceneX();
-        double targetY = user.getEpsilon().getSceneY();
+        double targetX = user.getEpsilon().getX();
+        double targetY = user.getEpsilon().getY();
         double speed = 10;
-        double dx = targetX - getSceneX();
-        double dy = targetY - getSceneY();
+        double dx = targetX - getX();
+        double dy = targetY - getY();
         double chord = Math.sqrt(dx * dx + dy * dy);
-        setX(getSceneX() + dx / chord * speed);
-        setY(getSceneY() + dy / chord * speed);
+        setX(getX() + dx / chord * speed);
+        setY(getY() + dy / chord * speed);
     }
     @Override
     public void aggress() {

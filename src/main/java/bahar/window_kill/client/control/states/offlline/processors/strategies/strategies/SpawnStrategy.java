@@ -33,8 +33,7 @@ public class SpawnStrategy extends Strategy {
         Entity bullet = generatorEntity.makeBullet();
         ((Pane) generatorEntity.getView().getParent()).getChildren().add(bullet.getView());
         game.addEntity(bullet);
-        Bounds entityBounds = GameUtil.getSceneBounds(generatorEntity);
-        bullet.setLocation(entityBounds.getCenterX(), entityBounds.getCenterY());
+        bullet.setLocation(generatorEntity.getX(), generatorEntity.getY());
         aggressionSource.getView().toFront();
         onAct(aggressionSource);
         hasBullet = false;

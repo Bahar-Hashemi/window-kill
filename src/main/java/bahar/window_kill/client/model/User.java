@@ -127,8 +127,8 @@ public class User {
     }
     public void aggress() {
         if (isShooting()) {
-            double dx = mouseX - epsilon.getSceneX();
-            double dy = mouseY - epsilon.getSceneY();
+            double dx = mouseX - epsilon.getX();
+            double dy = mouseY - epsilon.getY();
             double chord = Math.sqrt(dx * dx + dy * dy);
             epsilon.setGunDirectionX(dx / chord);
             epsilon.setGunDirectionY(dy / chord);

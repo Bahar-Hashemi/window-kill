@@ -1,6 +1,7 @@
 package bahar.window_kill.client.model.entities;
 
 import bahar.window_kill.client.control.util.GameUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.control.util.ImageUtil;
@@ -15,7 +16,8 @@ public class Barricados extends Entity implements BoardOwner {
     GameBoard gameBoard;
     Watch watch;
     public Barricados(String id) {
-        super(id, makeView(), 1000 * 1000 * 1000, true, null);
+        super(id, makeView(), new Bounds(0, 0, 80, 80),
+                1000 * 1000 * 1000, true, null);
         watch = new Watch(60 * 1000) {
             @Override
             protected void onEnd() {
@@ -23,7 +25,6 @@ public class Barricados extends Entity implements BoardOwner {
                 setHP(0);
             }
         };
-        setSize(80, 80);
         byBoard();
     }
     private static Node makeView() {

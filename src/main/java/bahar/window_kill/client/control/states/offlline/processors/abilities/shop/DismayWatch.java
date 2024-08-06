@@ -17,12 +17,12 @@ public class DismayWatch extends AbilityWatch {
         super.onCall();
         for (Entity entity: game.entities)
             if (dist(user.getEpsilon(), entity) < 120)
-                entity.impactFrom(user.getEpsilon().getSceneX(), user.getEpsilon().getSceneY(), 15);
+                entity.impactFrom(user.getEpsilon().getX(), user.getEpsilon().getY(), 15);
     }
 
     private static double dist(Entity first, Entity second) {
-        double dx = first.getSceneX() - second.getSceneX();
-        double dy = first.getSceneY() - second.getSceneY();
+        double dx = first.getX() - second.getX();
+        double dy = first.getY() - second.getY();
         return Math.sqrt(dx * dx + dy * dy);
     }
 }

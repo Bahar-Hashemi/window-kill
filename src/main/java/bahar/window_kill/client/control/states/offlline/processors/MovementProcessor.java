@@ -64,13 +64,13 @@ public class MovementProcessor extends GameProcessor {
         }
     }
     private void makeEpsilonInBoard(Epsilon epsilon, MainBoard mainBoard) {
-        if (epsilon.getSceneX() < mainBoard.getX())
-            epsilon.impactFrom(epsilon.getSceneX() - 10, epsilon.getSceneY());
-        if (epsilon.getSceneX() + 6 > mainBoard.getY() + mainBoard.getWidth())
-            epsilon.impactFrom(epsilon.getSceneX() + 10, epsilon.getSceneY());
-        if (epsilon.getSceneY() < mainBoard.getY())
-            epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() - 10);
-        if (epsilon.getSceneY() + 6 > mainBoard.getY() + mainBoard.getHeight())
-            epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() + 10);
+        if (epsilon.getBounds().getMinimumX() < mainBoard.getBounds().getMinimumX())
+            epsilon.impactFrom(epsilon.getBounds().getMinimumX(), epsilon.getY());
+        if (epsilon.getBounds().getMaximumX() > mainBoard.getBounds().getMaximumX())
+            epsilon.impactFrom(epsilon.getBounds().getMaximumX(), epsilon.getY());
+        if (epsilon.getBounds().getMinimumY() < mainBoard.getBounds().getMinimumY())
+            epsilon.impactFrom(epsilon.getX(), epsilon.getBounds().getMinimumY());
+        if (epsilon.getBounds().getMaximumY() > mainBoard.getBounds().getMaximumY())
+            epsilon.impactFrom(epsilon.getX(), epsilon.getBounds().getMaximumY());
     }
 }

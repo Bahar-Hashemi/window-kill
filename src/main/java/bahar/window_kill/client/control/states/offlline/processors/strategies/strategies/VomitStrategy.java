@@ -33,8 +33,8 @@ public class VomitStrategy extends Strategy {
         mainBoard.add(bullet.getView());
         game.addEntity(bullet);
         Random random = new Random();
-        bullet.setLocation(random.nextDouble(mainBoard.getX(), mainBoard.getX() + mainBoard.getWidth()),
-                random.nextDouble(mainBoard.getY(), mainBoard.getY() + mainBoard.getHeight()));
+        bullet.setLocation(random.nextDouble(mainBoard.getBounds().getMinimumX(), mainBoard.getBounds().getMaximumX()),
+                random.nextDouble(mainBoard.getBounds().getMinimumY(), mainBoard.getBounds().getMaximumY()));
         SoundUtil.ENEMY_SHOOT.play();
         onAct(aggressionSource); hasBullet = false;
     }

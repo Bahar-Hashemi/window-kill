@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.boards;
 
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.GameElement;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 public class GameBoard extends GameElement {
     protected boolean hovering;
     public GameBoard(String id, boolean hovering) {
-        super(id, makeView(hovering));
+        super(id, makeView(hovering), new Bounds(0, 0, 0, 0));
         this.hovering = hovering;
         clip();
     }
@@ -51,7 +52,7 @@ public class GameBoard extends GameElement {
         lockBoardHeight(height);
     }
     public void lockBoardWidth(double width) {
-        this.width = width;
+        bounds.setMaximumX(width);
         Pane board = (Pane) getView();
         board.setMinWidth(width);
         board.setMaxWidth(width);
@@ -59,17 +60,18 @@ public class GameBoard extends GameElement {
         clip();
     }
     public void lockBoardHeight(double height) {
-        this.height = height;
+        bounds.setMaximumY(height);
         Pane board = (Pane) getView();
         board.setMinHeight(height); board.setMaxHeight(height);
         clip();
     }
     public void setSize(double width, double height) {
-        setWidth(width); setHeight(height);
+        bounds.setMaximumX(width);
+        bounds.setMaximumY(height);
         lockBoardWidth(width); lockBoardHeight(height);
     }
     private void clip() {
-        Rectangle clip = new Rectangle(getWidth(), getHeight());
+        Rectangle clip = new Rectangle(bounds.getMaximumX(), bounds.getMaximumY());
         getView().setClip(clip);
     }
     public void add(Node node) {

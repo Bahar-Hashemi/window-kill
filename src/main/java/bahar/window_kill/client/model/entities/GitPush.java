@@ -2,6 +2,7 @@ package bahar.window_kill.client.model.entities;
 
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SaveStrategy;
 import bahar.window_kill.client.control.util.ImageUtil;
+import bahar.window_kill.client.model.Bounds;
 import javafx.animation.FadeTransition;
 import javafx.scene.Node;
 import javafx.scene.paint.ImagePattern;
@@ -9,14 +10,13 @@ import javafx.scene.shape.Rectangle;
 
 public class GitPush extends Entity {
     public GitPush(String id) {
-        super(id, makeView(), (int) 1E9 + 7, false, new SaveStrategy() {
+        super(id, makeView(), new Bounds(0, 0, 50, 50),
+                (int) 1E9 + 7, false, new SaveStrategy() {
             @Override
             public void onAct(Entity source) {
                 source.setHP(0);
             }
         });
-        setWidth(50);
-        setHeight(50);
     }
     private static Node makeView() {
         Rectangle rectangle = new Rectangle();

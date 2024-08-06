@@ -15,9 +15,9 @@ public class ComingInWatch extends BossWatch {
     @Override
     protected void onCall() {
         super.onCall();
-        face.setLocation(face.getSceneX(), face.getSceneY() + 1);
-        leftHand.setLocation(leftHand.getSceneX() + 1, leftHand.getSceneY());
-        rightHand.setLocation(rightHand.getSceneX() - 1, rightHand.getSceneY());
+        face.setLocation(face.getX(), face.getY() + 1);
+        leftHand.setLocation(leftHand.getX() + 1, leftHand.getY());
+        rightHand.setLocation(rightHand.getX() - 1, rightHand.getY());
     }
 
     @Override

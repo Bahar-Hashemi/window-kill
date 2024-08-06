@@ -30,7 +30,7 @@ public class BoardsProcessor extends GameProcessor {
                     myY + y * mid,
                     myWidth + width * mid,
                     myHeight + height * mid);
-            if (GameUtil.nonHoveringBoardsInBounds(mainBoard))
+            if (GameUtil.nonHoveringBoardsInBounds(mainBoard, Game.getInstance()))
                 right = mid;
             else
                 left = mid;

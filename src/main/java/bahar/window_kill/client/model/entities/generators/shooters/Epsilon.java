@@ -3,6 +3,7 @@ package bahar.window_kill.client.model.entities.generators.shooters;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.entities.Entity;
@@ -17,10 +18,10 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
     int damage = 0;
     final int SPEED;
     public Epsilon(String id, int speed) {
-        super(id, makeView(), 100, true, new SpawnStrategy(400));
+        super(id, makeView(), new Bounds(-20, -20, 20, 20),
+                100, true, new SpawnStrategy(400));
         setBulletDamage(5);
         this.SPEED = speed;
-        setSize(20, 20);
     }
     private static Node makeView() {
         Circle circle = new Circle();
@@ -45,13 +46,13 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
         }
         User user = GameUtil.findMyUser(this, game);
         if (user.hasLeftRequest())
-            setX(getSceneX() - SPEED);
+            setX(getX() - SPEED);
         if (user.hasRightRequest())
-            setX(getSceneX() + SPEED);
+            setX(getY() + SPEED);
         if (user.hasUpRequest())
-            setY(getSceneY() - SPEED);
+            setY(getX() - SPEED);
         if (user.hasDownRequest())
-            setY(getSceneY() + SPEED);
+            setY(getY() + SPEED);
     }
 
     @Override

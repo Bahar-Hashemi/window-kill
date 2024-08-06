@@ -1,6 +1,7 @@
 package bahar.window_kill.client.model.entities.attackers;
 
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.DamageStrategy;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.entities.Entity;
 import javafx.scene.Node;
@@ -12,7 +13,8 @@ public class Vomit extends Entity implements AttackerEntity {
     Watch damageWatch;
     private int damage = 20;
     public Vomit(String id) {
-        super(id, makeView(), 10, false, new DamageStrategy());
+        super(id, makeView(), new Bounds(-15, -15, 15, 15),
+                10, false, new DamageStrategy());
         opacityWatch = new Watch(30) {protected void onCall(){view.setOpacity(view.getOpacity() - 0.003);}};
         damageWatch = new Watch(500) {protected void onCall() {setHP(getHP() - 4); setDamage(getDamage() - 4); strategy.act(getMe(), game);}};
     }

@@ -1,6 +1,7 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.Strategy;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.entities.Entity;
 import bahar.window_kill.client.model.entities.generators.GeneratorEntity;
 import javafx.geometry.Point2D;
@@ -10,8 +11,8 @@ public abstract class ShooterEntity extends GeneratorEntity {
     protected Double gunDirectionX, gunDirectionY;
     protected int bulletDamage;
 
-    protected ShooterEntity(String id, Node view, int HP, boolean canImpact, Strategy strategy) {
-        super(id, view, HP, canImpact, strategy);
+    protected ShooterEntity(String id, Node view, Bounds bounds, int HP, boolean canImpact, Strategy strategy) {
+        super(id, view, bounds, HP, canImpact, strategy);
     }
     public void setGunDirection(double gunDirectionX, double gunDirectionY) {
         setGunDirectionX(gunDirectionX);

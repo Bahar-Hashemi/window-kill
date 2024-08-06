@@ -56,7 +56,7 @@ public class BlackOrbSpawner extends Spawner {
             if (orb != blackOrb) {
                 BlackOrbLaser blackOrbLaser = new BlackOrbLaser(GameUtil.generateID(), blackOrb, orb);
                 addEntity(blackOrbLaser, game);
-                blackOrbLaser.setLocation(blackOrb.getSceneX(), blackOrb.getSceneY());
+                blackOrbLaser.setLocation(blackOrb.getX(), blackOrb.getY());
             }
     }
 }

@@ -21,8 +21,8 @@ public class PowerPunchWatch extends BossWatch { //todo correct powerPunch later
         super.onCall();
             counter++;
             double change = (counter > 30)? -12: 12;
-            leftHand.setX(leftHand.getSceneX() + change);
-            rightHand.setX(rightHand.getSceneX() - change);
+            leftHand.setX(leftHand.getX() + change);
+            rightHand.setX(rightHand.getX() - change);
             //مقادیری تفمال
             for (User user: game.users) {
                 MainBoard mainBoard = user.mainBoard;

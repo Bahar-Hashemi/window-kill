@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.entities.generators;
 
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.entities.Collectable;
@@ -17,7 +18,8 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
     Watch watch;
     double previousX = 1, previousY = 0;
     public SpawnerArchmire(String id) {
-        super(id, makeView(), 30, false, new SpawnStrategy(200));
+        super(id, makeView(), new Bounds(-25, -50, 25, 50),
+                30, false, new SpawnStrategy(200));
     }
     private static Node makeView() {
         Path path = new Path();
@@ -52,16 +54,16 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
     public void move() {
         double speed = 3;
         User user = GameUtil.findMyUser(this, game);
-        double dx = user.getEpsilon().getSceneX() - getSceneX() + previousX;
-        double dy = user.getEpsilon().getSceneY() - getSceneY() + previousY;
+        double dx = user.getEpsilon().getX() - getX() + previousX;
+        double dy = user.getEpsilon().getY() - getY() + previousY;
         double chord = Math.sqrt(dx * dx + dy * dy);
         if (chord == 0) {
             dx = 1;
             dy = 0;
             chord = 1;
         }
-        setX(getSceneX() + dx / chord * speed);
-        setY(getSceneY() + dy / chord * speed);
+        setX(getX() + dx / chord * speed);
+        setY(getY() + dy / chord * speed);
         previousX = dx;
         previousY = dy;
     }

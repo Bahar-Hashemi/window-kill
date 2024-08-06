@@ -3,6 +3,7 @@ package bahar.window_kill.client.model.entities.attackers;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.DamageStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.entities.Collectable;
 import bahar.window_kill.client.model.entities.Entity;
@@ -18,7 +19,8 @@ public class Trigorath extends Entity implements LootDropper, AttackerEntity {
     private double speed = 0.025;
     private int damage = 10;
     public Trigorath(String id) {
-        super(id, makeView(), 15, true, new DamageStrategy());
+        super(id, makeView(), new Bounds(0, 0, 30, 30),
+                15, true, new DamageStrategy());
     }
 
     private static Node makeView() {
@@ -41,10 +43,10 @@ public class Trigorath extends Entity implements LootDropper, AttackerEntity {
             return;
         }
         User user = GameUtil.findMyUser(this, game);
-        double dx = user.getEpsilon().getSceneX() - getSceneX();
-        double dy = user.getEpsilon().getSceneY() - getSceneY();
-        setY(getSceneY() + dy * speed);
-        setX(getSceneX() + dx * speed);
+        double dx = user.getEpsilon().getX() - getX();
+        double dy = user.getEpsilon().getY() - getY();
+        setY(getY() + dy * speed);
+        setX(getX() + dx * speed);
     }
 
     @Override

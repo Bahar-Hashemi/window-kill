@@ -3,6 +3,7 @@ package bahar.window_kill.client.model.entities.generators.shooters;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.boards.MainBoard;
 import bahar.window_kill.client.model.entities.Collectable;
 import bahar.window_kill.client.model.entities.Entity;
@@ -22,10 +23,10 @@ import java.util.Random;
 public class Omenoct extends ShooterEntity implements LootDropper {
     private int lockStrategy; // 0: up, 1: right, 2: down, 3: left
     public Omenoct(String id) {
-        super(id, makeView(), 20, true, new SpawnStrategy(500));
+        super(id, makeView(), new Bounds(-40, -40, 40, 40),
+                20, true, new SpawnStrategy(500));
         lockStrategy = new Random().nextInt(4);
         setBulletDamage(4);
-        setSize(80, 80); //todo correct here!
     }
     private static Node makeView() {
         Group shapes = new Group();

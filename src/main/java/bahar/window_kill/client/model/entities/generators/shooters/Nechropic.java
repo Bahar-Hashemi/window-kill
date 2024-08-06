@@ -3,6 +3,7 @@ package bahar.window_kill.client.model.entities.generators.shooters;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.entities.Collectable;
@@ -22,10 +23,9 @@ public class Nechropic extends ShooterEntity implements LootDropper {
     boolean canAct = true;
     Watch stateWatch;
     public Nechropic(String id) {
-        super(id, makeView(), 10, true, new SpawnStrategy(15));
+        super(id, makeView(), new Bounds(-10, -10, 10, 10), 10, true, new SpawnStrategy(15));
         makeWatches();
         setBulletDamage(5);
-        setSize(30, 30);
     }
     private void makeWatches() {
         stateWatch = new Watch(500) {
@@ -69,8 +69,8 @@ public class Nechropic extends ShooterEntity implements LootDropper {
     public void move() {
         stateWatch.call(game.clock);
         User user = GameUtil.findMyUser(this, game);
-        double targetX = user.getEpsilon().getSceneX();
-        double targetY = user.getEpsilon().getSceneY();
+        double targetX = user.getEpsilon().getX();
+        double targetY = user.getEpsilon().getY();
         if (statePointer == 0 && canAct) {
             ascent(targetX, targetY);
             canAct = false;

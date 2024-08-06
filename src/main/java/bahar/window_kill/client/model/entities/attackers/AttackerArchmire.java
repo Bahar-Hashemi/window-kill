@@ -2,6 +2,7 @@ package bahar.window_kill.client.model.entities.attackers;
 
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.DamageStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.entities.Collectable;
 import bahar.window_kill.client.model.entities.Entity;
@@ -15,7 +16,8 @@ public class AttackerArchmire extends Entity implements LootDropper, AttackerEnt
     Watch damageWatch;
     private int damage = 10;
     public AttackerArchmire(String id) {
-        super(id, makeView(), 10, false, new DamageStrategy());
+        super(id, makeView(), new Bounds(-25, -50, 25, 50),
+                10, false, new DamageStrategy());
         opacityWatch = new Watch(30) {
             protected void onCall() {view.setOpacity(view.getOpacity() - 0.003);}
         };

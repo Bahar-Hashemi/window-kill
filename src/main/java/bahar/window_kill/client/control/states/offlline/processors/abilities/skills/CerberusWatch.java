@@ -19,7 +19,7 @@ public class CerberusWatch extends AbilityWatch {
         MiniEpsilon miniEpsilon = new MiniEpsilon(GameUtil.generateID());
         user.mainBoard.add(miniEpsilon.getView());
         game.entities.add(miniEpsilon);
-        miniEpsilon.setX(user.getEpsilon().getSceneX() + miniEpsilon.getDifX());
-        miniEpsilon.setY(user.getEpsilon().getSceneY() + miniEpsilon.getDifY());
+        miniEpsilon.setX(user.getEpsilon().getX() + miniEpsilon.getDifX());
+        miniEpsilon.setY(user.getEpsilon().getY() + miniEpsilon.getDifY());
     }
 }

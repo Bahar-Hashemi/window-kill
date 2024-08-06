@@ -1,6 +1,7 @@
 package bahar.window_kill.client.model.entities.attackers;
 
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.DamageStrategy;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.entities.Entity;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -11,7 +12,8 @@ public class Bullet extends Entity implements AttackerEntity {
     private final boolean traverser;
     private int damage;
     public Bullet(String id, int HP, double radius, Color color, int damage, double directionX, double directionY, boolean traversesWalls) {
-        super(id, makeView(radius, color), HP, false,
+        super(id, makeView(radius, color), new Bounds(-radius, -radius, radius, radius),
+                HP, false,
                 new DamageStrategy() {
                     @Override
                     public void onAct(Entity aggressionSource) {
@@ -36,8 +38,8 @@ public class Bullet extends Entity implements AttackerEntity {
     @Override
     public void move() {
         double SPEED = 17;
-        setY(getSceneY() + directionY * SPEED);
-        setX(getSceneX() + directionX * SPEED);
+        setY(getY() + directionY * SPEED);
+        setX(getX() + directionX * SPEED);
     }
 
     @Override

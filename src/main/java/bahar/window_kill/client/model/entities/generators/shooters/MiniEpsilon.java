@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.entities.Entity;
 import bahar.window_kill.client.model.entities.attackers.Bullet;
@@ -15,11 +16,11 @@ public class MiniEpsilon extends ShooterEntity {
     private static final double radius = 4;
     private final double difX, difY;
     public MiniEpsilon(String id) {
-        super(id, makeView(), 100, false, new SpawnStrategy(400));
+        super(id, makeView(), new Bounds(-4, -4, 4, 4),
+                100, false, new SpawnStrategy(400));
         setBulletDamage(1);
         difX = new Random().nextDouble(-15, 15);
         difY = (new Random().nextBoolean()? 1: -1) * Math.sqrt(15 * 15 - difX * difX);
-        setSize(8, 8);
     }
     private static Node makeView() {
         Circle circle = new Circle();
@@ -42,12 +43,12 @@ public class MiniEpsilon extends ShooterEntity {
     public void move() {
         double speed = 6;
         User user = GameUtil.findMyUser(this, game);
-        double dx = user.getEpsilon().getSceneX() + difX - getSceneX();
-        double dy = user.getEpsilon().getSceneY() + difY - getSceneY();
+        double dx = user.getEpsilon().getX() + difX - getX();
+        double dy = user.getEpsilon().getY() + difY - getY();
         double chord = Math.sqrt(dx * dx + dy * dy);
 
-        setX(getSceneX() + dx / chord);
-        setY(getSceneY() + dy / chord);
+        setX(getX() + dx / chord);
+        setY(getY() + dy / chord);
     }
     @Override
     public void aggress() {

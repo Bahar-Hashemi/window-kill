@@ -1,6 +1,7 @@
 package bahar.window_kill.client.model.entities;
 
 import bahar.window_kill.client.control.util.GameUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.control.util.SoundUtil;
 import javafx.animation.ScaleTransition;
@@ -15,10 +16,9 @@ import java.util.Random;
 public class BlackOrb extends Entity implements BoardOwner, LootDropper{
     GameBoard gameBoard;
     public BlackOrb(String id) {
-        super(id, makeView(), 30, true, null);
+        super(id, makeView(), new Bounds(-30, -30, 30, 30),
+                30, true, null);
         byBoard();
-        setWidth(60);
-        setHeight(60);
     }
     private static Node makeView() {
         Group sphereVisual = new Group();

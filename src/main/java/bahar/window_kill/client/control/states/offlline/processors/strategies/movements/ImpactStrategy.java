@@ -13,8 +13,8 @@ public class ImpactStrategy { //todo need to change it for slap
     }
     public void impact(double impactX, double impactY, Entity target, double power) {
         onImpact = true;
-        deltaX = target.getSceneX() - impactX;
-        deltaY = target.getSceneY() - impactY;
+        deltaX = target.getX() - impactX;
+        deltaY = target.getY() - impactY;
         double chord = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         deltaX = deltaX / chord * power;
         deltaY = deltaY / chord * power;
@@ -22,8 +22,8 @@ public class ImpactStrategy { //todo need to change it for slap
     
     public void act(Entity entity) {
         if (onImpact) {
-            entity.setX(entity.getSceneX() + deltaX);
-            entity.setY(entity.getSceneY() + deltaY);
+            entity.setX(entity.getX() + deltaX);
+            entity.setY(entity.getY() + deltaY);
             deltaX *= 0.8;
             deltaY *= 0.8;
             if (Math.sqrt(deltaX * deltaX + deltaY * deltaY) < 0.5)

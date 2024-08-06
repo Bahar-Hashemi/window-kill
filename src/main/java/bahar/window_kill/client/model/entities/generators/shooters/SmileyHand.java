@@ -3,6 +3,7 @@ package bahar.window_kill.client.model.entities.generators.shooters;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.ImageUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.model.entities.BoardOwner;
@@ -22,10 +23,10 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
     boolean isLeftHand;
     int damage = 0;
     public SmileyHand(String id, boolean isLeftHand) {
-        super(id, makeView(isLeftHand), 300, true, null);
+        super(id, makeView(isLeftHand), new Bounds(0, 0, 80, 80),
+                300, true, null);
         this.isLeftHand = isLeftHand;
         byBoard();
-        setSize(80, 80);
         setBulletDamage(10);
     }
     private static Node makeView(boolean isLeftHand) {

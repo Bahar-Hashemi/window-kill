@@ -2,6 +2,7 @@ package bahar.window_kill.client.model.entities.attackers;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.DamageStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.entities.Collectable;
 import bahar.window_kill.client.model.entities.Entity;
@@ -20,7 +21,8 @@ public class Squarantine extends Entity implements LootDropper, AttackerEntity  
     private double dashSpeed = 1;
     private int damage = 6;
     public Squarantine(String id) {
-        super(id, makeView(), 15, true, new DamageStrategy());
+        super(id, makeView(), new Bounds(0, 0, 25, 25),
+                15, true, new DamageStrategy());
     }
 
     private static Node makeView() {
@@ -43,15 +45,15 @@ public class Squarantine extends Entity implements LootDropper, AttackerEntity  
             return;
         }
         User user = GameUtil.findMyUser(this, game);
-        double dx = user.getEpsilon().getSceneX() - getSceneX();
-        double dy = user.getEpsilon().getSceneY() - getSceneY();
+        double dx = user.getEpsilon().getX() - getX();
+        double dy = user.getEpsilon().getY() - getY();
         double chord = Math.sqrt(dx * dx + dy * dy);
         Random random = new Random();
         if (dashSpeed > 5) dashSpeed -= 5;
         else if (random.nextDouble(0, 1) > 0.99)
             dashSpeed = 16;
-        setX(getSceneX() + dx / chord * speed * dashSpeed);
-        setY(getSceneY() + dy / chord * speed * dashSpeed);
+        setX(getX() + dx / chord * speed * dashSpeed);
+        setY(getY() + dy / chord * speed * dashSpeed);
     }
 
     @Override

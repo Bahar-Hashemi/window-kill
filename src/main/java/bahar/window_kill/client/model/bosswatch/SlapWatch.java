@@ -24,9 +24,9 @@ public class SlapWatch extends BossWatch {
         counter++;
         int change = (counter > 50)? -10: 10;
         if (hand == leftHand)
-            hand.setX(hand.getSceneX() + change);
+            hand.setX(hand.getX() + change);
         if (hand == rightHand)
-            hand.setX(hand.getSceneX() - change);
+            hand.setX(hand.getX() - change);
     }
 
     @Override

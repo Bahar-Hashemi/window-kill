@@ -31,8 +31,8 @@ public class EntityUtil extends ModelUtil {
 //            return writeCollectable(object);
         StringBuilder sb = new StringBuilder();
         sb.append(object.getClass().getName()).append("\n");
-        sb.append(((Entity) object).getLayoutX()).append(" ");
-        sb.append(((Entity) object).getLayoutY()).append("\n");
+        sb.append(((Entity) object).getX()).append(" ");
+        sb.append(((Entity) object).getY()).append("\n");
         sb.append(((Entity) object).getHP()).append("\n");
         return sb.toString();
     }

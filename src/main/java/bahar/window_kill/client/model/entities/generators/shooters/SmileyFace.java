@@ -1,6 +1,7 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
 import bahar.window_kill.client.control.util.GameUtil;
+import bahar.window_kill.client.model.Bounds;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.model.entities.BoardOwner;
 import bahar.window_kill.client.model.entities.Collectable;
@@ -23,12 +24,12 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
     private double x;
 
     public SmileyFace(String id) {
-        super(id, makeView(), 1000, true, null);
+        super(id, makeView(), new Bounds(-50, -50, 50, 50),
+                1000, true, null);
         byBoard();
         makeEyes();
         makeMouth();
         setBulletDamage(20);
-        setSize(80, 80); //todo correct here!
     }
     private void makeMouth() {
         // Creating a CubicCurve for the mouth
