@@ -8,8 +8,8 @@ public class EntityUtil extends ModelUtil {
     @Override
     public Entity read(Scanner sc) {
         Entity entity = EntityMaker(sc.next());
-        entity.setLayoutX(sc.nextDouble());
-        entity.setLayoutY(sc.nextDouble());
+        entity.setX(sc.nextDouble());
+        entity.setY(sc.nextDouble());
         entity.setHP(sc.nextDouble());
         return entity;
     }

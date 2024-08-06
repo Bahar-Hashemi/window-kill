@@ -64,13 +64,13 @@ public class MovementProcessor extends GameProcessor {
         }
     }
     private void makeEpsilonInBoard(Epsilon epsilon, MainBoard mainBoard) {
-        if (epsilon.getSceneX() < mainBoard.getLayoutX())
+        if (epsilon.getSceneX() < mainBoard.getX())
             epsilon.impactFrom(epsilon.getSceneX() - 10, epsilon.getSceneY());
-        if (epsilon.getSceneX() + 6 > mainBoard.getLayoutX() + mainBoard.getWidth())
+        if (epsilon.getSceneX() + 6 > mainBoard.getY() + mainBoard.getWidth())
             epsilon.impactFrom(epsilon.getSceneX() + 10, epsilon.getSceneY());
-        if (epsilon.getSceneY() < mainBoard.getLayoutY())
+        if (epsilon.getSceneY() < mainBoard.getY())
             epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() - 10);
-        if (epsilon.getSceneY() + 6 > mainBoard.getLayoutY() + mainBoard.getHeight())
+        if (epsilon.getSceneY() + 6 > mainBoard.getY() + mainBoard.getHeight())
             epsilon.impactFrom(epsilon.getSceneX(), epsilon.getSceneY() + 10);
     }
 }

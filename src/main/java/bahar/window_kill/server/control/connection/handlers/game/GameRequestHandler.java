@@ -9,7 +9,6 @@ import bahar.window_kill.communications.messages.client.game.GameRequestMessage;
 import bahar.window_kill.server.control.connection.DataBaseManager;
 import bahar.window_kill.server.control.connection.handlers.MessageHandler;
 import bahar.window_kill.server.control.game.GameController;
-import bahar.window_kill.server.model.Game;
 
 import java.io.DataOutputStream;
 

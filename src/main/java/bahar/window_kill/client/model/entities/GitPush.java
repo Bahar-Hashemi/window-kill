@@ -8,13 +8,15 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class GitPush extends Entity {
-    public GitPush() {
-        super(makeView(), (int) 1E9 + 7, false, new SaveStrategy() {
+    public GitPush(String id) {
+        super(id, makeView(), (int) 1E9 + 7, false, new SaveStrategy() {
             @Override
             public void onAct(Entity source) {
                 source.setHP(0);
             }
         });
+        setWidth(50);
+        setHeight(50);
     }
     private static Node makeView() {
         Rectangle rectangle = new Rectangle();

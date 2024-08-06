@@ -16,8 +16,8 @@ import javafx.scene.shape.*;
 public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
     Watch watch;
     double previousX = 1, previousY = 0;
-    public SpawnerArchmire() {
-        super(makeView(), 30, false, new SpawnStrategy(200));
+    public SpawnerArchmire(String id) {
+        super(id, makeView(), 30, false, new SpawnStrategy(200));
     }
     private static Node makeView() {
         Path path = new Path();
@@ -60,8 +60,8 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
             dy = 0;
             chord = 1;
         }
-        setSceneX(getSceneX() + dx / chord * speed);
-        setSceneY(getSceneY() + dy / chord * speed);
+        setX(getSceneX() + dx / chord * speed);
+        setY(getSceneY() + dy / chord * speed);
         previousX = dx;
         previousY = dy;
     }
@@ -77,7 +77,7 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
 
     @Override
     public Entity makeBullet() {
-        return new AttackerArchmire();
+        return new AttackerArchmire(GameUtil.generateID());
     }
 
     @Override
@@ -87,6 +87,6 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(3, Color.DARKMAGENTA);
+        return new Collectable(GameUtil.generateID(), 3, Color.DARKMAGENTA);
     }
 }

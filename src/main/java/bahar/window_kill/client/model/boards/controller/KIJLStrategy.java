@@ -7,8 +7,8 @@ public class KIJLStrategy extends ControlStrategy {
 
     @Override
     public void requestUserControl(MainBoard mainBoard, User user) {
-        mainBoard.requestFocus();
-        mainBoard.setOnKeyPressed(keyEvent -> {
+        mainBoard.getView().requestFocus();
+        mainBoard.getView().setOnKeyPressed(keyEvent -> {
             switch (keyEvent.getCode()) {
                 case I -> user.setUpRequest(true);
                 case J -> user.setLeftRequest(true);
@@ -20,7 +20,7 @@ public class KIJLStrategy extends ControlStrategy {
                 }
             }
         });
-        mainBoard.setOnKeyReleased(keyEvent -> {
+        mainBoard.getView().setOnKeyReleased(keyEvent -> {
             switch (keyEvent.getCode()) {
                 case I -> user.setUpRequest(false);
                 case J -> user.setLeftRequest(false);
@@ -39,15 +39,15 @@ public class KIJLStrategy extends ControlStrategy {
                 } //fight
             }
         });
-        mainBoard.setOnMousePressed(mouseEvent -> {
+        mainBoard.getView().setOnMousePressed(mouseEvent -> {
             user.setShooting(true);
-            user.setMouseX(mouseEvent.getX() + mainBoard.getLayoutX());
-            user.setMouseY(mouseEvent.getY() + mainBoard.getLayoutY());
+            user.setMouseX(mouseEvent.getX() + mainBoard.getX());
+            user.setMouseY(mouseEvent.getY() + mainBoard.getY());
         });
-        mainBoard.setOnMouseReleased(mouseEvent -> user.setShooting(false));
-        mainBoard.setOnMouseDragged(mouseEvent -> {
-            user.setMouseX(mouseEvent.getX() + mainBoard.getLayoutX());
-            user.setMouseY(mouseEvent.getY() + mainBoard.getLayoutY());
+        mainBoard.getView().setOnMouseReleased(mouseEvent -> user.setShooting(false));
+        mainBoard.getView().setOnMouseDragged(mouseEvent -> {
+            user.setMouseX(mouseEvent.getX() + mainBoard.getX());
+            user.setMouseY(mouseEvent.getY() + mainBoard.getY());
         });
     }
 }

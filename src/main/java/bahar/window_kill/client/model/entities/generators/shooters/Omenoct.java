@@ -1,6 +1,7 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
 import bahar.window_kill.client.model.boards.MainBoard;
 import bahar.window_kill.client.model.entities.Collectable;
@@ -11,6 +12,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
@@ -19,10 +21,11 @@ import java.util.Random;
 
 public class Omenoct extends ShooterEntity implements LootDropper {
     private int lockStrategy; // 0: up, 1: right, 2: down, 3: left
-    public Omenoct() {
-        super(makeView(), 20, true, new SpawnStrategy(500));
+    public Omenoct(String id) {
+        super(id, makeView(), 20, true, new SpawnStrategy(500));
         lockStrategy = new Random().nextInt(4);
         setBulletDamage(4);
+        setSize(80, 80); //todo correct here!
     }
     private static Node makeView() {
         Group shapes = new Group();
@@ -64,10 +67,10 @@ public class Omenoct extends ShooterEntity implements LootDropper {
         return shapes;
     }
     @Override
-    public void move() {
+    public void move() { //todo correct here!!
         int speed = 5;
-        double width = ((MainBoard)getView().getParent()).getWidth();
-        double height = ((MainBoard)getView().getParent()).getHeight();
+        double width = ((Pane) getView().getParent()).getWidth();
+        double height = ((Pane) getView().getParent()).getHeight();
         if (lockStrategy == 0 && Math.abs(view.getLayoutY()) + 2 > speed)
             view.setLayoutY(view.getLayoutY() + (view.getLayoutY() > 0? -1: 1) * speed);
 
@@ -92,7 +95,7 @@ public class Omenoct extends ShooterEntity implements LootDropper {
 
     @Override
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 3, Color.RED, getBulletDamage(), gunDirectionX, gunDirectionY, true);
+        return new Bullet(GameUtil.generateID(), getBulletDamage(), 3, Color.RED, getBulletDamage(), gunDirectionX, gunDirectionY, true);
     }
 
     @Override
@@ -102,6 +105,6 @@ public class Omenoct extends ShooterEntity implements LootDropper {
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(4, Color.RED);
+        return new Collectable(GameUtil.generateID(), 4, Color.RED);
     }
 }

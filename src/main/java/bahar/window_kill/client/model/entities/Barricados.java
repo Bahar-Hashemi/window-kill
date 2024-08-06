@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.entities;
 
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.control.util.ImageUtil;
@@ -13,8 +14,8 @@ import java.util.Random;
 public class Barricados extends Entity implements BoardOwner {
     GameBoard gameBoard;
     Watch watch;
-    public Barricados() {
-        super(makeView(), 1000 * 1000 * 1000, true, null);
+    public Barricados(String id) {
+        super(id, makeView(), 1000 * 1000 * 1000, true, null);
         watch = new Watch(60 * 1000) {
             @Override
             protected void onEnd() {
@@ -22,6 +23,7 @@ public class Barricados extends Entity implements BoardOwner {
                 setHP(0);
             }
         };
+        setSize(80, 80);
         byBoard();
     }
     private static Node makeView() {
@@ -52,8 +54,8 @@ public class Barricados extends Entity implements BoardOwner {
 
     @Override
     public void byBoard() {
-        gameBoard = new GameBoard(new Random().nextBoolean());
-        gameBoard.lockSize(120, 120);
+        gameBoard = new GameBoard(GameUtil.generateID(), new Random().nextBoolean());
+        gameBoard.lockBoardSize(120, 120);
     }
 
     @Override
@@ -61,26 +63,14 @@ public class Barricados extends Entity implements BoardOwner {
         return gameBoard;
     }
 
-    @Override
-    public void setSceneX(double x) {
-        super.setSceneX(x);
+    public void setX(double x) {
+        super.setX(x);
         if (gameBoard != null)
             gameBoard.setLayoutX(x - 20);
     }
 
-    @Override
-    public void setSceneY(double y) {
-        super.setSceneY(y);
-        if (gameBoard != null)
-            gameBoard.setLayoutY(y - 20);
-    }
-    public void setLayoutX(double x) {
-        super.setLayoutX(x);
-        if (gameBoard != null)
-            gameBoard.setLayoutX(x - 20);
-    }
-    public void setLayoutY(double y) {
-        super.setLayoutY(y);
+    public void setY(double y) {
+        super.setY(y);
         if (gameBoard != null)
             gameBoard.setLayoutY(y - 20);
     }

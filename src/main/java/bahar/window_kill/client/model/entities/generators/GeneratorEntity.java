@@ -6,8 +6,8 @@ import bahar.window_kill.client.control.states.offlline.processors.strategies.st
 import javafx.scene.Node;
 
 public abstract class GeneratorEntity extends Entity {
-    protected GeneratorEntity(Node view, int HP, boolean canImpact, Strategy strategy) {
-        super(view, HP, canImpact, strategy);
+    protected GeneratorEntity(String id, Node view, int HP, boolean canImpact, Strategy strategy) {
+        super(id, view, HP, canImpact, strategy);
     }
     abstract public Entity makeBullet();
     public void setSpawnDuration(long speed) {

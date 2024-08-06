@@ -1,6 +1,7 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
 import bahar.window_kill.client.model.Watch;
 import bahar.window_kill.client.model.boards.GameBoard;
@@ -18,11 +19,13 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     Watch gunWatch;
     GameBoard gameBoard;
     Circle iris;
-    public Wyrm() {
-        super(makeView(), 30, true, new SpawnStrategy(1000));
+    public Wyrm(String id) {
+        super(id, makeView(), 30, true, new SpawnStrategy(1000));
         makeIris();
         byBoard();
         setBulletDamage(5);
+        setWidth(55);
+        setHeight(35);
     }
     private void makeIris() {
         // Adjust iris to be centered in the wider eye
@@ -32,9 +35,9 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     }
     private static Node makeView() {
         Path eyeOutline = new Path();
-        MoveTo moveTo = new MoveTo(-20, -15);
-        CubicCurveTo upperEyelid = new CubicCurveTo(-10, -35, 30, -35, 40, -15);
-        CubicCurveTo lowerEyelid = new CubicCurveTo(30, 5, -10, 5, -20, -15);
+        MoveTo moveTo = new MoveTo(0, 20);
+        CubicCurveTo upperEyelid = new CubicCurveTo(10, 0, 50, 0, 60, 20);
+        CubicCurveTo lowerEyelid = new CubicCurveTo(55, 40, 10, 40, 0, 20);
 
         eyeOutline.getElements().add(moveTo);
         eyeOutline.getElements().addAll(upperEyelid, lowerEyelid);
@@ -49,8 +52,8 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
 
     @Override
     public void byBoard() {
-        gameBoard = new GameBoard(true);
-        gameBoard.lockSize(90, 70);
+        gameBoard = new GameBoard(GameUtil.generateID(), true);
+        gameBoard.lockBoardSize(90, 70);
     }
     @Override
     public GameBoard getBoard() {
@@ -77,29 +80,19 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     public void shout() {
         SoundUtil.HIT.play();
     }
-    public void setSceneX(double x) {
-        super.setSceneX(x);
+    public void setX(double x) {
+        super.setX(x);
         if (gameBoard != null)
-            gameBoard.setLayoutX(x - 35);
+            gameBoard.setLayoutX(x);
     }
-    public void setSceneY(double y) {
-        super.setSceneY(y);
+    public void setY(double y) {
+        super.setY(y);
         if (gameBoard != null)
-            gameBoard.setLayoutY(y - 50);
-    }
-    public void setLayoutX(double x) {
-        super.setLayoutX(x);
-        if (gameBoard != null)
-            gameBoard.setLayoutX(x - 50);
-    }
-    public void setLayoutY(double y) {
-        super.setLayoutY(y);
-        if (gameBoard != null)
-            gameBoard.setLayoutY(y - 50);
+            gameBoard.setLayoutY(y);
     }
     @Override
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 5, Color.CRIMSON, getBulletDamage(), gunDirectionX, gunDirectionY, true);
+        return new Bullet(GameUtil.generateID(), getBulletDamage(), 5, Color.CRIMSON, getBulletDamage(), gunDirectionX, gunDirectionY, true);
     }
 
     @Override
@@ -109,6 +102,6 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(8, Color.CRIMSON);
+        return new Collectable(GameUtil.generateID(), 8, Color.CRIMSON);
     }
 }

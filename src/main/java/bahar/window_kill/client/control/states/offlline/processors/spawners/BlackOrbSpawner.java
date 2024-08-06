@@ -1,6 +1,7 @@
 package bahar.window_kill.client.control.states.offlline.processors.spawners;
 
 import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.entities.BlackOrb;
 import bahar.window_kill.client.model.entities.Entity;
@@ -43,19 +44,19 @@ public class BlackOrbSpawner extends Spawner {
         double theta = 2 * Math.PI / 5;
         double x = centerX + radius * Math.cos(index * theta);
         double y = centerY + radius * Math.sin(index * theta);
-        BlackOrb blackOrb = new BlackOrb();
+        BlackOrb blackOrb = new BlackOrb(GameUtil.generateID());
         blackOrbs.add(blackOrb);
         addEntity(blackOrb, game);
-        blackOrb.setSceneLocation(x, y);
+        blackOrb.setLocation(x, y);
         makeLaser(blackOrb, game);
     }
     private static void makeLaser(BlackOrb blackOrb, Game game) {
         makeBlackOrbs(game);
         for (BlackOrb orb: blackOrbs)
             if (orb != blackOrb) {
-                BlackOrbLaser blackOrbLaser = new BlackOrbLaser(blackOrb, orb);
+                BlackOrbLaser blackOrbLaser = new BlackOrbLaser(GameUtil.generateID(), blackOrb, orb);
                 addEntity(blackOrbLaser, game);
-                blackOrbLaser.setSceneLocation(blackOrb.getSceneX(), blackOrb.getSceneY());
+                blackOrbLaser.setLocation(blackOrb.getSceneX(), blackOrb.getSceneY());
             }
     }
 }

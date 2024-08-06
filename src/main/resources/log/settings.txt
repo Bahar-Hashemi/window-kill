@@ -1,4 +1,4 @@
 10
 50
-0
+24
 bahar.window_kill.client.model.boards.controller.WASDStrategy

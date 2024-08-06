@@ -13,16 +13,16 @@ public class BlackOrbLaser extends Entity implements AttackerEntity {
     private final Node terminal1View, terminal2View;
     private static final int INF = (int) 1E9 + 7;
     private int damage = 12;
-    public BlackOrbLaser(BlackOrb terminal1, BlackOrb terminal2) {
-        super(makeView(terminal1, terminal2), INF, true, new DamageStrategy());
+    public BlackOrbLaser(String id, BlackOrb terminal1, BlackOrb terminal2) {
+        super(id, makeView(terminal1, terminal2), INF, true, new DamageStrategy());
         this.terminal1 = terminal1;
         this.terminal2 = terminal2;
         //در اینجا مقادیری تف زدیم
         terminal1View = makeView(terminal1, terminal2);
         terminal2View = makeView(terminal1, terminal2);
-        terminal1.getBoard().getChildren().add(terminal1View);
+        terminal1.getBoard().add(terminal1View);
         GameUtil.setSceneLocation(terminal1View, terminal1.getSceneX(), terminal1.getSceneY());
-        terminal2.getBoard().getChildren().add(terminal2View);
+        terminal2.getBoard().add(terminal2View);
         GameUtil.setSceneLocation(terminal2View, terminal1.getSceneX(), terminal1.getSceneY());
     }
     private static Node makeView(BlackOrb terminal1, BlackOrb terminal2) {
@@ -46,8 +46,8 @@ public class BlackOrbLaser extends Entity implements AttackerEntity {
     public void aggress() {
         if (terminal1.getHP() <= 0 || terminal2.getHP() <= 0) {
             setHP(0);
-            terminal1.getBoard().getChildren().remove(terminal1View);
-            terminal2.getBoard().getChildren().remove(terminal2View);
+            terminal1.getBoard().remove(terminal1View);
+            terminal2.getBoard().remove(terminal2View);
         }
         strategy.act(this, game);
     }

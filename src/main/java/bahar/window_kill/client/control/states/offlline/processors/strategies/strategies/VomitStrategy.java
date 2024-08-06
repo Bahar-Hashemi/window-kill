@@ -1,5 +1,6 @@
 package bahar.window_kill.client.control.states.offlline.processors.strategies.strategies;
 
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.util.SoundUtil;
 import bahar.window_kill.client.model.Watch;
@@ -26,14 +27,14 @@ public class VomitStrategy extends Strategy {
         watch.call(game.clock);
         if (!hasBullet)
             return;
-        Entity bullet = new Vomit();
+        Entity bullet = new Vomit(GameUtil.generateID());
         int index = new Random().nextInt(game.users.size());
         MainBoard mainBoard = game.users.get(index).mainBoard;
-        mainBoard.getChildren().add(bullet.getView());
+        mainBoard.add(bullet.getView());
         game.addEntity(bullet);
         Random random = new Random();
-        bullet.setSceneLocation(random.nextDouble(mainBoard.getLayoutX(), mainBoard.getLayoutX() + mainBoard.getWidth()),
-                random.nextDouble(mainBoard.getLayoutY(), mainBoard.getLayoutY() + mainBoard.getHeight()));
+        bullet.setLocation(random.nextDouble(mainBoard.getX(), mainBoard.getX() + mainBoard.getWidth()),
+                random.nextDouble(mainBoard.getY(), mainBoard.getY() + mainBoard.getHeight()));
         SoundUtil.ENEMY_SHOOT.play();
         onAct(aggressionSource); hasBullet = false;
     }

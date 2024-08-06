@@ -17,8 +17,8 @@ import javafx.util.Duration;
 public class Trigorath extends Entity implements LootDropper, AttackerEntity {
     private double speed = 0.025;
     private int damage = 10;
-    public Trigorath() {
-        super(makeView(), 15, true, new DamageStrategy());
+    public Trigorath(String id) {
+        super(id, makeView(), 15, true, new DamageStrategy());
     }
 
     private static Node makeView() {
@@ -43,8 +43,8 @@ public class Trigorath extends Entity implements LootDropper, AttackerEntity {
         User user = GameUtil.findMyUser(this, game);
         double dx = user.getEpsilon().getSceneX() - getSceneX();
         double dy = user.getEpsilon().getSceneY() - getSceneY();
-        setSceneY(getSceneY() + dy * speed);
-        setSceneX(getSceneX() + dx * speed);
+        setY(getSceneY() + dy * speed);
+        setX(getSceneX() + dx * speed);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Trigorath extends Entity implements LootDropper, AttackerEntity {
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(5, Color.ORANGE);
+        return new Collectable(GameUtil.generateID(), 5, Color.ORANGE);
     }
 
     @Override

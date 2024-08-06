@@ -10,6 +10,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -41,8 +42,8 @@ public class RestartingState extends GameState {
         label.setTextFill(Color.RED);
         label.setAlignment(Pos.CENTER);
         label.setFont(new Font("cooper black", 68));
-        label.layoutXProperty().bind(mainBoard.widthProperty().subtract(label.widthProperty()).divide(2));
-        label.layoutYProperty().bind(mainBoard.heightProperty().subtract(label.heightProperty()).divide(2));
+        label.layoutXProperty().bind(((Pane) mainBoard.getView()).widthProperty().subtract(label.widthProperty()).divide(2));
+        label.layoutYProperty().bind(((Pane) mainBoard.getView()).heightProperty().subtract(label.heightProperty()).divide(2));
         return label;
     }
     @Override

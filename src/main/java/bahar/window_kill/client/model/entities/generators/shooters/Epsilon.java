@@ -3,6 +3,7 @@ package bahar.window_kill.client.model.entities.generators.shooters;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.SpawnStrategy;
 import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.User;
 import bahar.window_kill.client.model.entities.Entity;
 import bahar.window_kill.client.model.entities.attackers.AttackerEntity;
@@ -15,10 +16,11 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
     private static final double radius = 10;
     int damage = 0;
     final int SPEED;
-    public Epsilon(int speed) {
-        super(makeView(), 100, true, new SpawnStrategy(400));
+    public Epsilon(String id, int speed) {
+        super(id, makeView(), 100, true, new SpawnStrategy(400));
         setBulletDamage(5);
         this.SPEED = speed;
+        setSize(20, 20);
     }
     private static Node makeView() {
         Circle circle = new Circle();
@@ -29,7 +31,7 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
         return circle;
     }
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 3.5, Color.WHITE, getBulletDamage(), gunDirectionX, gunDirectionY, false);
+        return new Bullet(GameUtil.generateID(), getBulletDamage(), 3.5, Color.WHITE, getBulletDamage(), gunDirectionX, gunDirectionY, false);
     }
     public void setColor(Color color) {
         ((Circle) view).setStroke(color);
@@ -43,13 +45,13 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
         }
         User user = GameUtil.findMyUser(this, game);
         if (user.hasLeftRequest())
-            setSceneX(getSceneX() - SPEED);
+            setX(getSceneX() - SPEED);
         if (user.hasRightRequest())
-            setSceneX(getSceneX() + SPEED);
+            setX(getSceneX() + SPEED);
         if (user.hasUpRequest())
-            setSceneY(getSceneY() - SPEED);
+            setY(getSceneY() - SPEED);
         if (user.hasDownRequest())
-            setSceneY(getSceneY() + SPEED);
+            setY(getSceneY() + SPEED);
     }
 
     @Override

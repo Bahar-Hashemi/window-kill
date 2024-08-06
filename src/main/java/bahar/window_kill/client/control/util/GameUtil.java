@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class GameUtil {
 
@@ -55,14 +56,14 @@ public class GameUtil {
     }
     public static User findMyUser(Entity entity, Game game) {
         for (User user : game.users) {
-            if (user.mainBoard == entity.getView().getParent())
+            if (user.mainBoard.getView() == entity.getView().getParent())
                 return user;
         }
         return null;
     }
     public static boolean intersects(GameBoard firstBoard, GameBoard secondBoard) {
-        Bounds firstBounds = firstBoard.localToScene(firstBoard.getBoundsInLocal());
-        Bounds secondBounds = secondBoard.localToScene(secondBoard.getBoundsInLocal());
+        Bounds firstBounds = firstBoard.getView().localToScene(firstBoard.getView().getBoundsInLocal());
+        Bounds secondBounds = secondBoard.getView().localToScene(secondBoard.getView().getBoundsInLocal());
         return firstBounds.intersects(secondBounds);
     }
     public static void setSceneX(Node node, double x) {
@@ -91,17 +92,20 @@ public class GameUtil {
     public static void placeOutsideBoard(Entity entity, GameBoard gameBoard) {
         int placingStrategy = new Random().nextInt(0, 4);
         if (placingStrategy == 0) {
-            entity.setSceneX(new Random().nextDouble(gameBoard.getLayoutX(), gameBoard.getLayoutX() + gameBoard.getWidth()));
-            entity.setSceneY(gameBoard.getLayoutY() -100);
+            entity.setX(new Random().nextDouble(gameBoard.getView().getLayoutX(), gameBoard.getView().getLayoutX() + gameBoard.getWidth()));
+            entity.setY(gameBoard.getView().getLayoutY() -100);
         } else if (placingStrategy == 1) {
-            entity.setSceneX(gameBoard.getLayoutX() + gameBoard.getWidth() + 100);
-            entity.setSceneY(new Random().nextDouble(gameBoard.getLayoutY(), gameBoard.getLayoutY() + gameBoard.getHeight()));
+            entity.setX(gameBoard.getView().getLayoutX() + gameBoard.getWidth() + 100);
+            entity.setY(new Random().nextDouble(gameBoard.getView().getLayoutY(), gameBoard.getView().getLayoutY() + gameBoard.getHeight()));
         } else if (placingStrategy == 2) {
-            entity.setSceneX(new Random().nextDouble(gameBoard.getLayoutX(), gameBoard.getLayoutX() + gameBoard.getWidth()));
-            entity.setSceneY(gameBoard.getLayoutY() + gameBoard.getHeight() + 100);
+            entity.setX(new Random().nextDouble(gameBoard.getView().getLayoutX(), gameBoard.getView().getLayoutX() + gameBoard.getWidth()));
+            entity.setY(gameBoard.getView().getLayoutY() + gameBoard.getHeight() + 100);
         } else {
-            entity.setSceneX(gameBoard.getLayoutX() - 100);
-            entity.setSceneY(new Random().nextDouble(gameBoard.getLayoutY(), gameBoard.getLayoutY() + gameBoard.getHeight()));
+            entity.setX(gameBoard.getView().getLayoutX() - 100);
+            entity.setY(new Random().nextDouble(gameBoard.getView().getLayoutY(), gameBoard.getView().getLayoutY() + gameBoard.getHeight()));
         }
+    }
+    public static String generateID() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 10);
     }
 }

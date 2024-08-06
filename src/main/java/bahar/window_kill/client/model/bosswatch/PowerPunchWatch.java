@@ -21,21 +21,21 @@ public class PowerPunchWatch extends BossWatch { //todo correct powerPunch later
         super.onCall();
             counter++;
             double change = (counter > 30)? -12: 12;
-            leftHand.setSceneX(leftHand.getSceneX() + change);
-            rightHand.setSceneX(rightHand.getSceneX() - change);
+            leftHand.setX(leftHand.getSceneX() + change);
+            rightHand.setX(rightHand.getSceneX() - change);
             //مقادیری تفمال
             for (User user: game.users) {
                 MainBoard mainBoard = user.mainBoard;
                 boolean leftIntersect = GameUtil.intersects(mainBoard, leftHand.getBoard());
                 boolean rightIntersect = GameUtil.intersects(mainBoard, rightHand.getBoard());
                 if (leftIntersect && rightIntersect) {
-                    mainBoard.lockWidth(mainBoard.getWidth() - 10);
-                    mainBoard.IndependentMoveX(mainBoard.getLayoutX() + 5);
+                    mainBoard.lockBoardWidth(mainBoard.getWidth() - 10);
+                    mainBoard.setLayoutX(mainBoard.getX() + 5);
                 }
                 else if (leftIntersect)
-                    mainBoard.IndependentMoveX(mainBoard.getLayoutX() + 5);
+                    mainBoard.setLayoutX(mainBoard.getX() + 5);
                 else if (rightIntersect)
-                    mainBoard.IndependentMoveX(mainBoard.getLayoutX() - 5);
+                    mainBoard.setLayoutX(mainBoard.getX() - 5);
             }
     }
 

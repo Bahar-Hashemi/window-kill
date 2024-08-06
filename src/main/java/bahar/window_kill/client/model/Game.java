@@ -18,7 +18,7 @@ public class Game {
     public String save = null;
     public GameState gameState;
     public static Game onlineInstance;
-    private Game() {
+    public Game() {
         entities = new ArrayList<>();
         gameBoards = new ArrayList<>();
         users = new ArrayList<>();

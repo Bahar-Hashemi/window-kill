@@ -21,12 +21,12 @@ public class BoardsProcessor extends GameProcessor {
 
     }
     public static void requestMainBoardChangeInBounds(double x, double y, double width, double height, MainBoard mainBoard) {
-        double myX = mainBoard.getLayoutX(), myY = mainBoard.getLayoutY();
+        double myX = mainBoard.getX(), myY = mainBoard.getY();
         double myWidth = mainBoard.getWidth(), myHeight = mainBoard.getHeight();
         double left = 0, right = 1;
         while (right - left > 0.001) {
             double mid = (right + left) / 2;
-            mainBoard.setIndependentDimensions(myX + x * mid,
+            mainBoard.setDimensions(myX + x * mid,
                     myY + y * mid,
                     myWidth + width * mid,
                     myHeight + height * mid);
@@ -37,17 +37,17 @@ public class BoardsProcessor extends GameProcessor {
         }
     }
     private static void mainBoardInBounds(MainBoard mainBoard) {
-        mainBoard.setLayoutY(Math.max(0, mainBoard.getLayoutY()));
-        mainBoard.setLayoutX(Math.max(0, mainBoard.getLayoutX()));
-        if (mainBoard.getWidth() + mainBoard.getLayoutX() > Constants.SCREEN_WIDTH)
-            mainBoard.lockWidth(Constants.SCREEN_WIDTH - mainBoard.getLayoutX());
-        if (mainBoard.getHeight() + mainBoard.getLayoutY() > Constants.SCREEN_HEIGHT)
-            mainBoard.lockHeight(Constants.SCREEN_HEIGHT - mainBoard.getLayoutY());
+        mainBoard.setLayoutY(Math.max(0, mainBoard.getY()));
+        mainBoard.setLayoutX(Math.max(0, mainBoard.getX()));
+        if (mainBoard.getWidth() + mainBoard.getX() > Constants.SCREEN_WIDTH)
+            mainBoard.lockBoardWidth(Constants.SCREEN_WIDTH - mainBoard.getX());
+        if (mainBoard.getHeight() + mainBoard.getY() > Constants.SCREEN_HEIGHT)
+            mainBoard.lockBoardHeight(Constants.SCREEN_HEIGHT - mainBoard.getY());
     }
     private void shrinkMainBoard(MainBoard mainBoard) {
         double minusWidth = Math.min((mainBoard.getWidth() - Constants.MINIMUM_WIDTH) / 2, mainBoard.shrink);
         double minusHeight = Math.min((mainBoard.getHeight() - Constants.MINIMUM_HEIGHT) / 2, mainBoard.shrink);
-        mainBoard.setIndependentDimensions(mainBoard.getLayoutX() + minusWidth, mainBoard.getLayoutY() + minusHeight,
+        mainBoard.setDimensions(mainBoard.getX() + minusWidth, mainBoard.getY() + minusHeight,
                 mainBoard.getWidth() - 2 * minusWidth , mainBoard.getHeight() - 2 * minusHeight);
     }
     public void updateMainBoardLabel(MainBoard mainBoard, User user) {

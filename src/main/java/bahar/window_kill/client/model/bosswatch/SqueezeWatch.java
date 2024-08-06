@@ -20,8 +20,8 @@ public class SqueezeWatch extends BossWatch {
         super.onCall();
         counter++;
         double change = (counter > 100)? -1: 1;
-        leftHand.setSceneX(leftHand.getSceneX() + change);
-        rightHand.setSceneX(rightHand.getSceneX() - change);
+        leftHand.setX(leftHand.getSceneX() + change);
+        rightHand.setX(rightHand.getSceneX() - change);
     }
 
     @Override

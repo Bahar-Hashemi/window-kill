@@ -3,17 +3,17 @@ package bahar.window_kill.client.model.entities;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.strategies.Strategy;
 import bahar.window_kill.client.control.states.offlline.processors.strategies.movements.ImpactStrategy;
+import bahar.window_kill.client.model.GameElement;
 import javafx.scene.Node;
 
-abstract public class Entity {
+abstract public class Entity extends GameElement {
     protected double HP;
     protected final ImpactStrategy impactStrategy;
-    protected final Node view;
     protected Strategy strategy;
     protected Game game;
     protected String id;
-    protected Entity(Node view, int HP, boolean canImpact, Strategy strategy) {
-        this.view = view;
+    protected Entity(String id, Node view, int HP, boolean canImpact, Strategy strategy) {
+        super(id, view);
         this.HP = HP;
         impactStrategy = new ImpactStrategy(canImpact);
         this.strategy = strategy;
@@ -24,16 +24,6 @@ abstract public class Entity {
     public void getDeck(Game game) {
         this.game = game;
     }
-    public void setLayoutX(double x) {
-        view.setLayoutX(x);
-    }
-    public void setLayoutY(double y) {
-        view.setLayoutY(y);
-    }
-    public void setLocation(double x, double y) {
-        setLayoutX(x);
-        setLayoutY(y);
-    }
     public double getCenterOnSceneX() {
         return view.getBoundsInParent().getCenterX() + view.getParent().getLayoutX();
     }
@@ -41,16 +31,6 @@ abstract public class Entity {
         return view.getBoundsInParent().getCenterY() + view.getParent().getLayoutY();
     }
     public abstract void move();
-    public Node getView() {
-        return view;
-    }
-    public void setSceneLocation(double x, double y) {setSceneX(x);setSceneY(y);}
-    public void setSceneX(double x) {
-        view.setLayoutX(x - view.getParent().getLayoutX());
-    }
-    public void setSceneY(double y) {
-        view.setLayoutY(y - view.getParent().getLayoutY());
-    }
     public double getSceneX() {
         return view.getParent().getLayoutX() + view.getLayoutX();
     }

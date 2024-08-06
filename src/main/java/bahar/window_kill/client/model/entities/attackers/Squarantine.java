@@ -19,8 +19,8 @@ public class Squarantine extends Entity implements LootDropper, AttackerEntity  
     private double speed = 2;
     private double dashSpeed = 1;
     private int damage = 6;
-    public Squarantine() {
-        super(makeView(), 15, true, new DamageStrategy());
+    public Squarantine(String id) {
+        super(id, makeView(), 15, true, new DamageStrategy());
     }
 
     private static Node makeView() {
@@ -50,8 +50,8 @@ public class Squarantine extends Entity implements LootDropper, AttackerEntity  
         if (dashSpeed > 5) dashSpeed -= 5;
         else if (random.nextDouble(0, 1) > 0.99)
             dashSpeed = 16;
-        setSceneX(getSceneX() + dx / chord * speed * dashSpeed);
-        setSceneY(getSceneY() + dy / chord * speed * dashSpeed);
+        setX(getSceneX() + dx / chord * speed * dashSpeed);
+        setY(getSceneY() + dy / chord * speed * dashSpeed);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class Squarantine extends Entity implements LootDropper, AttackerEntity  
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(5, Color.LIMEGREEN);
+        return new Collectable(GameUtil.generateID(), 5, Color.LIMEGREEN);
     }
 
     @Override

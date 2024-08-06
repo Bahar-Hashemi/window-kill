@@ -1,5 +1,6 @@
 package bahar.window_kill.client.control.states.offlline.processors.spawners;
 
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.entities.Entity;
 
@@ -17,8 +18,8 @@ public class EntitySpawner extends Spawner {
         Random random = new Random();
         Class<?> type = enemyTypes[random.nextInt(enemyTypes.length)];
         try {
-            Constructor<?> constructor = type.getConstructor();
-            Entity entity = (Entity) constructor.newInstance();
+            Constructor<?> constructor = type.getConstructor(String.class);
+            Entity entity = (Entity) constructor.newInstance(GameUtil.generateID());
             addEntity(entity, game);
         } catch (Exception e) {
             e.printStackTrace();

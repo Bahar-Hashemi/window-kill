@@ -18,7 +18,7 @@ public class SavingState extends GameState {
     }
     private static Timeline makeTimeLine(Game game) {
         Timeline saveTimeLine = new Timeline(new KeyFrame(new Duration(Constants.RESPOND_DURATION), actionEvent -> {
-            game.users.get(0).mainBoard.requestFocus();
+            game.users.get(0).mainBoard.getView().requestFocus();
         }));
         saveTimeLine.setCycleCount(-1);
         return saveTimeLine;

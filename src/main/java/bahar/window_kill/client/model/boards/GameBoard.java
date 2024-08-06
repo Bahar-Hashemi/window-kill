@@ -1,6 +1,6 @@
 package bahar.window_kill.client.model.boards;
 
-import javafx.application.Platform;
+import bahar.window_kill.client.model.GameElement;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -8,80 +8,91 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Scanner;
 
-public class GameBoard extends Pane {
+public class GameBoard extends GameElement {
     protected boolean hovering;
-    public GameBoard(boolean hovering) {
+    public GameBoard(String id, boolean hovering) {
+        super(id, makeView(hovering));
         this.hovering = hovering;
-        makeBorder(hovering);
-        setStyle("-fx-font-family: \"cooper black\"; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-color: rgba(0, 0, 0, 1);");
         clip();
     }
-    private void makeBorder(boolean hovering) {
+    private static Pane makeView(boolean hovering) {
+        Pane board = new Pane();
+        board.setStyle("-fx-font-family: \"cooper black\"; -fx-font-weight: bold; -fx-font-size: 12px; -fx-background-color: rgba(0, 0, 0, 1);");
+        makeBorder(board, hovering);
+        return board;
+    }
+    private static void makeBorder(Pane board, boolean hovering) {
         BorderStroke borderStroke = new BorderStroke(
                 (hovering? Color.rgb(255, 255, 255, 0.1): Color.RED), // Border color
                 BorderStrokeStyle.SOLID, // Border style
                 new CornerRadii(2),
                 new BorderWidths((hovering? 2: 5)) // Border width
         );
-        setBorder(new Border(borderStroke));
+        board.setBorder(new Border(borderStroke));
     }
     public void setHovering(boolean hovering) {
         this.hovering = hovering;
-        makeBorder(hovering);
+        makeBorder((Pane) getView(), hovering);
     }
     public void setDimensions(double x, double y, double width, double height) {
         setLayoutX(x); setLayoutY(y);
-        lockSize(width, height);
+        lockBoardSize(width, height);
     }
-    public void setIndependentDimensions(double x, double y, double width, double height) {
-        IndependentMoveX(x); IndependentMoveY(y);
-        lockSize(width, height);
+    public void setLayoutX(double x) {
+        setX(x);
+        getView().setLayoutX(x);
     }
-    public void lockSize(double width, double height) {
-        lockWidth(width);
-        lockHeight(height);
+    public void setLayoutY(double y) {
+        setY(y);
+        getView().setLayoutY(y);
     }
-    public void lockWidth(double width) {
-        setMinWidth(width);
-        setMaxWidth(width);
-        setPrefWidth(width);
+    public void lockBoardSize(double width, double height) {
+        lockBoardWidth(width);
+        lockBoardHeight(height);
+    }
+    public void lockBoardWidth(double width) {
+        this.width = width;
+        Pane board = (Pane) getView();
+        board.setMinWidth(width);
+        board.setMaxWidth(width);
+        board.setPrefWidth(width);
         clip();
     }
-    public void lockHeight(double height) {
-        setMinHeight(height); setMaxHeight(height);
+    public void lockBoardHeight(double height) {
+        this.height = height;
+        Pane board = (Pane) getView();
+        board.setMinHeight(height); board.setMaxHeight(height);
         clip();
     }
     public void setSize(double width, double height) {
-        lockWidth(width); lockHeight(height);
-    }
-    public void IndependentMoveX(double x) {
-        double deltaX = getLayoutX() - x;
-        for (Node node: getChildren())
-            if (!(node instanceof Pane))
-                node.setLayoutX(node.getLayoutX() + deltaX);
-        setLayoutX(x);
-    }
-    public void IndependentMoveY(double y) {
-        double deltaY = getLayoutY() - y;
-        for (Node node: getChildren())
-            if (!(node instanceof Pane))
-                node.setLayoutY(node.getLayoutY() + deltaY);
-        setLayoutY(y);
+        setWidth(width); setHeight(height);
+        lockBoardWidth(width); lockBoardHeight(height);
     }
     private void clip() {
-        Rectangle clip = new Rectangle(getMinWidth(), getMinHeight());
-        setClip(clip);
+        Rectangle clip = new Rectangle(getWidth(), getHeight());
+        getView().setClip(clip);
     }
     public void add(Node node) {
-        getChildren().add(node);
+        ((Pane) getView()).getChildren().add(node);
+    }
+    public void remove(Node node) {
+        ((Pane) getView()).getChildren().remove(node);
     }
     public boolean getHovering() {
         return hovering;
     }
+    public void clear() {
+        Pane board = (Pane) getView();
+        for (int i = board.getChildren().size() - 1; i >= 0; i--) {
+            Node node = board.getChildren().get(i);
+            if (!(node instanceof Pane))
+                board.getChildren().remove(node);
+        }
+    }
     public void readFromString(Scanner sc) {
-        setHovering(sc.nextBoolean());
-        setLayoutX(sc.nextDouble());
-        setLayoutY(sc.nextDouble());
-        lockSize(sc.nextDouble(), sc.nextDouble());
+//        setHovering(sc.nextBoolean());
+//        setLayoutX(sc.nextDouble());
+//        setLayoutY(sc.nextDouble());
+//        lockBoardSize(sc.nextDouble(), sc.nextDouble());
     }
 }

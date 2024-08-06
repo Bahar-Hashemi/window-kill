@@ -21,9 +21,9 @@ public class SmileyBrain {
         this.face = face;
         this.leftHand = leftHand;
         this.rightHand = rightHand;
-        face.setSceneLocation(Constants.SCREEN_WIDTH / 2, -100);
-        leftHand.setSceneLocation(-100, Constants.SCREEN_HEIGHT / 2);
-        rightHand.setSceneLocation(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT / 2);
+        face.setLocation(Constants.SCREEN_WIDTH / 2, -100);
+        leftHand.setLocation(-100, Constants.SCREEN_HEIGHT / 2);
+        rightHand.setLocation(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT / 2);
         watches.add(new ComingInWatch(game, face, leftHand, rightHand));
         attackController = new Watch(10000) {
             @Override

@@ -20,9 +20,9 @@ public class Spawner extends Watch {
     protected static void addEntity(Entity entity, Game game) {
         if (entity instanceof BoardOwner) {
             BoardOwner boardOwner = (BoardOwner) entity;
-            MainStage.add(boardOwner.getBoard()); game.gameBoards.add(boardOwner.getBoard());
+            MainStage.add(boardOwner.getBoard().getView()); game.gameBoards.add(boardOwner.getBoard());
             MainStage.add(entity.getView()); game.addEntity(entity);
-            boardOwner.getBoard().toBack();
+            boardOwner.getBoard().getView().toBack();
             GameUtil.placeOutsideBoard(entity, game.users.get(0).mainBoard);
         } else {
             MainBoard mainBoard = game.users.get(new Random().nextInt(game.users.size())).mainBoard;

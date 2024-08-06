@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.entities;
 
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.control.util.SoundUtil;
 import javafx.animation.ScaleTransition;
@@ -13,9 +14,11 @@ import java.util.Random;
 
 public class BlackOrb extends Entity implements BoardOwner, LootDropper{
     GameBoard gameBoard;
-    public BlackOrb() {
-        super(makeView(), 30, true, null);
+    public BlackOrb(String id) {
+        super(id, makeView(), 30, true, null);
         byBoard();
+        setWidth(60);
+        setHeight(60);
     }
     private static Node makeView() {
         Group sphereVisual = new Group();
@@ -52,23 +55,13 @@ public class BlackOrb extends Entity implements BoardOwner, LootDropper{
     public void move() {
         //it does not move as you know :)
     }
-    public void setSceneX(double x) {
-        super.setSceneX(x);
+    public void setX(double x) {
+        super.setX(x);
         if (gameBoard != null)
             gameBoard.setLayoutX(x - 75);
     }
-    public void setSceneY(double y) {
-        super.setSceneY(y);
-        if (gameBoard != null)
-            gameBoard.setLayoutY(y - 75);
-    }
-    public void setLayoutX(double x) {
-        super.setLayoutX(x);
-        if (gameBoard != null)
-            gameBoard.setLayoutX(x - 75);
-    }
-    public void setLayoutY(double y) {
-        super.setLayoutY(y);
+    public void setY(double y) {
+        super.setY(y);
         if (gameBoard != null)
             gameBoard.setLayoutY(y - 75);
     }
@@ -84,8 +77,8 @@ public class BlackOrb extends Entity implements BoardOwner, LootDropper{
 
     @Override
     public void byBoard() {
-        gameBoard = new GameBoard(true);
-        gameBoard.lockSize(150, 150);
+        gameBoard = new GameBoard(GameUtil.generateID(), true);
+        gameBoard.lockBoardSize(150, 150);
     }
 
     @Override
@@ -100,6 +93,6 @@ public class BlackOrb extends Entity implements BoardOwner, LootDropper{
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(30, Color.DARKBLUE);
+        return new Collectable(GameUtil.generateID(), 30, Color.DARKBLUE);
     }
 }

@@ -22,8 +22,8 @@ public class ImpactStrategy { //todo need to change it for slap
     
     public void act(Entity entity) {
         if (onImpact) {
-            entity.setSceneX(entity.getSceneX() + deltaX);
-            entity.setSceneY(entity.getSceneY() + deltaY);
+            entity.setX(entity.getSceneX() + deltaX);
+            entity.setY(entity.getSceneY() + deltaY);
             deltaX *= 0.8;
             deltaY *= 0.8;
             if (Math.sqrt(deltaX * deltaX + deltaY * deltaY) < 0.5)

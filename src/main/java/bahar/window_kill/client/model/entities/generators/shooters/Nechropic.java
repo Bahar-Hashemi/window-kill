@@ -21,10 +21,11 @@ public class Nechropic extends ShooterEntity implements LootDropper {
     private int statePointer = 0;
     boolean canAct = true;
     Watch stateWatch;
-    public Nechropic() {
-        super(makeView(), 10, true, new SpawnStrategy(15));
+    public Nechropic(String id) {
+        super(id, makeView(), 10, true, new SpawnStrategy(15));
         makeWatches();
         setBulletDamage(5);
+        setSize(30, 30);
     }
     private void makeWatches() {
         stateWatch = new Watch(500) {
@@ -96,15 +97,15 @@ public class Nechropic extends ShooterEntity implements LootDropper {
 
     @Override
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 3, Color.web("#640000"), getBulletDamage(), gunDirectionX, gunDirectionY, true);
+        return new Bullet(GameUtil.generateID(), getBulletDamage(), 3, Color.web("#640000"), getBulletDamage(), gunDirectionX, gunDirectionY, true);
     }
     private void ascent(double targetX, double targetY) {
         //
         double chord = 75;
         double dx = (new Random().nextDouble(-1 * chord, chord));
         double dy = (new Random().nextBoolean()? 1: -1) * (Math.sqrt(chord * chord - dx * dx));
-        setSceneX(targetX + dx);
-        setSceneY(targetY + dy);
+        setX(targetX + dx);
+        setY(targetY + dy);
         //
         RotateTransition rotateTransition = new RotateTransition(Duration.seconds(0.5), view);
         rotateTransition.setCycleCount(4);
@@ -138,6 +139,6 @@ public class Nechropic extends ShooterEntity implements LootDropper {
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(2, Color.web("#640000"));
+        return new Collectable(GameUtil.generateID(), 2, Color.web("#640000"));
     }
 }

@@ -10,8 +10,8 @@ public class Bullet extends Entity implements AttackerEntity {
     private final double directionX, directionY;
     private final boolean traverser;
     private int damage;
-    public Bullet(int HP, double radius, Color color, int damage, double directionX, double directionY, boolean traversesWalls) {
-        super(makeView(radius, color), HP, false,
+    public Bullet(String id, int HP, double radius, Color color, int damage, double directionX, double directionY, boolean traversesWalls) {
+        super(id, makeView(radius, color), HP, false,
                 new DamageStrategy() {
                     @Override
                     public void onAct(Entity aggressionSource) {
@@ -36,8 +36,8 @@ public class Bullet extends Entity implements AttackerEntity {
     @Override
     public void move() {
         double SPEED = 17;
-        setSceneY(getSceneY() + directionY * SPEED);
-        setSceneX(getSceneX() + directionX * SPEED);
+        setY(getSceneY() + directionY * SPEED);
+        setX(getSceneX() + directionX * SPEED);
     }
 
     @Override

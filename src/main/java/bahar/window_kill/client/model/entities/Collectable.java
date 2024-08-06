@@ -14,14 +14,16 @@ public class Collectable extends Entity {
     private final int xp;
     private static final int INF = (int) (1E9 + 7);
 
-    public Collectable(int xp, Color color) {
-        super(createView(color), INF, false, new PositiveStrategy() {
+    public Collectable(String id, int xp, Color color) {
+        super(id, createView(color), INF, false, new PositiveStrategy() {
             @Override
             public void onAct(Entity source) {
                 source.setHP(0);
             }
         });
         this.xp = xp;
+        this.setWidth(8);
+        this.setHeight(8);
     }
     private static Node createView(Color color) {
         Circle circle = new Circle();
@@ -45,8 +47,8 @@ public class Collectable extends Entity {
         double dx = targetX - getSceneX();
         double dy = targetY - getSceneY();
         double chord = Math.sqrt(dx * dx + dy * dy);
-        setSceneX(getSceneX() + dx / chord * speed);
-        setSceneY(getSceneY() + dy / chord * speed);
+        setX(getSceneX() + dx / chord * speed);
+        setY(getSceneY() + dy / chord * speed);
     }
     @Override
     public void aggress() {

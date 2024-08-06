@@ -14,11 +14,12 @@ import java.util.Random;
 public class MiniEpsilon extends ShooterEntity {
     private static final double radius = 4;
     private final double difX, difY;
-    public MiniEpsilon() {
-        super(makeView(), 100, false, new SpawnStrategy(400));
+    public MiniEpsilon(String id) {
+        super(id, makeView(), 100, false, new SpawnStrategy(400));
         setBulletDamage(1);
         difX = new Random().nextDouble(-15, 15);
         difY = (new Random().nextBoolean()? 1: -1) * Math.sqrt(15 * 15 - difX * difX);
+        setSize(8, 8);
     }
     private static Node makeView() {
         Circle circle = new Circle();
@@ -29,7 +30,7 @@ public class MiniEpsilon extends ShooterEntity {
         return circle;
     }
     public Entity makeBullet() {
-        return new Bullet(getBulletDamage(), 2, Color.rgb(255, 255, 255, 0.6), getBulletDamage(), gunDirectionX, gunDirectionY, false);
+        return new Bullet(GameUtil.generateID(), getBulletDamage(), 2, Color.rgb(255, 255, 255, 0.6), getBulletDamage(), gunDirectionX, gunDirectionY, false);
     }
     public double getDifX() {
         return difX;
@@ -45,8 +46,8 @@ public class MiniEpsilon extends ShooterEntity {
         double dy = user.getEpsilon().getSceneY() + difY - getSceneY();
         double chord = Math.sqrt(dx * dx + dy * dy);
 
-        setSceneX(getSceneX() + dx / chord);
-        setSceneY(getSceneY() + dy / chord);
+        setX(getSceneX() + dx / chord);
+        setY(getSceneY() + dy / chord);
     }
     @Override
     public void aggress() {

@@ -15,18 +15,18 @@ public class MainBoard extends GameBoard {
     private ControlStrategy controlStrategy;
     public Label countDown;
     public double shrink = 0.3;
-    public MainBoard(int HPValue, int XPValue, int waveNumber) {
-        super(true);
+    public MainBoard(String id) {
+        super(id,true);
         labels = new VBox(); labels.setSpacing(2);
         //HP
-        HPLabel = new Label("HP: " + HPValue);
+        HPLabel = new Label("HP: ");
         HPLabel.setStyle("-fx-text-fill: #00FF00");
         // XP
-        XPLabel = new Label("XP: " + XPValue);
+        XPLabel = new Label("XP: ");
         XPLabel.setStyle("-fx-text-fill: #8000FF");
         XPLabel.setOpacity(0.5);
         // wave
-        waveLabel = new Label("Wave: " + waveNumber);
+        waveLabel = new Label("Wave: ");
         waveLabel.setStyle("-fx-text-fill: #FFFF00");
         waveLabel.setOpacity(0.5);
         // abilities
@@ -64,19 +64,12 @@ public class MainBoard extends GameBoard {
     public void shout() {
         SoundUtil.WALLHIT.play();
     }
-    public void clear() {
-        for (int i = getChildren().size() - 1; i >= 0; i--) {
-            Node node = getChildren().get(i);
-            if (!(node instanceof Pane))
-                getChildren().remove(node);
-        }
-    }
     public void setCountDown(Label countDown) {
         this.countDown = countDown;
-        getChildren().add(countDown);
+        add(countDown);
     }
     public void removeCountDown() {
-        getChildren().remove(countDown);
+        remove(countDown);
     }
 
 }

@@ -1,5 +1,6 @@
 package bahar.window_kill.client.model.entities.generators.shooters;
 
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.boards.GameBoard;
 import bahar.window_kill.client.model.entities.BoardOwner;
 import bahar.window_kill.client.model.entities.Collectable;
@@ -19,12 +20,15 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
     GameBoard gameBoard;
     Circle leftEye, rightEye;
     CubicCurve mouth;
-    public SmileyFace() {
-        super(makeView(), 1000, true, null);
+    private double x;
+
+    public SmileyFace(String id) {
+        super(id, makeView(), 1000, true, null);
         byBoard();
         makeEyes();
         makeMouth();
         setBulletDamage(20);
+        setSize(80, 80); //todo correct here!
     }
     private void makeMouth() {
         // Creating a CubicCurve for the mouth
@@ -66,8 +70,8 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
     }
     @Override
     public void byBoard() {
-        gameBoard = new GameBoard(true);
-        gameBoard.lockSize(140, 140);
+        gameBoard = new GameBoard(GameUtil.generateID(), true);
+        gameBoard.lockBoardSize(140, 140);
     }
 
     @Override
@@ -108,30 +112,20 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
 
     @Override
     public Entity makeLoot() {
-        return new Collectable(40, Color.YELLOW);
+        return new Collectable(GameUtil.generateID(), 40, Color.YELLOW);
     }
-    public void setSceneX(double x) {
-        super.setSceneX(x);
+    public void setX(double x) {
+        super.setX(x);
         gameBoard.setLayoutX(x - 70);
     }
-    public void setSceneY(double y) {
-        super.setSceneY(y);
+    public void setY(double y) {
+        super.setY(y);
         gameBoard.setLayoutY(y - 70);
-    }
-    public void setLayoutX(double x) {
-        super.setLayoutX(x);
-        if (gameBoard != null)
-            gameBoard.setLayoutX(x - 70);
-    }
-    public void setLayoutY(double y) {
-        super.setLayoutY(y);
-        if (gameBoard != null)
-            gameBoard.setLayoutY(y - 70);
     }
 
     @Override
     public Entity makeBullet() {
         double x = new Random().nextDouble(-1, 1);
         double y = Math.sqrt(1 - x * x);
-        return new Bullet(getBulletDamage(), 5, Color.YELLOW, getBulletDamage(), x, y, true);    }
+        return new Bullet(GameUtil.generateID(), getBulletDamage(), 5, Color.YELLOW, getBulletDamage(), x, y, true);    }
 }

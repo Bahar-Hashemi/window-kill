@@ -1,5 +1,6 @@
 package bahar.window_kill.client.control.states.offlline.processors.spawners;
 
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.model.entities.GitPush;
 
@@ -21,9 +22,9 @@ public class SaveSpawner extends Spawner {
     @Override
     protected void onStart() {
         super.onStart();
-        gitPush = new GitPush();
+        gitPush = new GitPush(GameUtil.generateID());
         addEntity(gitPush, game);
-        gitPush.setLayoutY(new Random().nextDouble(0, game.users.get(0).mainBoard.getHeight()));
-        gitPush.setLayoutX(new Random().nextDouble(0, game.users.get(0).mainBoard.getWidth()));
+        gitPush.setY(new Random().nextDouble(0, game.users.get(0).mainBoard.getHeight()));
+        gitPush.setX(new Random().nextDouble(0, game.users.get(0).mainBoard.getWidth()));
     }
 }

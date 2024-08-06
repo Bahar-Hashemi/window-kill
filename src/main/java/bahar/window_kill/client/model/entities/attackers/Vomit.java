@@ -11,8 +11,8 @@ public class Vomit extends Entity implements AttackerEntity {
     Watch opacityWatch;
     Watch damageWatch;
     private int damage = 20;
-    public Vomit() {
-        super(makeView(), 10, false, new DamageStrategy());
+    public Vomit(String id) {
+        super(id, makeView(), 10, false, new DamageStrategy());
         opacityWatch = new Watch(30) {protected void onCall(){view.setOpacity(view.getOpacity() - 0.003);}};
         damageWatch = new Watch(500) {protected void onCall() {setHP(getHP() - 4); setDamage(getDamage() - 4); strategy.act(getMe(), game);}};
     }

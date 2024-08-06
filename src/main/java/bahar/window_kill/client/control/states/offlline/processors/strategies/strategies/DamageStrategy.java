@@ -54,25 +54,25 @@ public class DamageStrategy extends Strategy {
         if (!(attacker instanceof Bullet bullet)) return;
         if (bullet.isTraverser()) return;
         MainBoard mainBoard = GameUtil.findMyUser(bullet, game).mainBoard;
-        if (attacker.getSceneX() < mainBoard.getLayoutX()) {
+        if (attacker.getSceneX() < mainBoard.getX()) {
             BoardsProcessor.requestMainBoardChangeInBounds(-5 * ((AttackerEntity) attacker).getDamage(), 0,
                     5 * ((AttackerEntity) attacker).getDamage(), 0, mainBoard);
             mainBoard.shout();
             onAct(attacker);
         }
-        if (attacker.getSceneY() < mainBoard.getLayoutY()) {
+        if (attacker.getSceneY() < mainBoard.getY()) {
             BoardsProcessor.requestMainBoardChangeInBounds(0, -5 * ((AttackerEntity) attacker).getDamage(),
                     0, 5 * ((AttackerEntity) attacker).getDamage(), mainBoard);
             mainBoard.shout();
             onAct(attacker);
         }
-        if (attacker.getSceneX() > mainBoard.getLayoutX() + mainBoard.getWidth()) {
+        if (attacker.getSceneX() > mainBoard.getX() + mainBoard.getWidth()) {
             BoardsProcessor.requestMainBoardChangeInBounds(0, 0,
                     5 * ((AttackerEntity) attacker).getDamage(), 0, mainBoard);
             mainBoard.shout();
             onAct(attacker);
         }
-        if (attacker.getSceneY() > mainBoard.getLayoutY() + mainBoard.getHeight()) {
+        if (attacker.getSceneY() > mainBoard.getY() + mainBoard.getHeight()) {
             BoardsProcessor.requestMainBoardChangeInBounds(0, 0,
                     0, 5 * ((AttackerEntity) attacker).getDamage(), mainBoard);
             mainBoard.shout();

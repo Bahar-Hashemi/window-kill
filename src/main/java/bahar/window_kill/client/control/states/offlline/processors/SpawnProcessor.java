@@ -1,5 +1,6 @@
 package bahar.window_kill.client.control.states.offlline.processors;
 
+import bahar.window_kill.client.control.util.GameUtil;
 import bahar.window_kill.client.model.Game;
 import bahar.window_kill.client.control.states.offlline.processors.spawners.BlackOrbSpawner;
 import bahar.window_kill.client.control.states.offlline.processors.spawners.SaveSpawner;
@@ -71,9 +72,9 @@ public class SpawnProcessor extends GameProcessor {
                 currentWatches.remove(this);
                 game.wave = index + 1;
                 if (index == 9) {
-                    SmileyFace face = new SmileyFace(); addEntity(face, game);
-                    SmileyHand leftHand = new SmileyHand(true); addEntity(leftHand, game);
-                    SmileyHand rightHand = new SmileyHand(false); addEntity(rightHand, game);
+                    SmileyFace face = new SmileyFace(GameUtil.generateID()); addEntity(face, game);
+                    SmileyHand leftHand = new SmileyHand(GameUtil.generateID(), true); addEntity(leftHand, game);
+                    SmileyHand rightHand = new SmileyHand(GameUtil.generateID(), false); addEntity(rightHand, game);
                     smileyBrain = new SmileyBrain(game, face, leftHand, rightHand);
                     return;
                 }

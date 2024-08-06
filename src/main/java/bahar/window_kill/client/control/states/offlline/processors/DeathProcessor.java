@@ -68,11 +68,11 @@ public class DeathProcessor extends GameProcessor {
                 Entity collectable = lootDropper.makeLoot();
                 ((Pane) entity.getView().getParent()).getChildren().add(collectable.getView());
                 game.addEntity(collectable);
-                collectable.setSceneLocation(bounds.getMinX() + Math.random() * bounds.getWidth(), bounds.getMinY() + Math.random() * bounds.getHeight());
+                collectable.setLocation(bounds.getMinX() + Math.random() * bounds.getWidth(), bounds.getMinY() + Math.random() * bounds.getHeight());
             }
         }
         if (entity instanceof BoardOwner boardOwner) {
-            MainStage.remove(boardOwner.getBoard());
+            MainStage.remove(boardOwner.getBoard().getView());
             game.gameBoards.remove(boardOwner.getBoard());
         }
         parent.getChildren().remove(entity.getView());

@@ -22,7 +22,7 @@ public class PauseState extends GameState {
             User user = game.users.get(0);
             if (!user.hasPauseRequest())
                 game.setGameState(new RestartingState(game));
-            user.mainBoard.requestFocus();
+            user.mainBoard.getView().requestFocus();
         }));
         pauseTimeLine.setCycleCount(-1);
         return pauseTimeLine;
