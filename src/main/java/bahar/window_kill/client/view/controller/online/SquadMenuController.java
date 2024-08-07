@@ -1,7 +1,8 @@
 package bahar.window_kill.client.view.controller.online;
 
+import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.client.control.connection.TCPClient;
-import bahar.window_kill.client.model.User;
+import bahar.window_kill.communications.model.User;
 import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.data.UserMessage;
@@ -12,8 +13,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
-import java.util.ArrayList;
 
 public class SquadMenuController extends OnlineController {
     private final Label squadName, squadVault;
@@ -39,16 +38,16 @@ public class SquadMenuController extends OnlineController {
         makeBoxes();
     }
     private void makeBoxes() {
-        TableSquad squad = User.getInstance().tableSquad;
+        TableSquad squad = GameController.user.tableSquad;
         if (squad == null)
             teamMembersBox.getItems().clear();
         else
-            teamMembersBox.getItems().setAll(new TCPClient().mySquadMembers(User.getInstance().getUsername()));
-        if (User.getInstance().getTableUser().getMessages() != null)
-            messagesBox.getItems().addAll(User.getInstance().getTableUser().getMessages());
+            teamMembersBox.getItems().setAll(new TCPClient().mySquadMembers(GameController.user.getUsername()));
+        if (GameController.user.getTableUser().getMessages() != null)
+            messagesBox.getItems().addAll(GameController.user.getTableUser().getMessages());
     }
     private void makeData() {
-        TableSquad squad = User.getInstance().tableSquad;
+        TableSquad squad = GameController.user.tableSquad;
         if (squad == null) {
             makeNoSquad();
             return;
@@ -107,7 +106,7 @@ public class SquadMenuController extends OnlineController {
     private void handleAccept(UserMessage item) {
         messagesBox.getItems().remove(item);
         if (item.getType() == UserMessageType.MEMBERSHIP_REQUEST) {
-            new TCPClient().sendUserMessage(new UserMessage(UserMessageType.MEMBERSHIP_ACCEPTED, User.getInstance().getUsername(), item.getSenderName()));
+            new TCPClient().sendUserMessage(new UserMessage(UserMessageType.MEMBERSHIP_ACCEPTED, GameController.user.getUsername(), item.getSenderName()));
         }
     }
 
@@ -140,7 +139,7 @@ public class SquadMenuController extends OnlineController {
                     }
                     Label label = new Label(item.getUsername());
                     label.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
-                    if (item.getUsername().equals(User.getInstance().getUsername())) {
+                    if (item.getUsername().equals(GameController.user.getUsername())) {
                         label.setText(label.getText() + " (you)");
                         label.setStyle("-fx-font-size: 10px; -fx-text-fill: orange;");
                     }
@@ -152,7 +151,7 @@ public class SquadMenuController extends OnlineController {
         });
     }
     private void setupSquadNameContextMenu() {
-        if (User.getInstance().tableSquad == null) {
+        if (GameController.user.tableSquad == null) {
             squadName.setOnMouseClicked(null);
             return;
         }
@@ -175,8 +174,8 @@ public class SquadMenuController extends OnlineController {
 
     // Handle leave squad action
     private void handleLeaveSquad() {
-        TableSquad squad = User.getInstance().tableSquad;
+        TableSquad squad = GameController.user.tableSquad;
         if (squad != null)
-            new TCPClient().sendUserMessage(new UserMessage(UserMessageType.LEFT_SQUAD, User.getInstance().getUsername(), squad.getName()));
+            new TCPClient().sendUserMessage(new UserMessage(UserMessageType.LEFT_SQUAD, GameController.user.getUsername(), squad.getName()));
     }
 }

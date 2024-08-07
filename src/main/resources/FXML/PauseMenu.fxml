@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" prefHeight="475.0" prefWidth="301.0" stylesheets="@../CSS/pause_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.client.view.controller.PauseMenuController">
+<AnchorPane fx:id="pane" prefHeight="475.0" prefWidth="301.0" stylesheets="@../CSS/pause_style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bahar.window_kill.client.view.controller.offline.PauseMenuController">
    <children>
       <VBox prefHeight="475.0" prefWidth="331.0" spacing="30.0">
          <children>

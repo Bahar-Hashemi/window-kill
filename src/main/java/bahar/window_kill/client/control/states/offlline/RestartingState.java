@@ -1,11 +1,10 @@
 package bahar.window_kill.client.control.states.offlline;
 
 import bahar.window_kill.client.control.states.GameState;
-import bahar.window_kill.client.control.states.offlline.PlayingState;
-import bahar.window_kill.client.model.Game;
+import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.client.control.util.SoundUtil;
-import bahar.window_kill.client.model.User;
-import bahar.window_kill.client.model.boards.MainBoard;
+import bahar.window_kill.communications.model.User;
+import bahar.window_kill.communications.model.boards.MainBoard;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -17,10 +16,10 @@ import javafx.util.Duration;
 
 public class RestartingState extends GameState {
     static Color[] colors = new Color[] {Color.GREEN, Color.GREENYELLOW, Color.ORANGE, Color.RED};
-    public RestartingState(Game game) {
-        super(game, makeTimeLine(game));
+    public RestartingState(boolean isViewable, Game game) {
+        super(isViewable, game, makeTimeLine(isViewable, game));
     }
-    private static Timeline makeTimeLine(Game game) {
+    private static Timeline makeTimeLine(boolean isViewable, Game game) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             for (User user: game.users)
                 handleMainBoard(user.mainBoard);
@@ -28,7 +27,7 @@ public class RestartingState extends GameState {
         }));
         timeline.setCycleCount(3);
         timeline.setOnFinished(e -> {
-            game.setGameState(new PlayingState(game));
+            game.setGameState(new PlayingState(isViewable, game));
         });
         return timeline;
     }

@@ -1,6 +1,6 @@
 package bahar.window_kill.communications.data;
 
-import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityType;
+import bahar.window_kill.communications.processors.util.abilities.AbilityType;
 import com.google.gson.Gson;
 
 public class Development {

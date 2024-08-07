@@ -1,6 +1,6 @@
 package bahar.window_kill.client.control.util.reader;
 
-import bahar.window_kill.client.model.Watch;
+import bahar.window_kill.communications.model.Watch;
 
 import java.util.Scanner;
 

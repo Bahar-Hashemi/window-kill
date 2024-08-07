@@ -5,8 +5,10 @@ import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.messages.client.ClientMessage;
 import bahar.window_kill.communications.messages.client.data.RequestDataMessage;
 import bahar.window_kill.communications.messages.client.data.RequestedDataType;
+import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.server.control.connection.DataBaseManager;
 import bahar.window_kill.server.control.connection.handlers.MessageHandler;
+import bahar.window_kill.server.control.game.GamePool;
 
 import java.io.DataOutputStream;
 import java.util.ArrayList;
@@ -29,8 +31,8 @@ public class DataRequestHandler extends MessageHandler {
         return true;
     }
     private void returnGame(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
-//        Game game = Game.notNullGame(requestDataMessage.getUsername());
-//        sendString(sendBuffer, game.writeToString(new StringBuilder()));
+        Game game = GamePool.getNotNullGame(requestDataMessage.getUsername());
+        sendObject(sendBuffer, game);
     }
     private void returnMe(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
         TableUser tableUser = DataBaseManager.getInstance().getUser(requestDataMessage.getUsername());

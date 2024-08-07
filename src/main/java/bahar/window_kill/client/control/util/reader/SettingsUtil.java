@@ -1,6 +1,6 @@
 package bahar.window_kill.client.control.util.reader;
 
-import bahar.window_kill.client.model.boards.controller.ControlStrategy;
+import bahar.window_kill.communications.model.boards.controller.ControlStrategy;
 import bahar.window_kill.communications.data.Settings;
 
 import java.util.Scanner;

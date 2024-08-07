@@ -1,9 +1,9 @@
 package bahar.window_kill.client.view.controller.online;
 
+import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.client.control.connection.TCPClient;
-import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityType;
-import bahar.window_kill.client.control.states.offlline.processors.abilities.AbilityWatch;
-import bahar.window_kill.client.model.User;
+import bahar.window_kill.communications.processors.util.abilities.AbilityType;
+import bahar.window_kill.communications.processors.util.abilities.AbilityWatch;
 import bahar.window_kill.communications.data.Development;
 import bahar.window_kill.communications.data.TableSquad;
 import javafx.event.ActionEvent;
@@ -24,7 +24,7 @@ public class OnlineSkillsController extends OnlineController {
     }
     @Override
     public void initialize() {
-        development = User.getInstance().development;
+        development = GameController.user.development;
         makeData();
     }
     private void makeData() {
@@ -39,26 +39,26 @@ public class OnlineSkillsController extends OnlineController {
         makeSquadBox();
     }
     private void makeSquadBox() { //todo correct prices
-        if (User.getInstance().tableSquad == null)
+        if (GameController.user.tableSquad == null)
             return;
         squadBox.getChildren().clear();
-        squadBox.getChildren().add(makeSquadButton("Call OF PALIOXIS", User.getInstance().tableSquad.getPalioxisState(), 100,  User.getInstance().tableSquad, event -> {
-            if (User.getInstance().tableSquad.getPalioxisState() == -1)
-                User.getInstance().tableSquad.setVault(User.getInstance().tableSquad.getVault() - 100);
-            User.getInstance().tableSquad.setPalioxisState(Math.max(User.getInstance().tableSquad.getPalioxisState() + 1, 3));
-            new TCPClient().sendSquad(User.getInstance().getUsername(), User.getInstance().tableSquad);
+        squadBox.getChildren().add(makeSquadButton("Call OF PALIOXIS", GameController.user.tableSquad.getPalioxisState(), 100,  GameController.user.tableSquad, event -> {
+            if (GameController.user.tableSquad.getPalioxisState() == -1)
+                GameController.user.tableSquad.setVault(GameController.user.tableSquad.getVault() - 100);
+            GameController.user.tableSquad.setPalioxisState(Math.max(GameController.user.tableSquad.getPalioxisState() + 1, 3));
+            new TCPClient().sendSquad(GameController.user.getUsername(), GameController.user.tableSquad);
         }));
-        squadBox.getChildren().add(makeSquadButton("Call OF ADONIS", User.getInstance().tableSquad.getAdonisState(), 100,  User.getInstance().tableSquad, event -> {
-            if (User.getInstance().tableSquad.getAdonisState() == -1)
-                User.getInstance().tableSquad.setVault(User.getInstance().tableSquad.getVault() - 100);
-            User.getInstance().tableSquad.setAdonisState(Math.max(User.getInstance().tableSquad.getPalioxisState() + 1, 3));
-            new TCPClient().sendSquad(User.getInstance().getUsername(), User.getInstance().tableSquad);
+        squadBox.getChildren().add(makeSquadButton("Call OF ADONIS", GameController.user.tableSquad.getAdonisState(), 100,  GameController.user.tableSquad, event -> {
+            if (GameController.user.tableSquad.getAdonisState() == -1)
+                GameController.user.tableSquad.setVault(GameController.user.tableSquad.getVault() - 100);
+            GameController.user.tableSquad.setAdonisState(Math.max(GameController.user.tableSquad.getPalioxisState() + 1, 3));
+            new TCPClient().sendSquad(GameController.user.getUsername(), GameController.user.tableSquad);
         }));
-        squadBox.getChildren().add(makeSquadButton("Call OF GEFJON", User.getInstance().tableSquad.getGefjonState(), 100,  User.getInstance().tableSquad, event -> {
-            if (User.getInstance().tableSquad.getPalioxisState() == -1)
-                User.getInstance().tableSquad.setVault(User.getInstance().tableSquad.getVault() - 100);
-            User.getInstance().tableSquad.setGefjonState(Math.max(User.getInstance().tableSquad.getPalioxisState() + 1, 3));
-            new TCPClient().sendSquad(User.getInstance().getUsername(), User.getInstance().tableSquad);
+        squadBox.getChildren().add(makeSquadButton("Call OF GEFJON", GameController.user.tableSquad.getGefjonState(), 100,  GameController.user.tableSquad, event -> {
+            if (GameController.user.tableSquad.getPalioxisState() == -1)
+                GameController.user.tableSquad.setVault(GameController.user.tableSquad.getVault() - 100);
+            GameController.user.tableSquad.setGefjonState(Math.max(GameController.user.tableSquad.getPalioxisState() + 1, 3));
+            new TCPClient().sendSquad(GameController.user.getUsername(), GameController.user.tableSquad);
         }));
     }
     private Button makeButton(Development.State[] states, AbilityType[] abilityTypes, int index) {
@@ -107,7 +107,7 @@ public class OnlineSkillsController extends OnlineController {
         makeSquadBox();
     }
     private void sendUpdatesToServer() {
-        new TCPClient().sendDevelopment(User.getInstance().getUsername(), development);
+        new TCPClient().sendDevelopment(GameController.user.getUsername(), development);
     }
     private Button makeSquadButton(String name, int state, int price, TableSquad tableSquad, EventHandler<ActionEvent> eventEventHandler) {
         Button button = new Button(name);

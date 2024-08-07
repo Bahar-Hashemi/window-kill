@@ -1,6 +1,6 @@
 package bahar.window_kill.client.control.util.reader;
 
-import bahar.window_kill.client.model.entities.Entity;
+import bahar.window_kill.communications.model.entities.Entity;
 
 import java.util.Scanner;
 

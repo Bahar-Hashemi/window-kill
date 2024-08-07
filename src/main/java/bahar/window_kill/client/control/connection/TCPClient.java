@@ -10,6 +10,7 @@ import bahar.window_kill.communications.messages.client.register.LoginMessage;
 import bahar.window_kill.communications.messages.client.register.SignupMessage;
 import bahar.window_kill.communications.messages.client.squads.NewSquadMessage;
 import bahar.window_kill.communications.messages.server.GeneralAnswer;
+import bahar.window_kill.communications.model.Game;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -263,12 +264,12 @@ public class TCPClient {
         }
 
     }
-    public String getGameData(String username) {
+    public Game getGameData(String username) {
         RequestDataMessage requestDataMessage = new RequestDataMessage(RequestedDataType.GAME_DATA, username);
         try {
             establishConnection();
             sendMessage(gsonAgent.toJson(requestDataMessage));
-            String result = receiveResponse();
+            Game result = gsonAgent.fromJson(receiveResponse(), Game.class);
             endConnection();
             return result;
         }

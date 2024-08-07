@@ -1,7 +1,8 @@
 package bahar.window_kill.client.view.controller.online;
 
+import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.client.control.connection.TCPClient;
-import bahar.window_kill.client.model.User;
+import bahar.window_kill.communications.model.User;
 import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 
@@ -16,10 +17,10 @@ public class UpdateDataController extends OnlineController {
         updateData();
     }
     private void updateData() {
-        TableUser user = new TCPClient().getMe(User.getInstance().getUsername());
-        TableSquad squad = new TCPClient().mySquad(User.getInstance().getUsername());
-        User.getInstance().setTableUser(user);
-        User.getInstance().development = user.getDevelopment();
-        User.getInstance().tableSquad = squad;
+        TableUser user = new TCPClient().getMe(GameController.user.getUsername());
+        TableSquad squad = new TCPClient().mySquad(GameController.user.getUsername());
+        GameController.user.setTableUser(user);
+        GameController.user.development = user.getDevelopment();
+        GameController.user.tableSquad = squad;
     }
 }

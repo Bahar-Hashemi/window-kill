@@ -2,7 +2,6 @@ package bahar.window_kill.client.view;
 
 import bahar.window_kill.client.control.Constants;
 import bahar.window_kill.client.control.util.ImageUtil;
-import bahar.window_kill.client.model.User;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -42,7 +41,8 @@ public class MainStage extends Stage {
         getInstance().setScene(new Scene(pane, Color.TRANSPARENT));
     }
     public static void add(Node node) {
-        ((Pane) getInstance().getScene().getRoot()).getChildren().add(node);
+        if (node != null)
+            ((Pane) getInstance().getScene().getRoot()).getChildren().add(node);
     }
     public static void remove(Node node) {
         ((Pane) getInstance().getScene().getRoot()).getChildren().remove(node);
