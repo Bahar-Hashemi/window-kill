@@ -7,7 +7,7 @@ import bahar.window_kill.communications.processors.util.strategies.movements.Imp
 import bahar.window_kill.communications.model.GameElement;
 import javafx.scene.Node;
 
-abstract public class Entity extends GameElement {
+public class Entity extends GameElement {
     protected double HP;
     transient protected final ImpactStrategy impactStrategy;
     transient protected Strategy strategy;
@@ -24,7 +24,7 @@ abstract public class Entity extends GameElement {
     public void getDeck(Game game) {
         this.game = game;
     }
-    public abstract void move();
+    public void move(){}
     public double getHP() {
         return HP;
     }
@@ -35,9 +35,9 @@ abstract public class Entity extends GameElement {
         return strategy;
     }
     public void setAggressionStrategy(Strategy strategy) { this.strategy = strategy; }
-    public abstract void aggress();
-    public abstract void morph();
-    public abstract void shout();
+    public void aggress(){}
+    public void morph(){}
+    public void shout(){}
     public boolean canImpact() {
         return impactStrategy.canImpact();
     }

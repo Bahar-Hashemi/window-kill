@@ -12,6 +12,7 @@ public class AbilityProcessor extends GameProcessor {
 
     @Override
     public void run() {
+        game.clock += 30;
         for (User user: game.users) {
             user.coolDown = (long) Math.max(0, user.coolDown - Constants.RESPOND_DURATION);
             for (int i = user.abilities.size() - 1; i >= 0; i--)

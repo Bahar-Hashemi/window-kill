@@ -20,7 +20,6 @@ public class SendControlsHandler extends MessageHandler {
         for (User init: game.users)
             if (init.getUsername().equals(sendControlsMessage.getUsername()))
                 user = init;
-        System.out.println("hello from SendControlsHandler");
         User goalUser = sendControlsMessage.getUser();
         user.setShooting(goalUser.isShooting());
         user.setDownRequest(goalUser.hasDownRequest());

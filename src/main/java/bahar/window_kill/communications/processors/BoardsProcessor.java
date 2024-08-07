@@ -21,7 +21,7 @@ public class BoardsProcessor extends GameProcessor {
         }
 
     }
-    public static void requestMainBoardChangeInBounds(double x, double y, double width, double height, MainBoard mainBoard) {
+    public static void requestMainBoardChangeInBounds(double x, double y, double width, double height, MainBoard mainBoard, Game game) {
         double myX = mainBoard.getX(), myY = mainBoard.getY();
         double myWidth = mainBoard.getWidth(), myHeight = mainBoard.getHeight();
         double left = 0, right = 1;
@@ -31,7 +31,7 @@ public class BoardsProcessor extends GameProcessor {
                     myY + y * mid,
                     myWidth + width * mid,
                     myHeight + height * mid);
-            if (GameUtil.nonHoveringBoardsInBounds(mainBoard, GameController.game))
+            if (GameUtil.nonHoveringBoardsInBounds(mainBoard, game))
                 right = mid;
             else
                 left = mid;

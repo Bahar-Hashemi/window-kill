@@ -15,7 +15,9 @@ public class Vomit extends Entity implements AttackerEntity {
     public Vomit(boolean isViewable, String id) {
         super(isViewable, id, (isViewable? makeView(): null), new Bounds(-15, -15, 15, 15), Vomit.class.getName(),
                 10, false, new DamageStrategy());
-        opacityWatch = new Watch(30) {protected void onCall(){opacity -= 0.003;}};
+        opacityWatch = new Watch(30) {protected void onCall(){
+            opacity -= 0.003;
+        }};
         damageWatch = new Watch(500) {protected void onCall() {setHP(getHP() - 4); setDamage(getDamage() - 4); strategy.act(getMe(), game);}};
     }
     private Vomit getMe() {

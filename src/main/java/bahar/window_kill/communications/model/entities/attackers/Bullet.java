@@ -1,8 +1,10 @@
 package bahar.window_kill.communications.model.entities.attackers;
 
+import bahar.window_kill.communications.model.entities.additional.data.BulletData;
 import bahar.window_kill.communications.processors.util.strategies.attacks.DamageStrategy;
 import bahar.window_kill.communications.model.Bounds;
 import bahar.window_kill.communications.model.entities.Entity;
+import com.google.gson.Gson;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -22,6 +24,7 @@ public class Bullet extends Entity implements AttackerEntity {
                         ((Bullet)aggressionSource).setDamage(0);
                     }
                 });
+        additionalData = new Gson().toJson(new BulletData(radius, color.toString()));
         this.damage = damage;
         this.directionX = directionX;
         this.directionY = directionY;

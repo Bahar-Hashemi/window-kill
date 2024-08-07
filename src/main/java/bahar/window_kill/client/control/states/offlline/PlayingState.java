@@ -28,7 +28,6 @@ public class PlayingState extends GameState {
     }
     private static Timeline makeTimeLine(Game game) {
         Timeline gameTimeLine = new Timeline(new KeyFrame(new Duration(Constants.RESPOND_DURATION), actionEvent -> {
-            game.clock += (long) Constants.RESPOND_DURATION;
             for (GameProcessor gameProcessor: game.gameProcessors)
                 gameProcessor.run();
         }));

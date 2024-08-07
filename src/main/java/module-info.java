@@ -38,6 +38,7 @@ module learningJavaFX {
     exports bahar.window_kill.client.control.states.offlline;
     exports bahar.window_kill.client.view.controller.offline;
     exports bahar.window_kill.client.view.controller.online;
+    exports bahar.window_kill.communications.model.entities.additional.data to com.google.gson;
     opens bahar.window_kill.communications.processors.util.strategies.attacks to com.google.gson;
     exports bahar.window_kill.communications.util;
 }

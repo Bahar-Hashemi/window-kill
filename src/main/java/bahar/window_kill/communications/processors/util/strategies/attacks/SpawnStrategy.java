@@ -29,10 +29,12 @@ public class SpawnStrategy extends Strategy {
         if (!hasBullet)
             return;
         Entity bullet = generatorEntity.makeBullet();
-        ((Pane) generatorEntity.getView().getParent()).getChildren().add(bullet.getView());
+        if (aggressionSource.isViewable)
+            ((Pane) generatorEntity.getView().getParent()).getChildren().add(bullet.getView());
         game.addEntity(bullet);
         bullet.setLocation(generatorEntity.getBounds().getCenterX(), generatorEntity.getBounds().getCenterY());
-        aggressionSource.getView().toFront();
+        if (aggressionSource.isViewable)
+            aggressionSource.getView().toFront();
         onAct(aggressionSource);
         hasBullet = false;
     }

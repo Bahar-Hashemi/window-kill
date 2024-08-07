@@ -45,9 +45,7 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
             impactStrategy.act(this);
             return;
         }
-        System.out.println("hello");
         User user = GameUtil.findMyUser(this, game);
-        System.out.println("down request: " + user.hasDownRequest());
         if (user.hasLeftRequest())
             setX(getX() - SPEED);
         if (user.hasRightRequest())

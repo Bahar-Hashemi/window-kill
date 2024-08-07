@@ -5,8 +5,12 @@ import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.communications.model.boards.MainBoard;
 import bahar.window_kill.communications.model.entities.BoardOwner;
 import bahar.window_kill.communications.model.entities.Entity;
+import bahar.window_kill.communications.model.entities.additional.data.BulletData;
+import bahar.window_kill.communications.model.entities.attackers.Bullet;
 import bahar.window_kill.communications.processors.GameProcessor;
+import com.google.gson.Gson;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.lang.reflect.Constructor;
 import java.util.Random;
@@ -22,6 +26,7 @@ public class OnlineEntityProcessor extends GameProcessor {
             return;
         int myPointer = 0;
         int savePointer = 0;
+        System.out.println("Size: " +  game.save.entities.size());
         while (myPointer < game.entities.size() && savePointer < game.save.entities.size()) {
             if (game.entities.get(myPointer).getId().equals(game.save.entities.get(savePointer).getId())) {
                 myPointer++;
@@ -48,10 +53,25 @@ public class OnlineEntityProcessor extends GameProcessor {
         entity.shout();
     }
     private void makeEntity(Entity entity) {
+        if (entity.getClassName().equals(Bullet.class.getName())) {
+            makeBullet(entity);
+            return;
+        }
         try {
             Class<?> type = Class.forName(entity.getClassName());
             Constructor<?> constructor = type.getConstructor(boolean.class, String.class);
             Entity result = (Entity) constructor.newInstance(true, entity.getId());
+            addEntity(result, game);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void makeBullet(Entity entity) {
+        BulletData bulletData = new Gson().fromJson(entity.getAdditionalData(), BulletData.class);
+        try {
+            Class<?> type = Class.forName(entity.getClassName());
+            Constructor<?> constructor = type.getConstructor(boolean.class, String.class, int.class, double.class, Color.class, int.class, double.class, double.class, boolean.class);
+            Bullet result = (Bullet) constructor.newInstance(true, entity.getId(), (int) entity.getHP(), bulletData.radius, Color.valueOf(bulletData.color), 0, 0, 0, false);
             addEntity(result, game);
         } catch (Exception e) {
             e.printStackTrace();

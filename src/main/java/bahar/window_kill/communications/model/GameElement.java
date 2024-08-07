@@ -9,6 +9,7 @@ public class GameElement {
     transient protected final Node view;
     public final boolean isViewable;
     protected final String className;
+    protected String additionalData;
     protected double opacity = 1;
     public GameElement(boolean isViewable, String id, Node view, Bounds bounds, String className) {
         this.isViewable = isViewable;
@@ -61,5 +62,9 @@ public class GameElement {
     }
     public String getClassName() {
         return className;
+    }
+
+    public String getAdditionalData() {
+        return additionalData;
     }
 }
