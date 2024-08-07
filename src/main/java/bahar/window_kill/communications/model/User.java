@@ -165,4 +165,12 @@ public class User {
     public void setTableUser(TableUser tableUser) {
         this.tableUser = tableUser;
     }
+
+    public void readFrom(User goalUser) {
+        epsilon.setLocation(goalUser.epsilon.getX(), goalUser.epsilon.getY());
+        mainBoard.setLocation(goalUser.mainBoard.getX(), goalUser.mainBoard.getY());
+        mainBoard.setSize(goalUser.mainBoard.getWidth(), goalUser.mainBoard.getHeight());
+        abilities = goalUser.abilities;
+        coolDown = goalUser.coolDown;
+    }
 }

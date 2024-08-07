@@ -9,6 +9,7 @@ import bahar.window_kill.communications.messages.client.squads.NewSquadMessage;
 import bahar.window_kill.server.control.connection.handlers.MessageHandler;
 import bahar.window_kill.server.control.connection.handlers.data.ChangeStateHandler;
 import bahar.window_kill.server.control.connection.handlers.data.DataRequestHandler;
+import bahar.window_kill.server.control.connection.handlers.data.SendControlsHandler;
 import bahar.window_kill.server.control.connection.handlers.data.SendDevelopmentHandler;
 import bahar.window_kill.server.control.connection.handlers.game.GameRequestHandler;
 import bahar.window_kill.server.control.connection.handlers.register.LoginHandler;
@@ -49,6 +50,7 @@ public class TCPWorker extends Thread {
         result.add(new SendSquadHandler());
         result.add(new SendMessageHandler());
         result.add(new GameRequestHandler());
+        result.add(new SendControlsHandler());
         return result;
     }
 
@@ -87,6 +89,7 @@ public class TCPWorker extends Thread {
                 case SEND_SQUAD -> gsonAgent.fromJson(clientStr, SendSquadMessage.class);
                 case SEND_MESSAGE -> gsonAgent.fromJson(clientStr, SendMessageMessage.class);
                 case GAME_REQUEST -> gsonAgent.fromJson(clientStr, GameRequestMessage.class);
+                case SEND_CONTROLS -> gsonAgent.fromJson(clientStr, SendControlsMessage.class);
                 default -> null;
             };
         }

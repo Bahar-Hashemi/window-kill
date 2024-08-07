@@ -1,7 +1,7 @@
 package bahar.window_kill.communications.processors;
 
 
-import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.communications.util.Constants;
 import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.communications.model.User;
 

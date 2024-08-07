@@ -31,6 +31,8 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
         return circle;
     }
     public Entity makeBullet() {
+        if (isViewable)
+            new Bullet(isViewable, GameUtil.generateID(), getBulletDamage(), 3.5, (Color) ((Circle) view).getStroke(), getBulletDamage(), gunDirectionX, gunDirectionY, false);
         return new Bullet(isViewable, GameUtil.generateID(), getBulletDamage(), 3.5, Color.WHITE, getBulletDamage(), gunDirectionX, gunDirectionY, false);
     }
     public void setColor(Color color) {
@@ -43,7 +45,9 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
             impactStrategy.act(this);
             return;
         }
+        System.out.println("hello");
         User user = GameUtil.findMyUser(this, game);
+        System.out.println("down request: " + user.hasDownRequest());
         if (user.hasLeftRequest())
             setX(getX() - SPEED);
         if (user.hasRightRequest())

@@ -1,6 +1,6 @@
 package bahar.window_kill.communications.processors;
 
-import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.communications.util.Constants;
 import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.communications.util.GameUtil;
@@ -40,14 +40,14 @@ public class BoardsProcessor extends GameProcessor {
     private static void mainBoardInBounds(MainBoard mainBoard) {
         mainBoard.setLayoutY(Math.max(0, mainBoard.getY()));
         mainBoard.setLayoutX(Math.max(0, mainBoard.getX()));
-        if (mainBoard.getWidth() + mainBoard.getX() > Constants.SCREEN_WIDTH)
-            mainBoard.lockBoardWidth(Constants.SCREEN_WIDTH - mainBoard.getX());
-        if (mainBoard.getHeight() + mainBoard.getY() > Constants.SCREEN_HEIGHT)
-            mainBoard.lockBoardHeight(Constants.SCREEN_HEIGHT - mainBoard.getY());
+        if (mainBoard.getWidth() + mainBoard.getX() > 1536)
+            mainBoard.lockBoardWidth(1536 - mainBoard.getX());
+        if (mainBoard.getHeight() + mainBoard.getY() > 950)
+            mainBoard.lockBoardHeight(950 - mainBoard.getY());
     }
     private void shrinkMainBoard(MainBoard mainBoard) {
-        double minusWidth = Math.min((mainBoard.getWidth() - Constants.MINIMUM_WIDTH) / 2, mainBoard.shrink);
-        double minusHeight = Math.min((mainBoard.getHeight() - Constants.MINIMUM_HEIGHT) / 2, mainBoard.shrink);
+        double minusWidth = Math.min((mainBoard.getWidth() - 350) / 2, mainBoard.shrink);
+        double minusHeight = Math.min((mainBoard.getHeight() - 200) / 2, mainBoard.shrink);
         mainBoard.setDimensions(mainBoard.getX() + minusWidth, mainBoard.getY() + minusHeight,
                 mainBoard.getWidth() - 2 * minusWidth , mainBoard.getHeight() - 2 * minusHeight);
     }

@@ -1,11 +1,8 @@
 package bahar.window_kill.client.view.controller.offline;
 
-import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.communications.util.Constants;
 import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.client.control.states.offlline.RestartingState;
-import bahar.window_kill.client.control.util.reader.SaveUtil;
-import bahar.window_kill.communications.model.Game;
-import bahar.window_kill.communications.model.User;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

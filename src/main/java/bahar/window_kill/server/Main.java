@@ -6,7 +6,6 @@ import bahar.window_kill.server.control.game.GamesManager;
 
 public class Main {
     public static void main(String[] args) {
-
         if (!DataBaseManager.getInstance().tableExists("users"))
             DataBaseManager.getInstance().createUserTable();
         if (!DataBaseManager.getInstance().tableExists("squads"))

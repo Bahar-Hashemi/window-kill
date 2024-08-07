@@ -2,7 +2,7 @@ package bahar.window_kill.communications.model;
 
 import bahar.window_kill.communications.model.entities.generators.shooters.Epsilon;
 import bahar.window_kill.communications.model.entities.generators.shooters.SmileyHand;
-import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.communications.util.Constants;
 import bahar.window_kill.communications.model.boards.MainBoard;
 import bahar.window_kill.communications.model.entities.generators.shooters.SmileyFace;
 import bahar.window_kill.communications.model.bosswatch.*;

@@ -1,6 +1,6 @@
 package bahar.window_kill.client.view;
 
-import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.communications.util.Constants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;

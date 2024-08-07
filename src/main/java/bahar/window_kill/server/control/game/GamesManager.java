@@ -12,11 +12,13 @@ public class GamesManager extends Thread {
     @Override
     public void run() {
         try {
-            super.run();
-            for (GameProcessor gameProcessor: gameProcessors)
-                gameProcessor.run();
-            this.sleep(30);
-        } catch (InterruptedException e) {
+            while (true) {
+                super.run();
+                for (int i = gameProcessors.size() - 1; i >= 0; i--)
+                    gameProcessors.get(i).run();
+                this.sleep(30);
+            }
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

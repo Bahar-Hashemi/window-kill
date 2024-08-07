@@ -3,6 +3,7 @@ package bahar.window_kill.client.control;
 import bahar.window_kill.client.control.states.offlline.WhooshState;
 import bahar.window_kill.client.control.states.online.OnlinePlayingState;
 import bahar.window_kill.client.control.util.FileUtil;
+import bahar.window_kill.communications.util.Constants;
 import bahar.window_kill.communications.util.GameUtil;
 import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.client.view.MainStage;
@@ -19,7 +20,7 @@ public class GameController {
         user = new User(new Epsilon(true, GameUtil.generateID(), settings.getSpeed()), new MainBoard(true, GameUtil.generateID()));
         game = new Game(true);
         game.addUser(user);
-       user.mainBoard.setDimensions(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 4,
+        user.mainBoard.setDimensions(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_HEIGHT / 4,
                  Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);
         user.mainBoard.add(user.epsilon.getView());
         user.epsilon.setLocation(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2);

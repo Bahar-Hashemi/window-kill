@@ -1,5 +1,6 @@
 package bahar.window_kill.client.control.connection;
 
+import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.communications.data.Development;
 import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
@@ -11,6 +12,7 @@ import bahar.window_kill.communications.messages.client.register.SignupMessage;
 import bahar.window_kill.communications.messages.client.squads.NewSquadMessage;
 import bahar.window_kill.communications.messages.server.GeneralAnswer;
 import bahar.window_kill.communications.model.Game;
+import bahar.window_kill.communications.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -277,5 +279,16 @@ public class TCPClient {
             e.printStackTrace();
         }
         return null;
+    }
+    public void sendControls(String username, User user) {
+        SendControlsMessage sendControlsMessage = new SendControlsMessage(username, user);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(sendControlsMessage));
+            endConnection();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package bahar.window_kill.client.control;
+package bahar.window_kill.communications.util;
 
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;

@@ -55,4 +55,11 @@ public class GameElement {
     public String getId() {
         return id;
     }
+    public void readFrom(GameElement gameElement) {
+        setLocation(gameElement.getX(), gameElement.getY());
+        opacity = gameElement.opacity;
+    }
+    public String getClassName() {
+        return className;
+    }
 }

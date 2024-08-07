@@ -1,6 +1,6 @@
 package bahar.window_kill.client.view;
 
-import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.communications.util.Constants;
 import bahar.window_kill.client.control.util.ImageUtil;
 import javafx.scene.Node;
 import javafx.scene.Scene;

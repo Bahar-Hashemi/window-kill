@@ -40,7 +40,8 @@ public class MainBoard extends GameBoard {
         add(labels);
     }
     public void labelsToFront() {
-        labels.toFront();
+        if (labels != null)
+            labels.toFront();
     }
     public void setControlStrategy(ControlStrategy controlStrategy) {
         this.controlStrategy = controlStrategy;
@@ -49,23 +50,29 @@ public class MainBoard extends GameBoard {
         controlStrategy.requestUserControl(this, user);
     }
     public void setHP(int HP) {
-        HPLabel.setText("HP: " + HP);
+        if (isViewable)
+            HPLabel.setText("HP: " + HP);
     }
     public void setXP(int XP) {
-        XPLabel.setText("XP: " + XP);
+        if (isViewable)
+            XPLabel.setText("XP: " + XP);
     }
     public void setWave(int wave) {
-        waveLabel.setText("wave: " + wave);
+        if (isViewable)
+            waveLabel.setText("wave: " + wave);
     }
     public void setAbilities(String abilities) {
-        abilitiesLabel.setText(abilities);
+        if (isViewable)
+            abilitiesLabel.setText(abilities);
     }
     public void shout() {
-        SoundUtil.WALLHIT.play();
+        if (isViewable)
+            SoundUtil.WALLHIT.play();
     }
     public void setCountDown(Label countDown) {
         this.countDown = countDown;
-        add(countDown);
+        if (isViewable)
+            add(countDown);
     }
     public void removeCountDown() {
         remove(countDown);

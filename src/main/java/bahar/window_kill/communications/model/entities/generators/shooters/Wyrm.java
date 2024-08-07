@@ -71,13 +71,12 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
 
     @Override
     public void morph() {
+        if (!isViewable)
+            return;
         iris.setLayoutX(0);
         iris.setLayoutY(0);
-        double dx = gunDirectionX - iris.getLayoutX() - getView().getLayoutX();
-        double dy = gunDirectionY - iris.getLayoutY() - getView().getLayoutY();
-        double chord = Math.sqrt(dx * dx + dy * dy);
-        iris.setLayoutX(iris.getLayoutX() + dx / chord * 10);
-        iris.setLayoutY(iris.getLayoutY() + dy / chord * 5);
+        iris.setLayoutX(iris.getLayoutX() + gunDirectionX * 10);
+        iris.setLayoutY(iris.getLayoutY() + gunDirectionY * 5);
     }
 
     @Override

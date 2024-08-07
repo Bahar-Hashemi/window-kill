@@ -112,10 +112,4 @@ public class GameBoard extends GameElement {
                 board.getChildren().remove(node);
         }
     }
-    public void readFromString(Scanner sc) {
-//        setHovering(sc.nextBoolean());
-//        setLayoutX(sc.nextDouble());
-//        setLayoutY(sc.nextDouble());
-//        lockBoardSize(sc.nextDouble(), sc.nextDouble());
-    }
 }

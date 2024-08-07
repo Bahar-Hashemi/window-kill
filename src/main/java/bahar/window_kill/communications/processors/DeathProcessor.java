@@ -1,9 +1,8 @@
 package bahar.window_kill.communications.processors;
 
-import bahar.window_kill.client.control.Constants;
+import bahar.window_kill.communications.util.Constants;
 import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.client.control.states.offlline.RestartingState;
-import bahar.window_kill.client.control.util.reader.SaveUtil;
 import bahar.window_kill.client.view.MainStage;
 import bahar.window_kill.communications.model.User;
 import bahar.window_kill.communications.model.entities.BoardOwner;
@@ -14,7 +13,6 @@ import javafx.scene.layout.Pane;
 import bahar.window_kill.client.view.PaneBuilder;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class DeathProcessor extends GameProcessor {
     public DeathProcessor(Boolean isViewable, Game game) {
@@ -61,18 +59,18 @@ public class DeathProcessor extends GameProcessor {
         }
     }
     private void kill(Entity entity) {
+        if (entity instanceof LootDropper lootDropper) {
+            for (int i = 0; i < lootDropper.getLootCount(); i++) {
+                Entity collectable = lootDropper.makeLoot();
+                if (entity.isViewable)
+                    ((Pane) entity.getView().getParent()).getChildren().add(collectable.getView());
+                game.addEntity(collectable);
+                collectable.setLocation(new Random().nextDouble(entity.getBounds().getMinimumX(), entity.getBounds().getMaximumX()),
+                        new Random().nextDouble(entity.getBounds().getMinimumY(), entity.getBounds().getMaximumY()));
+            }
+        }
         if (entity.isViewable) {
             Pane parent = (Pane) entity.getView().getParent();
-            if (entity instanceof LootDropper lootDropper) {
-                for (int i = 0; i < lootDropper.getLootCount(); i++) {
-                    Entity collectable = lootDropper.makeLoot();
-                    ((Pane) entity.getView().getParent()).getChildren().add(collectable.getView());
-                    game.addEntity(collectable);
-
-                    collectable.setLocation(new Random().nextDouble(entity.getBounds().getMinimumX(), entity.getBounds().getMaximumX()),
-                            new Random().nextDouble(entity.getBounds().getMinimumY(), entity.getBounds().getMaximumY()));
-                }
-            }
             if (entity instanceof BoardOwner boardOwner) {
                 MainStage.remove(boardOwner.getBoard().getView());
                 game.gameBoards.remove(boardOwner.getBoard());
