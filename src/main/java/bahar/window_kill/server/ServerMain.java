@@ -20,7 +20,7 @@ public class ServerMain {
         Scanner sc = new Scanner(System.in);
         while (true) {
             if (isRunningSquadBattle) {
-                System.out.println("Do you want to end squad battle? (yes/no)");
+                System.out.println("Do you want to end squad battle? (yes/no)\n");
                 String answer = sc.nextLine();
                 if (answer.equals("yes")) {
                     BattleController.endSquadBattle();
@@ -28,7 +28,7 @@ public class ServerMain {
                 }
             }
             else {
-                System.out.println("Do you want to start squad battle? (yes/no)");
+                System.out.println("Do you want to start squad battle? (yes/no)\n");
                 String answer = sc.nextLine();
                 if (answer.equals("yes")) {
                     BattleController.initiateSquadBattle();

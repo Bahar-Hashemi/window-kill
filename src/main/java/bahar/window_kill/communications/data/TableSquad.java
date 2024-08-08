@@ -9,6 +9,7 @@ public class TableSquad {
         this.name = name;
         this.owner = owner;
         this.enemy = enemy;
+        System.err.println("my enemy: " + enemy);
         this.history = history;
         this.vault = vault;
         this.PalioxisState = PalioxisState;

@@ -163,8 +163,8 @@ public class DataBaseManager {
                 return new TableSquad(
                         rs.getString("name"),
                         rs.getString("owner"),
-                        rs.getString("game_history"),
                         rs.getString("enemy"),
+                        rs.getString("game_history"),
                         rs.getInt("vault"),
                         rs.getInt("PalioxisState"),
                         rs.getInt("AdonisState"),
