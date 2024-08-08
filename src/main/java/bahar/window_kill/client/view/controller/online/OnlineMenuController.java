@@ -29,6 +29,8 @@ public class OnlineMenuController {
     public Label squadVault;
     public ListView<UserMessage> messagesBox;
     public ListView<TableUser> teamMembersBox;
+    public ListView<String> GameHistoryBox;
+    public ListView<TableUser> EnemiesBox;
     private ArrayList<OnlineController> controllers;
     public void initialize() {
         MainStage.requestCenterOnScreen(pane);
@@ -45,6 +47,7 @@ public class OnlineMenuController {
         controllers.add(new GlobeMenuController(globalSquads));
         controllers.add(new OnlineSkillsController(xpLabel, defenseBox, attackBox, squadBox));
         controllers.add(new SquadMenuController(squadName, squadVault, messagesBox, teamMembersBox));
+        controllers.add(new GamesMenuController(GameHistoryBox, EnemiesBox));
     }
     private void setUpTimeline() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> runControllers()));

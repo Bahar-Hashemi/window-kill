@@ -27,8 +27,10 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
         super(isViewable, id, (isViewable? makeView(): null), new Bounds(-50, -50, 50, 50), SmileyFace.class.getName(),
                 1000, true, null);
         byBoard();
-        makeEyes();
-        makeMouth();
+        if (isViewable) {
+            makeEyes();
+            makeMouth();
+        }
         setBulletDamage(20);
     }
     private void makeMouth() {
@@ -100,6 +102,7 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
 
     @Override
     public void morph() {
+        super.morph();
         moveEye(leftEye, -10, -10, gunDirectionX, gunDirectionY);
         moveEye(rightEye, 10, -10, gunDirectionX, gunDirectionY);
         setHappiness(getHP() / 1000 * 100);
@@ -107,7 +110,8 @@ public class SmileyFace extends ShooterEntity implements BoardOwner, LootDropper
 
     @Override
     public void shout() {
-        SoundUtil.HIT.play();
+        if (isViewable)
+            SoundUtil.HIT.play();
     }
 
     @Override

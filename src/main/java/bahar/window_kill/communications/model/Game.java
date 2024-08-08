@@ -7,18 +7,17 @@ import bahar.window_kill.communications.processors.GameProcessor;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Game {
-    public ArrayList<User> users;
-    public ArrayList<Entity> entities;
-    public ArrayList<GameBoard> gameBoards;
+    public final ArrayList<User> users;
+    public final ArrayList<Entity> entities;
+    public final ArrayList<GameBoard> gameBoards;
     public int wave;
     public boolean isLocked;
     public long clock;
     transient public Game save = null;
     transient public GameState gameState;
     transient public ArrayList<GameProcessor> gameProcessors;
-    boolean needsView;
+    transient public boolean needsView;
     public Game(boolean needsView) {
         this.needsView = needsView;
         entities = new ArrayList<>();
@@ -30,10 +29,12 @@ public class Game {
         clock = 0;
     }
     public void setGameState(GameState gameState) {
-        if (this.gameState != null)
-            this.gameState.stop();
-        this.gameState = gameState;
-        this.gameState.play();
+        synchronized (this) {
+            if (this.gameState != null)
+                this.gameState.stop();
+            this.gameState = gameState;
+            this.gameState.play();
+        }
     }
     public int getPR() {
         double result = 0;
@@ -49,11 +50,34 @@ public class Game {
         return wave * wave / 100.0;
     }
     public void addEntity(Entity entity) {
-        entities.add(entity);
-        entity.setDeck(this);
+        synchronized (entities) {
+            entities.add(entity);
+            entity.setDeck(this);
+        }
     }
     public void addUser(User user) {
-        users.add(user);
-        user.epsilon.setDeck(this);
+        synchronized (users) {
+            users.add(user);
+            user.epsilon.setDeck(this);
+        }
     }
+    public void removeUser(User user) {
+        synchronized (users) {
+            users.remove(user);
+        }
+    }
+    public void removeEntity(Entity entity) {
+        synchronized (entities) {
+            entities.remove(entity);
+        }
+    }
+    public Entity getEntity(String id) {
+        synchronized (entities) {
+            for (Entity entity: entities)
+                if (entity.getId().equals(id))
+                    return entity;
+        }
+        return null;
+    }
+
 }

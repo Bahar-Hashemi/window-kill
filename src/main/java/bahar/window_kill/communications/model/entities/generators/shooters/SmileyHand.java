@@ -69,7 +69,7 @@ public class SmileyHand extends ShooterEntity implements LootDropper, BoardOwner
 
     @Override
     public void morph() {
-
+        super.morph();
     }
 
     @Override

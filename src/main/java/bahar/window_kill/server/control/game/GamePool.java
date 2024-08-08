@@ -15,10 +15,10 @@ public class GamePool {
     }
     public static Game getMyGame(String name) {
         synchronized (onlineGames) {
-            for (Game game: onlineGames)
-                for (User user: game.users)
-                    if (user.getUsername().equals(name))
-                        return game;
+            for (int i = onlineGames.size() - 1; i >= 0; i--)
+                for (int j = onlineGames.get(i).users.size() - 1; j >= 0; j--)
+                    if (onlineGames.get(i).users.get(j).getUsername().equals(name))
+                        return onlineGames.get(i);
             return null;
         }
     }

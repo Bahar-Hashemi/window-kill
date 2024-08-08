@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.DataOutputStream;
+import java.util.ConcurrentModificationException;
 
 abstract public class MessageHandler {
     private final Gson gsonAgent;
@@ -23,12 +24,18 @@ abstract public class MessageHandler {
         }
     }
     protected boolean sendObject(DataOutputStream sendBuffer, Object object) {
-        String messageString = gsonAgent.toJson(object);
-        try {
-            sendBuffer.writeUTF(messageString);
-            return true;
-        } catch (Exception e) {
-            return false;
+        while (true) {
+            try {
+                String messageString = gsonAgent.toJson(object);
+                try {
+                    sendBuffer.writeUTF(messageString);
+                    return true;
+                } catch (Exception e) {
+                    return false;
+                }
+            } catch (ConcurrentModificationException e) {
+                System.err.println("Concurrent happened");
+            }
         }
     }
     protected boolean sendString(DataOutputStream sendBuffer, String message) {

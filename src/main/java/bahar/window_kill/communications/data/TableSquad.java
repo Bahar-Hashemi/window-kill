@@ -4,9 +4,11 @@ public class TableSquad {
     private String name, owner, history;
     private int vault;
     private int PalioxisState, AdonisState, GefjonState;
-    public TableSquad(String name, String owner, String history, int vault, int PalioxisState, int AdonisState, int GefjonState) {
+    private String enemy;
+    public TableSquad(String name, String owner, String enemy, String history, int vault, int PalioxisState, int AdonisState, int GefjonState) {
         this.name = name;
         this.owner = owner;
+        this.enemy = enemy;
         this.history = history;
         this.vault = vault;
         this.PalioxisState = PalioxisState;
@@ -68,5 +70,13 @@ public class TableSquad {
 
     public void setGefjonState(int gefjonOn) {
         GefjonState = gefjonOn;
+    }
+
+    public String getEnemy() {
+        return enemy;
+    }
+
+    public void setEnemy(String enemy) {
+        this.enemy = enemy;
     }
 }

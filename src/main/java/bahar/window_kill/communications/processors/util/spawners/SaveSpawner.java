@@ -22,7 +22,7 @@ public class SaveSpawner extends Spawner {
     @Override
     protected void onStart() {
         super.onStart();
-        gitPush = new GitPush(true, GameUtil.generateID());
+        gitPush = new GitPush(game.needsView, GameUtil.generateID());
         addEntity(gitPush, game);
         gitPush.setY(new Random().nextDouble(0, game.users.get(0).mainBoard.getHeight()));
         gitPush.setX(new Random().nextDouble(0, game.users.get(0).mainBoard.getWidth()));

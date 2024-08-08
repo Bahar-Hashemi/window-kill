@@ -114,10 +114,10 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="13.0" layoutY="35.0" prefHeight="122.0" prefWidth="280.0" />
+                        <ListView fx:id="GameHistoryBox" layoutX="13.0" layoutY="35.0" prefHeight="122.0" prefWidth="280.0" />
                         <Label layoutX="71.0" text="GAME HISTORY" />
                         <Label layoutX="62.0" layoutY="175.0" text="ENEMY MEMBERS" />
-                        <ListView layoutX="13.0" layoutY="210.0" prefHeight="201.0" prefWidth="280.0" />
+                        <ListView fx:id="EnemiesBox" layoutX="13.0" layoutY="210.0" prefHeight="201.0" prefWidth="280.0" />
                         <Button layoutX="90.0" layoutY="436.0" mnemonicParsing="false" onAction="#onNewGame" text="NEW GAME" />
                      </children></AnchorPane>
               </content>

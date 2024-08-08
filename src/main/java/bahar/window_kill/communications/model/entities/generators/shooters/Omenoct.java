@@ -1,5 +1,6 @@
 package bahar.window_kill.communications.model.entities.generators.shooters;
 
+import bahar.window_kill.communications.model.boards.MainBoard;
 import bahar.window_kill.communications.processors.util.strategies.attacks.SpawnStrategy;
 import bahar.window_kill.communications.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
@@ -69,19 +70,18 @@ public class Omenoct extends ShooterEntity implements LootDropper {
     @Override
     public void move() { //todo correct here!!
         int speed = 5;
-        double width = ((Pane) getView().getParent()).getWidth();
-        double height = ((Pane) getView().getParent()).getHeight();
-        if (lockStrategy == 0 && Math.abs(view.getLayoutY()) + 2 > speed)
-            view.setLayoutY(view.getLayoutY() + (view.getLayoutY() > 0? -1: 1) * speed);
-
-        else if (lockStrategy == 1 && Math.abs(view.getLayoutX() - width) + 2 > speed)
-            view.setLayoutX(view.getLayoutX() + (view.getLayoutX() > width? -1: 1) * speed);
-
-        else if (lockStrategy == 2 && Math.abs(view.getLayoutY() - height) + 2 > speed)
-            view.setLayoutY(view.getLayoutY() + (view.getLayoutY() > height? -1: 1) * speed);
-
-        else if (lockStrategy == 3 && Math.abs(view.getLayoutX()) + 2 > speed)
-            view.setLayoutX(view.getLayoutX() + (view.getLayoutX() > 0? -1: 1) * speed);
+        MainBoard mainBoard = GameUtil.findMyUser(this, game).mainBoard;
+        Bounds bounds = mainBoard.getBounds();
+        if (lockStrategy == 0 && Math.abs(getY() - bounds.getMinimumY()) + 2 > speed)
+            setY(getY() + (getY() - bounds.getMinimumY() > 0? -1: 1) * speed);
+        else if (lockStrategy == 1 && Math.abs(getX() - bounds.getMaximumX()) + 2 > speed)
+            setX(getX() + (getX() - bounds.getMaximumX() > 0? -1: 1) * speed);
+        else if (lockStrategy == 2 && Math.abs(getY() - bounds.getMaximumY()) + 2 > speed)
+            setY(getY() + (getY() - bounds.getMaximumY() > 0? -1: 1) * speed);
+        else if (lockStrategy == 3 && Math.abs(getX() - bounds.getMinimumX()) + 2 > speed)
+            setX(getX() + (getX() - bounds.getMinimumX() > 0? -1: 1) * speed);
+        else
+            lockStrategy = new Random().nextInt(4);
     }
     @Override
     public void aggress() {
@@ -90,11 +90,13 @@ public class Omenoct extends ShooterEntity implements LootDropper {
 
     @Override
     public void morph() {
+        super.morph();
     }
 
     @Override
     public void shout() {
-        SoundUtil.HIT.play();
+        if (isViewable)
+            SoundUtil.HIT.play();
     }
 
     @Override

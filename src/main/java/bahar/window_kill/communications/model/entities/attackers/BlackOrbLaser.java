@@ -1,17 +1,19 @@
 package bahar.window_kill.communications.model.entities.attackers;
 
+import bahar.window_kill.communications.model.entities.additional.data.BlackOrbLaserData;
 import bahar.window_kill.communications.util.GameUtil;
 import bahar.window_kill.communications.processors.util.strategies.attacks.DamageStrategy;
 import bahar.window_kill.communications.model.Bounds;
 import bahar.window_kill.communications.model.entities.BlackOrb;
 import bahar.window_kill.communications.model.entities.Entity;
+import com.google.gson.Gson;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class BlackOrbLaser extends Entity implements AttackerEntity {
     private final BlackOrb terminal1, terminal2;
-    private final Node terminal1View, terminal2View;
+    transient private final Node terminal1View, terminal2View;
     private static final int INF = (int) 1E9 + 7;
     private int damage = 12;
     public BlackOrbLaser(boolean isViewable, String id, BlackOrb terminal1, BlackOrb terminal2) {
@@ -19,18 +21,26 @@ public class BlackOrbLaser extends Entity implements AttackerEntity {
         this.terminal1 = terminal1;
         this.terminal2 = terminal2;
         //در اینجا مقادیری تف زدیم
-        terminal1View = makeView(terminal1, terminal2);
-        terminal2View = makeView(terminal1, terminal2);
-        GameUtil.setSceneLocation(terminal1View, terminal1.getX(), terminal1.getY());
-        terminal2.getBoard().add(terminal2View);
-        GameUtil.setSceneLocation(terminal2View, terminal1.getX(), terminal1.getY());
+        if (isViewable) {
+            terminal1View = makeView(terminal1, terminal2);
+            terminal2View = makeView(terminal1, terminal2);
+            terminal1.getBoard().add(terminal1View);
+            terminal2.getBoard().add(terminal2View);
+            GameUtil.setSceneLocation(terminal1View, terminal1.getX(), terminal1.getY());
+            GameUtil.setSceneLocation(terminal2View, terminal1.getX(), terminal1.getY());
+        }
+        else {
+            terminal1View = null;
+            terminal2View = null;
+        }
+        additionalData = new Gson().toJson(new BlackOrbLaserData(terminal1.getId(), terminal2.getId()));
     }
     private static Node makeView(BlackOrb terminal1, BlackOrb terminal2) {
         // Assuming getX() and get() methods exist in BlackOrb
-        double x1 = terminal1.getX();
-        double y1 = terminal1.getY();
-        double x2 = terminal2.getX();
-        double y2 = terminal2.getY();
+        double x1 = terminal1.getBounds().getCenterX();
+        double y1 = terminal1.getBounds().getCenterY();
+        double x2 = terminal2.getBounds().getCenterX();
+        double y2 = terminal2.getBounds().getCenterY();
 
         Line line = new Line(0, 0, x2 - x1, y2 - y1);
         line.setStroke(Color.LIGHTBLUE);
@@ -54,7 +64,7 @@ public class BlackOrbLaser extends Entity implements AttackerEntity {
 
     @Override
     public void morph() {
-
+        super.morph();
     }
 
     @Override

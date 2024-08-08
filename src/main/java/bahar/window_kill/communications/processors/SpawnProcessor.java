@@ -16,8 +16,8 @@ import bahar.window_kill.communications.model.entities.generators.shooters.*;
 import java.util.ArrayList;
 
 public class SpawnProcessor extends GameProcessor {
-    EntitySpawner[] entitySpawners = new EntitySpawner[10];
-    ArrayList<Watch> currentWatches = new ArrayList<>();
+    transient EntitySpawner[] entitySpawners = new EntitySpawner[10];
+    transient ArrayList<Watch> currentWatches = new ArrayList<>();
     SmileyBrain smileyBrain;
 
     public SpawnProcessor(Boolean isViewable, Game game) {
@@ -25,30 +25,33 @@ public class SpawnProcessor extends GameProcessor {
         makeWatches();
     }
     private void makeWatches() {
-        int difficulty = 100 / game.users.get(0).settings.getDifficulty() /*/ settings.getDifficulty()*/;
-        makeWatch(0, 1250 * difficulty, 5 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
-        makeWatch(1, 1000 * difficulty, 5 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
-        makeWatch(2, 1500 * difficulty, 5 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
-        makeWatch(3, 1300 * difficulty, 5 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
+        int difficulty = 2;
+        if (game.needsView)
+            difficulty = 100 / game.users.get(0).settings.getDifficulty() /*/ settings.getDifficulty()*/;
+        makeWatch(isViewable, 0, 1250 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
+        makeWatch(isViewable, 1, 1000 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
+        makeWatch(isViewable,2, 1500 / difficulty, 30 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
+        makeWatch(isViewable,3, 1300 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
 
-        makeWatch(4, 1500 * difficulty, 5 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,4, 1500 / difficulty, 30 * difficulty, new Class<?>[]{
                 Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(5, 2000 * difficulty, 5 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,5, 2000 / difficulty, 25 * difficulty, new Class<?>[]{
                 Wyrm.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(6, 1500 * difficulty, 5 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,6, 1500 / difficulty, 30 * difficulty, new Class<?>[]{
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class});
-        makeWatch(7, 1500 * difficulty, 5 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,7, 1500 / difficulty, 30 * difficulty, new Class<?>[]{
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(8, 1500 * difficulty, 5 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,8, 1500 / difficulty, 50 * difficulty, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(9, 1500 * difficulty, 5 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,9, 1500 / difficulty, 50 * difficulty, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
         currentWatches.add(entitySpawners[game.wave]);
     }
-    private void makeWatch(int index, int duration, int cycleCount, Class<?>[] enemyTypes) {
+    private void makeWatch(boolean isViewable, int index, int duration, int cycleCount, Class<?>[] enemyTypes) {
         entitySpawners[index] = new EntitySpawner(isViewable, duration, cycleCount, enemyTypes, game) {
             @Override
             protected void onEnd() {
+                super.onEnd();
                 currentWatches.remove(entitySpawners[game.wave]);
                 currentWatches.add(makeSaveWatch(index));
             }

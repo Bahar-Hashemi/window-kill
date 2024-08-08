@@ -94,12 +94,13 @@ public class GameBoard extends GameElement {
         getView().setClip(clip);
     }
     public void add(Node node) {
-        if (node == null) return;
+        if (node == null || !isViewable) return;
         ((Pane) getView()).getChildren().add(node);
     }
     public void remove(Node node) {
         if (node == null) return;
-        ((Pane) getView()).getChildren().remove(node);
+        if (isViewable && getView() != null)
+            ((Pane) getView()).getChildren().remove(node);
     }
     public boolean getHovering() {
         return hovering;

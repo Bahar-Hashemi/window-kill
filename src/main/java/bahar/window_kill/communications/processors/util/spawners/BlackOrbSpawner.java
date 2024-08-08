@@ -11,30 +11,30 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BlackOrbSpawner extends Spawner {
-    static double centerX, centerY;
-    static ArrayList<BlackOrb> blackOrbs = new ArrayList<>();
-    static double radius;
+    double centerX, centerY;
+    ArrayList<BlackOrb> blackOrbs = new ArrayList<>();
+    double radius;
     public BlackOrbSpawner(Boolean isViewable, Game game) {
         super(isViewable,500, game);
         setCycleCount(findCycle(game));
     }
-    private static void makeBlackOrbs(Game game) {
+    private void makeBlackOrbs(Game game) {
         blackOrbs = new ArrayList<>();
         for (Entity entity: game.entities)
             if (entity instanceof BlackOrb)
                 blackOrbs.add((BlackOrb) entity);
     }
-    private static int findIndex(Game game) {
+    private int findIndex(Game game) {
         makeBlackOrbs(game);
         return blackOrbs.size();
     }
-    private static int findCycle(Game game) {
+    private int findCycle(Game game) {
         return 5 - findIndex(game);
     }
-    private static void makeConstants() {
+    private void makeConstants() {
         Random random = new Random();
-        centerX = random.nextDouble(Constants.SCREEN_WIDTH / 4, Constants.SCREEN_WIDTH * 3 / 4);
-        centerY = random.nextDouble(Constants.SCREEN_HEIGHT / 4, Constants.SCREEN_HEIGHT * 3 / 4);
+        centerX = random.nextDouble(1536.0 / 4, 1536.0 * 3 / 4);
+        centerY = random.nextDouble(950.0 / 4, 950.0 * 3 / 4);
         radius = random.nextDouble(150, 250);
     }
     protected void onCall() {

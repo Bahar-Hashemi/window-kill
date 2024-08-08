@@ -52,7 +52,7 @@ public class Bullet extends Entity implements AttackerEntity {
 
     @Override
     public void morph() {
-
+        super.morph();
     }
 
     public void shout() {

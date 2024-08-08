@@ -67,6 +67,7 @@ public class DataBaseManager {
         String query = "CREATE TABLE squads (" +
                 "name VARCHAR(255) NOT NULL, " +
                 "owner VARCHAR(255) NOT NULL, " +
+                "enemy VARCHAR(255) DEFAULT ''," +
                 "game_history VARCHAR(1023) DEFAULT '', " +
                 "vault INT DEFAULT 0," +
                 "PalioxisState INT DEFAULT -1, " +
@@ -163,6 +164,7 @@ public class DataBaseManager {
                         rs.getString("name"),
                         rs.getString("owner"),
                         rs.getString("game_history"),
+                        rs.getString("enemy"),
                         rs.getInt("vault"),
                         rs.getInt("PalioxisState"),
                         rs.getInt("AdonisState"),
@@ -211,6 +213,7 @@ public class DataBaseManager {
 
     public void updateSquad(TableSquad tableSquad) {
         String query = "UPDATE squads SET owner = '" + tableSquad.getOwner() +
+                "', enemy = '" + tableSquad.getEnemy() +
                 "', game_history = '" + tableSquad.getHistory() +
                 "', vault = " + tableSquad.getVault() +
                 ", PalioxisState = " + tableSquad.getPalioxisState() +

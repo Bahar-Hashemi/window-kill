@@ -22,7 +22,7 @@ public class OnlinePlayingState extends GameState {
         makeGameProcessors();
     }
     private static Timeline makeTimeLine(Game game) {
-        Timeline gameTimeLine = new Timeline(new KeyFrame(new Duration(Constants.RESPOND_DURATION), actionEvent -> {
+        Timeline gameTimeLine = new Timeline(new KeyFrame(new Duration(40), actionEvent -> {
             for (GameProcessor gameProcessor: game.gameProcessors)
                 gameProcessor.run();
             game.save = new TCPClient().getGameData(GameController.user.getUsername());
@@ -39,9 +39,9 @@ public class OnlinePlayingState extends GameState {
     }
     private void makeGameProcessors() {
         game.gameProcessors = new ArrayList<>();
-        game.gameProcessors.add(new ViewProcessor(isViewable, game));
         game.gameProcessors.add(new OnlineUserProcessor(isViewable, game));
         game.gameProcessors.add(new OnlineEntityProcessor(isViewable, game));
-        game.gameProcessors.add(new OnlineChangeProcessor(isViewable, game));
+        game.gameProcessors.add(new OnlineChangeProcessor(isViewable, game)); //important it must be the last processor
+        game.gameProcessors.add(new ViewProcessor(isViewable, game));
     }
 }

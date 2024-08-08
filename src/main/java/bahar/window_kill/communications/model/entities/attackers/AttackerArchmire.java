@@ -72,7 +72,7 @@ public class AttackerArchmire extends Entity implements LootDropper, AttackerEnt
 
     @Override
     public void morph() {
-        view.setOpacity(opacity);
+        super.morph();
     }
 
     @Override

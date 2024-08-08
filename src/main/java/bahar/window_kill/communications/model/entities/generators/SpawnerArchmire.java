@@ -74,12 +74,13 @@ public class SpawnerArchmire extends GeneratorEntity implements LootDropper {
 
     @Override
     public void morph() {
-
+        super.morph();
     }
 
     @Override
     public void shout() {
-        SoundUtil.HIT.play();
+        if (isViewable)
+            SoundUtil.HIT.play();
     }
 
     @Override

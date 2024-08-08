@@ -67,4 +67,11 @@ public class GameElement {
     public String getAdditionalData() {
         return additionalData;
     }
+    public double getArea() {
+        return getWidth() * getHeight();
+    }
+
+    public void setOpacity(double i) {
+        opacity = i;
+    }
 }

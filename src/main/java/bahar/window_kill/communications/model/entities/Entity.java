@@ -36,7 +36,10 @@ public class Entity extends GameElement {
     }
     public void setAggressionStrategy(Strategy strategy) { this.strategy = strategy; }
     public void aggress(){}
-    public void morph(){}
+    public void morph(){
+        if (isViewable)
+            view.setOpacity(opacity);
+    }
     public void shout(){}
     public boolean canImpact() {
         return impactStrategy.canImpact();

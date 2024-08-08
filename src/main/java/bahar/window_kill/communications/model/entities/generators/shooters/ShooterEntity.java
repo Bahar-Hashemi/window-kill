@@ -4,7 +4,6 @@ import bahar.window_kill.communications.processors.util.strategies.attacks.Strat
 import bahar.window_kill.communications.model.Bounds;
 import bahar.window_kill.communications.model.entities.Entity;
 import bahar.window_kill.communications.model.entities.generators.GeneratorEntity;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
 public abstract class ShooterEntity extends GeneratorEntity {
@@ -25,11 +24,8 @@ public abstract class ShooterEntity extends GeneratorEntity {
         return bulletDamage;
     }
     public void target(Entity target) {
-        Point2D sourcePosition = this.getView().localToScene(0, 0);
-        Point2D targetPosition = target.getView().localToScene(0, 0);
-
-        double dx = targetPosition.getX() - sourcePosition.getX();
-        double dy = targetPosition.getY() - sourcePosition.getY();
+        double dx = target.getX() - this.getX();
+        double dy = target.getY() - this.getY();
 
         double chord = Math.sqrt(dx * dx + dy * dy);
         setGunDirection(dx / chord, dy / chord);

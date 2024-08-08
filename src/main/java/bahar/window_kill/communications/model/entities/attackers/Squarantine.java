@@ -67,7 +67,8 @@ public class Squarantine extends Entity implements LootDropper, AttackerEntity  
     }
 
     public void shout() {
-        SoundUtil.HIT.play();
+        if (isViewable)
+            SoundUtil.HIT.play();
     }
 
     @Override

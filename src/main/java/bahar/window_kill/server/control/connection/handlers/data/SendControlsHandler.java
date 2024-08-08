@@ -27,6 +27,8 @@ public class SendControlsHandler extends MessageHandler {
         user.setLeftRequest(goalUser.hasLeftRequest());
         user.setRightRequest(goalUser.hasRightRequest());
         user.setUpRequest(goalUser.hasUpRequest());
+        user.setMouseX(goalUser.getMouseX());
+        user.setMouseY(goalUser.getMouseY());
         user.abilityRequests = goalUser.abilityRequests;
         return true;
     }

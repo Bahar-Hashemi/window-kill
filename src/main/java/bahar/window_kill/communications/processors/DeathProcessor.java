@@ -21,20 +21,23 @@ public class DeathProcessor extends GameProcessor {
 
     @Override
     public void run() {
-        killBulletsOutsideMonitor();
-        checkEpsilonHealth();
-        checkEntitiesHealth();
+        synchronized (game) {
+            killBulletsOutsideMonitor();
+            checkEpsilonHealth();
+            checkEntitiesHealth();
+        }
     }
     private void killBulletsOutsideMonitor() {
         for (Entity entity: game.entities)
             if (entity instanceof Bullet && ((Bullet) entity).isTraverser() &&
-                    (entity.getX() < 0 || entity.getX() > Constants.SCREEN_WIDTH ||
-                            entity.getY() < 0 || entity.getY() > Constants.SCREEN_HEIGHT)
+                    (entity.getX() < 0 || entity.getX() > 15361 ||
+                            entity.getY() < 0 || entity.getY() > 950)
             )
                 entity.setHP(0);
     }
     private void checkEpsilonHealth() { //todo correct here
-        for (User user: game.users)
+        for (int i = game.users.size() - 1; i >= 0; i--) {
+            User  user = game.users.get(i);
             if (user.getEpsilon().getHP() <= 0) {
                 if (game.save != null) { //todo complete save!
 //                    (new SaveUtil()).read(new Scanner(game.save));
@@ -42,13 +45,14 @@ public class DeathProcessor extends GameProcessor {
                     game.save = null;
                 }
                 else {
-                    game.gameState.stop();
                     if (isViewable) {
+                        game.gameState.stop();
                         Pane pane = PaneBuilder.GAME_OVER_PANE.generatePane();
                         MainStage.add(pane);
                     }
                 }
             }
+        }
     }
     private void checkEntitiesHealth() {
         for (int i = game.entities.size() - 1; i >= 0; i--) {
@@ -77,7 +81,7 @@ public class DeathProcessor extends GameProcessor {
             }
             parent.getChildren().remove(entity.getView());
         }
-        game.entities.remove(entity);
+        game.removeEntity(entity);
         entity.shout();
     }
 }

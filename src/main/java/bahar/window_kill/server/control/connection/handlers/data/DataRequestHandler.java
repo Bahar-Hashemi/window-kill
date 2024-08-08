@@ -28,11 +28,22 @@ public class DataRequestHandler extends MessageHandler {
             returnMyTeamMates(sendBuffer, requestDataMessage);
         if (requestDataMessage.getRequestedDataType() == RequestedDataType.GAME_DATA)
             returnGame(sendBuffer, requestDataMessage);
+        if (requestDataMessage.getRequestedDataType() == RequestedDataType.ENEMY_SQUAD_MEMBERS)
+            returnEnemySquadMembers(sendBuffer, requestDataMessage);
         return true;
+    }
+    private void returnEnemySquadMembers(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
+        TableUser tableUser = DataBaseManager.getInstance().getUser(requestDataMessage.getUsername());
+        TableSquad squad = DataBaseManager.getInstance().getSquad(tableUser.getSquad());
+        TableSquad enemySquad = DataBaseManager.getInstance().getSquad(squad.getEnemy());
+        ArrayList<TableUser> users = DataBaseManager.getInstance().getSquadMembers(enemySquad.getName());
+        sendObject(sendBuffer, users);
     }
     private void returnGame(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
         Game game = GamePool.getNotNullGame(requestDataMessage.getUsername());
-        sendObject(sendBuffer, game);
+        synchronized (game) {
+            sendObject(sendBuffer, game);
+        }
     }
     private void returnMe(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
         TableUser tableUser = DataBaseManager.getInstance().getUser(requestDataMessage.getUsername());

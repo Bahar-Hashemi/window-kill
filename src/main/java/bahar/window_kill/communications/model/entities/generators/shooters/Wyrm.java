@@ -1,5 +1,7 @@
 package bahar.window_kill.communications.model.entities.generators.shooters;
 
+import bahar.window_kill.communications.model.GameElement;
+import bahar.window_kill.communications.model.entities.additional.data.WyrmData;
 import bahar.window_kill.communications.processors.util.strategies.attacks.SpawnStrategy;
 import bahar.window_kill.communications.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
@@ -11,19 +13,21 @@ import bahar.window_kill.communications.model.entities.Collectable;
 import bahar.window_kill.communications.model.entities.Entity;
 import bahar.window_kill.communications.model.entities.LootDropper;
 import bahar.window_kill.communications.model.entities.attackers.Bullet;
+import com.google.gson.Gson;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
 public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
-    Watch gunWatch;
     GameBoard gameBoard;
-    Circle iris;
+    transient Circle iris;
     public Wyrm(boolean isViewable, String id) {
         super(isViewable, id, (isViewable? makeView(): null), new Bounds(-20, -35, 30, 5), Wyrm.class.getName(),
                 30, true, new SpawnStrategy(1000));
-        makeIris();
+        if (isViewable)
+            makeIris();
+        additionalData = new Gson().toJson(new WyrmData(0, 1));
         byBoard();
         setBulletDamage(5);
     }
@@ -51,6 +55,15 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     }
 
     @Override
+    public void target(Entity target) {
+        super.target(target);
+        double dx = target.getX() - getX();
+        double dy = target.getY() - getY();
+        double chord = Math.sqrt(dx * dx + dy * dy);
+        additionalData = new Gson().toJson(new WyrmData(dx / chord, dy / chord));
+    }
+
+    @Override
     public void byBoard() {
         gameBoard = new GameBoard(isViewable, GameUtil.generateID(), true);
         gameBoard.lockBoardSize(90, 70);
@@ -71,6 +84,7 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
 
     @Override
     public void morph() {
+        super.morph();
         if (!isViewable)
             return;
         iris.setLayoutX(0);
@@ -81,7 +95,8 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
 
     @Override
     public void shout() {
-        SoundUtil.HIT.play();
+        if (isViewable)
+            SoundUtil.HIT.play();
     }
     public void setX(double x) {
         super.setX(x);
@@ -101,6 +116,14 @@ public class Wyrm extends ShooterEntity implements BoardOwner, LootDropper  {
     @Override
     public int getLootCount() {
         return 2;
+    }
+
+    @Override
+    public void readFrom(GameElement gameElement) {
+        super.readFrom(gameElement);
+        WyrmData wyrmData = new Gson().fromJson(gameElement.getAdditionalData(), WyrmData.class);
+        gunDirectionX = wyrmData.getGunDirectionX();
+        gunDirectionY = wyrmData.getGunDirectionY();
     }
 
     @Override

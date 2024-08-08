@@ -46,7 +46,7 @@ public class GitPush extends Entity {
 
     @Override
     public void morph() {
-
+        super.morph();
     }
 
     @Override

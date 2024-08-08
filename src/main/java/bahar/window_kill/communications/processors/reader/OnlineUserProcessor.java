@@ -46,7 +46,7 @@ public class OnlineUserProcessor extends GameProcessor {
         }
         else {
             MainStage.remove(user.mainBoard.getView());
-            game.users.remove(user);
+            game.removeUser(user);
         }
     }
     private void addUser(User user) {

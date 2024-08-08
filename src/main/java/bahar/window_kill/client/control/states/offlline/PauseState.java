@@ -24,8 +24,6 @@ public class PauseState extends GameState {
             if (!user.hasPauseRequest())
                 game.setGameState(new RestartingState(isViewable, game));
             user.mainBoard.getView().requestFocus();
-            Gson gson = new Gson();
-            System.out.println(gson.toJson(game));
         }));
         pauseTimeLine.setCycleCount(-1);
         return pauseTimeLine;

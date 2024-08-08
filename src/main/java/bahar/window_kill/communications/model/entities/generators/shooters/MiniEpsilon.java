@@ -57,7 +57,7 @@ public class MiniEpsilon extends ShooterEntity {
 
     @Override
     public void morph() {
-
+        super.morph();
     }
 
     @Override

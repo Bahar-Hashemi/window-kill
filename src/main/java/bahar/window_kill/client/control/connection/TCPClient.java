@@ -1,6 +1,5 @@
 package bahar.window_kill.client.control.connection;
 
-import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.communications.data.Development;
 import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
@@ -21,7 +20,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class TCPClient {
     private final String serverIP = "127.0.0.1";
@@ -222,6 +220,20 @@ public class TCPClient {
                     receiveResponse(), TableSquad.class);
             endConnection();
             return squad;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public ArrayList<TableUser> getEnemyMembers(String username) {
+        RequestDataMessage requestDataMessage = new RequestDataMessage(RequestedDataType.ENEMY_SQUAD_MEMBERS, username);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(requestDataMessage));
+            ArrayList<TableUser> enemies = TableUser.fromJsonArray(receiveResponse());
+            endConnection();
+            return enemies;
         }
         catch (Exception e) {
             e.printStackTrace();

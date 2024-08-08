@@ -34,10 +34,10 @@ public class MovementProcessor extends GameProcessor {
     private void checkOpacities() {
         for (Entity entity: game.entities)
             if ((entity instanceof Bullet && ((Bullet) entity).isTraverser()) || (entity instanceof Collectable)) {
-                if (GameUtil.isInOneBoard(entity))
-                    entity.getView().setOpacity(1);
+                if (GameUtil.isInOneBoard(entity, game))
+                    entity.setOpacity(1);
                 else
-                    entity.getView().setOpacity(0);
+                    entity.setOpacity(0);
             }
     }
     private void simpleMovement() {

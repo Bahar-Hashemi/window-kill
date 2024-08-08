@@ -78,7 +78,8 @@ public class BlackOrb extends Entity implements BoardOwner, LootDropper{
 
     @Override
     public void shout() {
-        SoundUtil.HIT.play();
+        if (isViewable)
+            SoundUtil.HIT.play();
     }
 
     @Override

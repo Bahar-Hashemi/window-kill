@@ -63,12 +63,13 @@ public class Epsilon extends ShooterEntity implements AttackerEntity {
 
     @Override
     public void morph() {
-
+        super.morph();
     }
 
     @Override
     public void shout() {
-        SoundUtil.DAMAGE.play();
+        if (isViewable)
+            SoundUtil.DAMAGE.play();
     }
 
     @Override

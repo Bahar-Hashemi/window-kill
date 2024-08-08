@@ -2,9 +2,11 @@ package bahar.window_kill.communications.model.entities;
 
 import bahar.window_kill.communications.model.Bounds;
 import bahar.window_kill.communications.model.User;
+import bahar.window_kill.communications.model.entities.additional.data.CollectableData;
 import bahar.window_kill.communications.processors.util.strategies.attacks.PositiveStrategy;
 import bahar.window_kill.communications.util.GameUtil;
 import bahar.window_kill.client.control.util.SoundUtil;
+import com.google.gson.Gson;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -23,6 +25,7 @@ public class Collectable extends Entity {
                 source.setHP(0);
             }
         });
+        additionalData = new Gson().toJson(new CollectableData(color.toString()));
         this.xp = xp;
     }
     private static Node createView(boolean isViewable, Color color) {
@@ -59,12 +62,13 @@ public class Collectable extends Entity {
 
     @Override
     public void morph() {
-
+        super.morph();
     }
 
 
     @Override
     public void shout() {
-        SoundUtil.COIN_COLLECT.play();
+        if (isViewable)
+            SoundUtil.COIN_COLLECT.play();
     }
 }

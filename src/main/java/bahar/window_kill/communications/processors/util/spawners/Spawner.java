@@ -20,18 +20,24 @@ public class Spawner extends Watch {
     }
 
     protected static void addEntity(Entity entity, Game game) {
-        if (entity instanceof BoardOwner) {
-            BoardOwner boardOwner = (BoardOwner) entity;
-            MainStage.add(boardOwner.getBoard().getView()); game.gameBoards.add(boardOwner.getBoard());
-            MainStage.add(entity.getView()); game.addEntity(entity);
-            if (entity.isViewable)
-                boardOwner.getBoard().getView().toBack();
-            GameUtil.placeOutsideBoard(entity, game.users.get(0).mainBoard);
-        } else {
-            MainBoard mainBoard = game.users.get(new Random().nextInt(game.users.size())).mainBoard;
-            mainBoard.add(entity.getView());
-            game.addEntity(entity);
-            GameUtil.placeOutsideBoard(entity, mainBoard);
+        synchronized (game) {
+            if (entity instanceof BoardOwner) {
+                BoardOwner boardOwner = (BoardOwner) entity;
+                if (game.needsView && entity.isViewable)
+                    MainStage.add(boardOwner.getBoard().getView());
+                game.gameBoards.add(boardOwner.getBoard());
+                if (game.needsView && entity.isViewable)
+                    MainStage.add(entity.getView());
+                game.addEntity(entity);
+                if (game.needsView && entity.isViewable)
+                    boardOwner.getBoard().getView().toBack();
+                GameUtil.placeOutsideBoard(entity, game.users.get(0).mainBoard);
+            } else {
+                MainBoard mainBoard = game.users.get(new Random().nextInt(game.users.size())).mainBoard;
+                mainBoard.add(entity.getView());
+                game.addEntity(entity);
+                GameUtil.placeOutsideBoard(entity, mainBoard);
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ import java.util.Random;
 public class SmileyBrain {
     private final SmileyFace face;
     private final SmileyHand leftHand, rightHand;
+    private Game game;
     ArrayList<BossWatch> watches = new ArrayList<>();
     Watch attackController; boolean canAttack = false;
     private static Class<?>[] attackWatches = new Class[] {SlapWatch.class, ProjectileWatch.class, RapidFireWatch.class, SlapWatch.class, SqueezeWatch.class, VomitWatch.class};
@@ -21,9 +22,10 @@ public class SmileyBrain {
         this.face = face;
         this.leftHand = leftHand;
         this.rightHand = rightHand;
-        face.setLocation(Constants.SCREEN_WIDTH / 2, -100);
-        leftHand.setLocation(-100, Constants.SCREEN_HEIGHT / 2);
-        rightHand.setLocation(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT / 2);
+        this.game = game;
+        face.setLocation(1536.0 / 2, -100);
+        leftHand.setLocation(-100, 950.0 / 2);
+        rightHand.setLocation(1536, 950.0 / 2);
         watches.add(new ComingInWatch(game, face, leftHand, rightHand));
         attackController = new Watch(10000) {
             @Override
@@ -54,8 +56,8 @@ public class SmileyBrain {
         while (!doneSomething) {
             Class<?> type = attackWatches[new Random().nextInt(attackWatches.length)];
             try {
-                Constructor<?> constructor = type.getConstructor(SmileyFace.class, SmileyHand.class, SmileyHand.class);
-                BossWatch watch = (BossWatch) constructor.newInstance(face, leftHand, rightHand);
+                Constructor<?> constructor = type.getConstructor(Game.class, SmileyFace.class, SmileyHand.class, SmileyHand.class);
+                BossWatch watch = (BossWatch) constructor.newInstance(game, face, leftHand, rightHand);
                 if (watch.isValid(epsilon, mainBoard)) {
                     watches.add(watch);
                     doneSomething = true;

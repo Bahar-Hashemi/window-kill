@@ -47,13 +47,15 @@ public class GameUtil {
         double dy = first.getY() - second.getY();
         return Math.sqrt(dx * dx + dy * dy);
     }
-    public static boolean isInOneBoard(Entity entity) {
-        javafx.geometry.Bounds boundsInScene = entity.getView().localToScene(entity.getView().getBoundsInLocal());
-        for (Node node: ((Pane) MainStage.getInstance().getScene().getRoot()).getChildren())
-            if (node instanceof Pane)
-                if (node.localToScene(node.getBoundsInLocal()).contains(boundsInScene))
-                    return true;
-        return false;
+    public static boolean isInOneBoard(Entity entity, Game game) {
+        return true;
+//        for (GameBoard gameBoard: game.gameBoards)
+//            if (GameUtil.commonArea(entity, gameBoard) > entity.getArea() * 70 / 100)
+//                return true;
+//        for (User user: game.users)
+//            if (GameUtil.commonArea(entity, user.mainBoard) > entity.getArea() * 70 / 100)
+//                return true;
+//        return false;
     }
     public static void placeOutsideBoard(Entity entity, GameBoard gameBoard) {
         int placingStrategy = new Random().nextInt(0, 4);

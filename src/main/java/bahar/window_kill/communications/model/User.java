@@ -167,6 +167,8 @@ public class User {
     }
 
     public void readFrom(User goalUser) {
+        setXp(goalUser.getXp());
+        epsilon.setHP(goalUser.epsilon.getHP());
         epsilon.setLocation(goalUser.epsilon.getX(), goalUser.epsilon.getY());
         mainBoard.setLocation(goalUser.mainBoard.getX(), goalUser.mainBoard.getY());
         mainBoard.setSize(goalUser.mainBoard.getWidth(), goalUser.mainBoard.getHeight());
