@@ -30,12 +30,12 @@ public class WASDStrategy extends ControlStrategy {
                 case KeyCode.E -> user.setPauseRequest(!user.hasPauseRequest());
                 case KeyCode.Q -> user.setKillWish(false);
                 case KeyCode.R -> {
-                    if (GameController.user.coolDown <= 0 && GameController.user.getDevelopment().getActiveDefense() != null)
-                        user.abilityRequests.add(GameController.user.getDevelopment().getActiveDefense());
+                    if (GameController.user.getDevelopment().getActiveDefense() != null)
+                        user.abilityRequests.add(user.getDevelopment().getActiveDefense());
                 }
                 case KeyCode.F -> {
-                    if (GameController.user.coolDown <= 0 && GameController.user.getDevelopment().getActiveAttack() != null)
-                        user.abilityRequests.add(GameController.user.getDevelopment().getActiveAttack());
+                    if (GameController.user.getDevelopment().getActiveAttack() != null)
+                        user.abilityRequests.add(user.getDevelopment().getActiveAttack());
                 } //fight
             }
         });

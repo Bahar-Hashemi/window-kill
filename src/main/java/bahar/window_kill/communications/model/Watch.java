@@ -16,7 +16,7 @@ public class Watch {
     }
     public void call(long clock) {
         if (cycleCount == 0) {
-            System.err.println("the " + this.getClass().getName() + " was called in zero cycle count");
+//            System.err.println("the " + this.getClass().getName() + " was called in zero cycle count");
             return;
         }
         if (!wasCalled)

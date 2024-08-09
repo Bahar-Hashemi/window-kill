@@ -26,12 +26,12 @@ public class GameController {
         addProcessors(game);
     }
     private static void addProcessors(Game game) {
-        GamesManager.addProcessor(new RequestProcessor(false, game));
-        GamesManager.addProcessor(new AbilityProcessor(false, game));
-        GamesManager.addProcessor(new SpawnProcessor(false, game));
-        GamesManager.addProcessor(new BoardsProcessor(false, game));
-        GamesManager.addProcessor(new AggressionProcessor(false, game));
-        GamesManager.addProcessor(new MovementProcessor(false, game)); //important: must be after Aggression processor
-        GamesManager.addProcessor(new DeathProcessor(false, game));
+        game.gameProcessors.add(new RequestProcessor(false, game));
+        game.gameProcessors.add(new AbilityProcessor(false, game));
+        game.gameProcessors.add(new SpawnProcessor(false, game));
+        game.gameProcessors.add(new BoardsProcessor(false, game));
+        game.gameProcessors.add(new AggressionProcessor(false, game));
+        game.gameProcessors.add(new MovementProcessor(false, game)); //important: must be after Aggression processor
+        game.gameProcessors.add(new DeathProcessor(false, game));
     }
 }

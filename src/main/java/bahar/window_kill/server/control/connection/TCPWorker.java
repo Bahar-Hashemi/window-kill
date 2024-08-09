@@ -5,6 +5,7 @@ import bahar.window_kill.communications.messages.client.data.*;
 import bahar.window_kill.communications.messages.client.game.GameRequestMessage;
 import bahar.window_kill.communications.messages.client.register.LoginMessage;
 import bahar.window_kill.communications.messages.client.register.SignupMessage;
+import bahar.window_kill.communications.messages.client.squads.DonateMessage;
 import bahar.window_kill.communications.messages.client.squads.NewSquadMessage;
 import bahar.window_kill.server.control.connection.handlers.MessageHandler;
 import bahar.window_kill.server.control.connection.handlers.data.ChangeStateHandler;
@@ -14,6 +15,7 @@ import bahar.window_kill.server.control.connection.handlers.data.SendDevelopment
 import bahar.window_kill.server.control.connection.handlers.game.GameRequestHandler;
 import bahar.window_kill.server.control.connection.handlers.register.LoginHandler;
 import bahar.window_kill.server.control.connection.handlers.register.SignupHandler;
+import bahar.window_kill.server.control.connection.handlers.squads.DonateHandler;
 import bahar.window_kill.server.control.connection.handlers.squads.NewSquadHandler;
 import bahar.window_kill.server.control.connection.handlers.squads.SendMessageHandler;
 import bahar.window_kill.server.control.connection.handlers.squads.SendSquadHandler;
@@ -51,6 +53,7 @@ public class TCPWorker extends Thread {
         result.add(new SendMessageHandler());
         result.add(new GameRequestHandler());
         result.add(new SendControlsHandler());
+        result.add(new DonateHandler());
         return result;
     }
 
@@ -90,6 +93,7 @@ public class TCPWorker extends Thread {
                 case SEND_MESSAGE -> gsonAgent.fromJson(clientStr, SendMessageMessage.class);
                 case GAME_REQUEST -> gsonAgent.fromJson(clientStr, GameRequestMessage.class);
                 case SEND_CONTROLS -> gsonAgent.fromJson(clientStr, SendControlsMessage.class);
+                case DONATE -> gsonAgent.fromJson(clientStr, DonateMessage.class);
                 default -> null;
             };
         }

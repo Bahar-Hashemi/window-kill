@@ -66,12 +66,12 @@ public class OnlineSkillsController extends OnlineController {
         Button button = new Button("Writ of " + abilityTypes[index]);
         switch (states[index]) {
             case LOCKED:
-                makeBorder("transparent", button);
+                makeStyle("transparent", button);
                 button.setText(button.getText() + "   " + watch.getPrice());
                 button.setDisable(true);
                 break;
             case UNLOCKED:
-                makeBorder("transparent", button);
+                makeStyle("transparent", button);
                 button.setText(button.getText() + "   " + watch.getPrice());
                 if (development.getXp() > watch.getPrice())
                     button.setOnAction(event -> {
@@ -83,14 +83,14 @@ public class OnlineSkillsController extends OnlineController {
                     button.setDisable(true);
                 break;
             case ACTIVE:
-                makeBorder("yellow", button);
+                makeStyle("yellow", button);
                 button.setOnAction(event -> {
                     states[index] = Development.State.BOUGHT;
                     makeData();
                 });
                 break;
             case BOUGHT:
-                makeBorder("white", button);
+                makeStyle("white", button);
                 button.setOnAction(event -> {
                     development.activate(states, abilityTypes, index);
                     makeData();
@@ -100,8 +100,8 @@ public class OnlineSkillsController extends OnlineController {
         button.setPrefWidth(225);
         return button;
     }
-    private void makeBorder(String color, Button button) {
-        button.setStyle("-fx-border-color: " + color + "; -fx-border-radius: 15; -fx-background-radius: 15; -fx-border-width: 3; -fx-pref-width: 225px; -fx-pref-height: 30px;");
+    private void makeStyle(String color, Button button) {
+        button.setStyle("-fx-border-color: " + color + "; -fx-border-radius: 15; -fx-background-radius: 15; -fx-border-width: 3; -fx-pref-width: 225px; -fx-pref-height: 30px; -fx-font-size: 12px");
     }
     public void run() {
         makeSquadBox();
@@ -111,9 +111,9 @@ public class OnlineSkillsController extends OnlineController {
     }
     private Button makeSquadButton(String name, int state, int price, TableSquad tableSquad, EventHandler<ActionEvent> eventEventHandler) {
         Button button = new Button(name);
-        if (state == -1) makeBorder("transparent", button);
-        if (state == 0) makeBorder("white", button);
-        if (state == 1) makeBorder("yellow", button);
+        if (state == -1) makeStyle("transparent", button);
+        if (state == 0) makeStyle("white", button);
+        if (state == 1) makeStyle("yellow", button);
         if (!tableSquad.getOwner().equals(name))
             button.setDisable(true);
         else if (tableSquad.getVault() < price && state == -1)

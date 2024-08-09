@@ -14,14 +14,16 @@ public class RequestProcessor extends GameProcessor {
     @Override
     public void run() {
         for (User user: game.users)
+            user.coolDown = Math.max(0, user.coolDown - 30);
+        for (User user: game.users)
             handleRequest(user);
     }
     private void handleRequest(User user) {
-        if (user.hasPauseRequest())
+        if (isViewable && user.hasPauseRequest())
             game.setGameState(new PauseState(isViewable, game));
         if (user.hasKillWish())
             user.getEpsilon().setHP(-1 * (1E9 + 7));
-        if (!user.abilityRequests.isEmpty()) {
+        if (!user.abilityRequests.isEmpty() && user.coolDown <= 0) {
             for (AbilityType abilityName: user.abilityRequests) {
                 AbilityWatch ability = AbilityWatch.getAbilityByType(game, user, abilityName);
                 if (ability != null)

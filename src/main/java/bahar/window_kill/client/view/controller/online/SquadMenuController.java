@@ -2,7 +2,6 @@ package bahar.window_kill.client.view.controller.online;
 
 import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.client.control.connection.TCPClient;
-import bahar.window_kill.communications.model.User;
 import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.data.UserMessage;
@@ -138,15 +137,41 @@ public class SquadMenuController extends OnlineController {
                             break;
                     }
                     Label label = new Label(item.getUsername());
-                    label.setStyle("-fx-font-size: 10px; -fx-text-fill: white;");
+                    label.setStyle("-fx-font-size: 13px; -fx-text-fill: white;");
                     if (item.getUsername().equals(GameController.user.getUsername())) {
                         label.setText(label.getText() + " (you)");
-                        label.setStyle("-fx-font-size: 10px; -fx-text-fill: orange;");
+                        label.setStyle("-fx-font-size: 13px; -fx-text-fill: orange;");
                     }
                     label.setText(label.getText() + "    xp: " + item.getDevelopment().getXp());
                     hbox.getChildren().addAll(statusCircle, label);
                     setGraphic(hbox);
+
+                    if (GameController.user.tableSquad.getEnemy() == null || item.getUsername().equals(GameController.user.getUsername()))
+                        label.setOnMouseClicked(null);
+                    else {
+                        // Create context menu
+                        ContextMenu contextMenu = new ContextMenu();
+                        if (GameController.user.tableSquad.getEnemy() != null) {
+                            MenuItem colosseumItem = new MenuItem("COLOSSEUM");
+                            colosseumItem.setOnAction(event -> handleColosseumAction(item));
+                            contextMenu.getItems().add(colosseumItem);
+                        }
+
+                        // Setup context menu on right-click
+                        setupContextMenu(label, contextMenu);
+                    }
                 }
+            }
+        });
+    }
+    private void handleColosseumAction(TableUser item) {
+        UserMessage userMessage = new UserMessage(UserMessageType.COLOSSEUM_REQUEST, GameController.user.getUsername(), item.getUsername());
+        new TCPClient().sendUserMessage(userMessage);
+    }
+    private void setupContextMenu(Label label, ContextMenu contextMenu) {
+        label.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                contextMenu.show(label, event.getScreenX(), event.getScreenY());
             }
         });
     }
@@ -157,7 +182,7 @@ public class SquadMenuController extends OnlineController {
         }
         // Create context menu
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem leaveSquadItem = new MenuItem("Leave Squad");
+        MenuItem leaveSquadItem = new MenuItem("LEAVE");
 
         // Add event handler for the leave squad menu item
         leaveSquadItem.setOnAction(event -> handleLeaveSquad());

@@ -25,25 +25,25 @@ public class SpawnProcessor extends GameProcessor {
         makeWatches();
     }
     private void makeWatches() {
-        int difficulty = 2;
+        int difficulty = 1;
         if (game.needsView)
             difficulty = 100 / game.users.get(0).settings.getDifficulty() /*/ settings.getDifficulty()*/;
-        makeWatch(isViewable, 0, 1250 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
-        makeWatch(isViewable, 1, 1000 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
-        makeWatch(isViewable,2, 1500 / difficulty, 30 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
-        makeWatch(isViewable,3, 1300 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
+        makeWatch(isViewable, 0, 2500 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
+        makeWatch(isViewable, 1, 2000 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
+        makeWatch(isViewable,2, 3000 / difficulty, 30 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
+        makeWatch(isViewable,3, 26000 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});
 
-        makeWatch(isViewable,4, 1500 / difficulty, 30 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,4, 3000 / difficulty, 30 * difficulty, new Class<?>[]{
                 Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(isViewable,5, 2000 / difficulty, 25 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,5, 3000 / difficulty, 25 * difficulty, new Class<?>[]{
                 Wyrm.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(isViewable,6, 1500 / difficulty, 30 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,6, 3000 / difficulty, 30 * difficulty, new Class<?>[]{
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class});
-        makeWatch(isViewable,7, 1500 / difficulty, 30 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,7, 2500 / difficulty, 30 * difficulty, new Class<?>[]{
                 Wyrm.class, Barricados.class, Squarantine.class, Trigorath.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(isViewable,8, 1500 / difficulty, 50 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,8, 2500 / difficulty, 50 * difficulty, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
-        makeWatch(isViewable,9, 1500 / difficulty, 50 * difficulty, new Class<?>[]{
+        makeWatch(isViewable,9, 2000 / difficulty, 50 * difficulty, new Class<?>[]{
                 Wyrm.class, Barricados.class, Nechropic.class, Omenoct.class, SpawnerArchmire.class});
         currentWatches.add(entitySpawners[game.wave]);
     }

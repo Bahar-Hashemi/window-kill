@@ -20,3 +20,15 @@
 .button:pressed {
     -fx-background-color: #202020;
 }
+.slider .thumb {
+    -fx-background-color: gold; /* Gold thumb color */
+    -fx-background-radius: 10px; /* Round the corners of the thumb */
+}
+
+.slider .track {
+    -fx-background-color: #202020;
+}
+
+.slider .thumb:hover {
+    -fx-background-color: #ffd700; /* Lighter gold on hover */
+}

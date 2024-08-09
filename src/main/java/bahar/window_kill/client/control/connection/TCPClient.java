@@ -8,10 +8,12 @@ import bahar.window_kill.communications.messages.client.data.*;
 import bahar.window_kill.communications.messages.client.game.GameRequestMessage;
 import bahar.window_kill.communications.messages.client.register.LoginMessage;
 import bahar.window_kill.communications.messages.client.register.SignupMessage;
+import bahar.window_kill.communications.messages.client.squads.DonateMessage;
 import bahar.window_kill.communications.messages.client.squads.NewSquadMessage;
 import bahar.window_kill.communications.messages.server.GeneralAnswer;
 import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.communications.model.User;
+import bahar.window_kill.communications.processors.util.abilities.AbilityType;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -294,9 +296,22 @@ public class TCPClient {
     }
     public void sendControls(String username, User user) {
         SendControlsMessage sendControlsMessage = new SendControlsMessage(username, user);
+        for (AbilityType abilityType: user.abilityRequests)
+            System.out.println(abilityType.name());
         try {
             establishConnection();
             sendMessage(gsonAgent.toJson(sendControlsMessage));
+            endConnection();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void donate(String username, int amount) {
+        DonateMessage donateMessage = new DonateMessage(username, amount);
+        try {
+            establishConnection();
+            sendMessage(gsonAgent.toJson(donateMessage));
             endConnection();
         }
         catch (Exception e) {

@@ -23,9 +23,20 @@ public class SendMessageHandler extends MessageHandler {
             handleMembershipAccepted(sendBuffer, sendMessageMessage);
         if (sendMessageMessage.getUserMessage().getType() == UserMessageType.LEFT_SQUAD)
             handleLeftSquad(sendBuffer, sendMessageMessage);
+        if (sendMessageMessage.getUserMessage().getType() == UserMessageType.COLOSSEUM_REQUEST)
+            handleBattleRequest(sendBuffer, sendMessageMessage);
+        if (sendMessageMessage.getUserMessage().getType() == UserMessageType.MONOMACHIA_REQUEST)
+            handleBattleRequest(sendBuffer, sendMessageMessage);
         return true;
     }
-
+    private void handleBattleRequest(DataOutputStream sendBuffer, SendMessageMessage sendMessageMessage) {
+        UserMessage userMessage = sendMessageMessage.getUserMessage();
+        TableUser tableUser = DataBaseManager.getInstance().getUser(userMessage.getMessageData());
+        if (tableUser.getMessages() == null)
+            tableUser.setMessages(new ArrayList<>());
+        tableUser.getMessages().add(userMessage);
+        DataBaseManager.getInstance().updateUser(tableUser);
+    }
     private void handleMembershipAccepted(DataOutputStream sendBuffer, SendMessageMessage sendMessageMessage) {
         UserMessage userMessage = sendMessageMessage.getUserMessage();
         TableUser tableUser = DataBaseManager.getInstance().getUser(userMessage.getMessageData());

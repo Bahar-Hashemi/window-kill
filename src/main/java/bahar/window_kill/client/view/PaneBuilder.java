@@ -8,7 +8,8 @@ import javafx.scene.paint.Color;
 public enum PaneBuilder {
     MAIN_MENU_PANE("MainMenu.fxml", 1), PAUSE_PANE("PauseMenu.fxml", 0.7), GAME_OVER_PANE("GameOver.fxml", 0.6),
     SKILL_TREE_PANE("SkillTree.fxml", 1), SETTINGS_PANE("Settings.fxml", 1), SAVE_PANE("SavePane.fxml", 0.7),
-    REGISTER_MENU_PANE("RegisterMenu.fxml", 1), ONLINE_MENU_PANE("OnlineMenu.fxml", 1), SIGNUP_MENU_PANE("SignupMenu.fxml", 1);
+    REGISTER_MENU_PANE("RegisterMenu.fxml", 1), ONLINE_MENU_PANE("OnlineMenu.fxml", 1), SIGNUP_MENU_PANE("SignupMenu.fxml", 1),
+    ONLINE_GAME_OVER_PANE("OnlineGameOver.fxml", 0.75);
     final String name;
     final double opacity;
     PaneBuilder(String name, double opacity) {

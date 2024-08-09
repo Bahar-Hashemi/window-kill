@@ -35,14 +35,11 @@ public class DataRequestHandler extends MessageHandler {
     private void returnEnemySquadMembers(DataOutputStream sendBuffer, RequestDataMessage requestDataMessage) {
         TableUser tableUser = DataBaseManager.getInstance().getUser(requestDataMessage.getUsername());
         TableSquad squad = DataBaseManager.getInstance().getSquad(tableUser.getSquad());
-        System.err.println("squad name: " + squad);
         if (squad == null) {
             sendObject(sendBuffer, new ArrayList<>());
             return;
         }
-        System.err.println("saved enemy: " + squad.getEnemy());
         TableSquad enemySquad = DataBaseManager.getInstance().getSquad(squad.getEnemy());
-        System.err.println("enemy squad: " + enemySquad);
         if (enemySquad == null) {
             sendObject(sendBuffer, new ArrayList<>());
             return;

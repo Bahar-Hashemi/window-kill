@@ -35,7 +35,7 @@ public class UserMessage {
             return "User '" + senderName + "' wants to join your squad!";
         if (type == UserMessageType.MONOMACHIA_REQUEST)
             return "User '" + senderName + "' has a 'Monomachia' request!";
-        if (type == UserMessageType.COLLOSEUM_REQUEST)
+        if (type == UserMessageType.COLOSSEUM_REQUEST)
             return "User '" + senderName + "' has a 'Colloseum' request!";
         return "Unknown message type!";
     }
