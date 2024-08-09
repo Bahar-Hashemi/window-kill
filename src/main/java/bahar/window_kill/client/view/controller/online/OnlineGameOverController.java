@@ -24,6 +24,7 @@ public class OnlineGameOverController {
             donateLabel.setText("DONATION: " + newValue.intValue());
         });
         MainStage.requestCenterOnScreen(root);
+        GameController.user.tableUser = new TCPClient().getMe(GameController.user.getUsername());
         if (GameController.user.tableUser.getSquad() == null)
             donateButton.setDisable(true);
     }

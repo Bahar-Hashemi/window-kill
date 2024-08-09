@@ -2,6 +2,7 @@ package bahar.window_kill.client.view.controller.online;
 
 import bahar.window_kill.client.control.GameController;
 import bahar.window_kill.client.control.connection.TCPClient;
+import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.data.UserMessage;
 import bahar.window_kill.communications.data.UserMessageType;
@@ -40,7 +41,10 @@ public class GamesMenuController extends OnlineController {
         enemiesBox.getItems().setAll(enemies);
     }
     private void makeGameHistoryBox() {
-
+        if (GameController.user.tableSquad == null)
+            return;
+        String[] gameHistory = GameController.user.tableSquad.getHistory().split("\n");
+        gameHistoryBox.getItems().setAll(gameHistory);
     }
     private void setupEnemiesBox() {
         makeView();

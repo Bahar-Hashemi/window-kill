@@ -18,6 +18,11 @@ public class BattleController {
         }
     }
     public static void endSquadBattle() {
-
+        ArrayList<String> squads = DataBaseManager.getInstance().getSquadNames();
+        for (String squadName: squads) {
+            TableSquad squad = DataBaseManager.getInstance().getSquad(squadName);
+            squad.setEnemy(""); squad.setHistory("");
+            DataBaseManager.getInstance().updateSquad(squad);
+        }
     }
 }

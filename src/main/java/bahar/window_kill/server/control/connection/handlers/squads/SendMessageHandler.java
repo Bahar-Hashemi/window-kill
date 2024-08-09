@@ -6,8 +6,12 @@ import bahar.window_kill.communications.data.UserMessage;
 import bahar.window_kill.communications.data.UserMessageType;
 import bahar.window_kill.communications.messages.client.ClientMessage;
 import bahar.window_kill.communications.messages.client.data.SendMessageMessage;
+import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.server.control.connection.DataBaseManager;
 import bahar.window_kill.server.control.connection.handlers.MessageHandler;
+import bahar.window_kill.server.control.game.GameController;
+import bahar.window_kill.server.control.game.GamePool;
+import javafx.scene.control.Tab;
 
 import java.io.DataOutputStream;
 import java.util.ArrayList;
@@ -27,7 +31,19 @@ public class SendMessageHandler extends MessageHandler {
             handleBattleRequest(sendBuffer, sendMessageMessage);
         if (sendMessageMessage.getUserMessage().getType() == UserMessageType.MONOMACHIA_REQUEST)
             handleBattleRequest(sendBuffer, sendMessageMessage);
+        if (sendMessageMessage.getUserMessage().getType() == UserMessageType.ACCEPT_BATTLE)
+            handleAcceptBattle(sendBuffer, sendMessageMessage);
+        if (sendMessageMessage.getUserMessage().getType() == UserMessageType.ACCEPT_SUMMON)
+            handleAcceptSummon(sendBuffer, sendMessageMessage);
         return true;
+    }
+    private void handleAcceptBattle(DataOutputStream sendBuffer, SendMessageMessage sendMessageMessage) {
+        GameController.newMultiplayerGame(sendMessageMessage.getUserMessage().getSenderName(), sendMessageMessage.getUserMessage().getMessageData());
+    }
+    private void handleAcceptSummon(DataOutputStream sendBuffer, SendMessageMessage sendMessageMessage) {
+        TableUser tableUser = DataBaseManager.getInstance().getUser(sendMessageMessage.getUserMessage().getMessageData());
+        Game game = GamePool.getNotNullGame(tableUser.getUsername());
+        GameController.addUserToGame(sendMessageMessage.getUserMessage().getSenderName(), game);
     }
     private void handleBattleRequest(DataOutputStream sendBuffer, SendMessageMessage sendMessageMessage) {
         UserMessage userMessage = sendMessageMessage.getUserMessage();

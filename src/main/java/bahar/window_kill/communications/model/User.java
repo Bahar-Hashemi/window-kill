@@ -19,6 +19,16 @@ public class User {
     private boolean hasUpRequest = false, hasLeftRequest = false, hasDownRequest = false, hasRightRequest = false;
     private boolean shooting = false;
     private double mouseX, mouseY;
+    private boolean hasSummonRequest = false;
+
+    public boolean hasSummonRequest() {
+        return hasSummonRequest;
+    }
+
+    public void setSummonRequest(boolean hasSummonRequest) {
+        this.hasSummonRequest = hasSummonRequest;
+    }
+
     private boolean hasPauseRequest = false, killWish = false;
     public ArrayList<AbilityWatch> abilities;
     public ArrayList<AbilityType> abilityRequests;
@@ -174,5 +184,6 @@ public class User {
         mainBoard.setSize(goalUser.mainBoard.getWidth(), goalUser.mainBoard.getHeight());
         abilities = goalUser.abilities;
         coolDown = goalUser.coolDown;
+        setTableUser(goalUser.getTableUser());
     }
 }

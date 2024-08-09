@@ -27,7 +27,7 @@ public class SpawnProcessor extends GameProcessor {
     private void makeWatches() {
         int difficulty = 1;
         if (game.needsView)
-            difficulty = 100 / game.users.get(0).settings.getDifficulty() /*/ settings.getDifficulty()*/;
+            difficulty = 300 / game.users.get(0).settings.getDifficulty() /*/ settings.getDifficulty()*/;
         makeWatch(isViewable, 0, 2500 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
         makeWatch(isViewable, 1, 2000 / difficulty, 25 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class});
         makeWatch(isViewable,2, 3000 / difficulty, 30 * difficulty, new Class<?>[]{Trigorath.class, Squarantine.class, Nechropic.class, Omenoct.class});

@@ -53,6 +53,7 @@ public class OnlinePlayingState extends GameState {
     private static void sendMyControls() {
         new TCPClient().sendControls(GameController.user.getUsername(), GameController.user);
         GameController.user.abilityRequests.clear();
+        GameController.user.setSummonRequest(false);
     }
     private void makeGameProcessors() {
         game.gameProcessors = new ArrayList<>();

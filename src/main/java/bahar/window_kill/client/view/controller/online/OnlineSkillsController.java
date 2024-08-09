@@ -114,10 +114,12 @@ public class OnlineSkillsController extends OnlineController {
         if (state == -1) makeStyle("transparent", button);
         if (state == 0) makeStyle("white", button);
         if (state == 1) makeStyle("yellow", button);
-        if (!tableSquad.getOwner().equals(name))
+        if (!tableSquad.getOwner().equals(GameController.user.getUsername())) {
             button.setDisable(true);
-        else if (tableSquad.getVault() < price && state == -1)
+        }
+        else if (tableSquad.getVault() < price && state == -1) {
             button.setDisable(true);
+        }
         else
             button.setOnAction(eventEventHandler);
         return button;

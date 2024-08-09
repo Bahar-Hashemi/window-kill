@@ -25,7 +25,11 @@ public class WASDStrategy extends ControlStrategy {
             switch (keyEvent.getCode()) {
                 case KeyCode.W -> user.setUpRequest(false);
                 case KeyCode.A -> user.setLeftRequest(false);
-                case KeyCode.S -> user.setDownRequest(false);
+                case KeyCode.S -> {
+                    if (keyEvent.isShiftDown())
+                        user.setSummonRequest(true);
+                    user.setDownRequest(false);
+                }
                 case KeyCode.D -> user.setRightRequest(false);
                 case KeyCode.E -> user.setPauseRequest(!user.hasPauseRequest());
                 case KeyCode.Q -> user.setKillWish(false);

@@ -16,6 +16,10 @@ public class KIJLStrategy extends ControlStrategy {
                 case KeyCode.J -> user.setLeftRequest(true);
                 case KeyCode.K -> user.setDownRequest(true);
                 case KeyCode.L -> user.setRightRequest(true);
+                case KeyCode.S -> {
+                    if (keyEvent.isShiftDown())
+                        user.setSummonRequest(true);
+                }
                 case KeyCode.Q -> {
                     if (keyEvent.isControlDown())
                         user.setKillWish(true);

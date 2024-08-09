@@ -37,6 +37,8 @@ public class UserMessage {
             return "User '" + senderName + "' has a 'Monomachia' request!";
         if (type == UserMessageType.COLOSSEUM_REQUEST)
             return "User '" + senderName + "' has a 'Colloseum' request!";
+        if (type == UserMessageType.REQUEST_SUMMON)
+            return "User '" + senderName + "' wants to summon you!";
         return "Unknown message type!";
     }
 

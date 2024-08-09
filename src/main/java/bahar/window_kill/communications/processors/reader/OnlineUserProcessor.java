@@ -1,8 +1,10 @@
 package bahar.window_kill.communications.processors.reader;
 
 import bahar.window_kill.client.control.GameController;
+import bahar.window_kill.client.control.connection.TCPClient;
 import bahar.window_kill.client.view.MainStage;
 import bahar.window_kill.client.view.PaneBuilder;
+import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.communications.model.User;
 import bahar.window_kill.communications.model.boards.MainBoard;
@@ -55,12 +57,18 @@ public class OnlineUserProcessor extends GameProcessor {
         game.addUser(newUser);
         newUser.mainBoard.add(newUser.epsilon.getView());
         MainStage.add(newUser.mainBoard.getView());
+        TableUser myUser = new TCPClient().getMe(GameController.user.getUsername());
+        TableUser thisUser = new TCPClient().getMe(user.getUsername());
         if (user.getUsername().equals(GameController.user.getUsername())) {
             newUser.mainBoard.setControlStrategy(GameController.user.settings.getControlStrategy());
             newUser.mainBoard.requestUserControl(newUser);
             newUser.setDevelopment(user.getDevelopment());
-            ((Circle) newUser.epsilon.getView()).setStroke(Color.LIGHTSKYBLUE);
+            ((Circle) newUser.epsilon.getView()).setStroke(Color.CORNFLOWERBLUE);
             GameController.user = newUser;
         }
+        else if (myUser.getSquad().equals(thisUser.getSquad()))
+            ((Circle) newUser.epsilon.getView()).setStroke(Color.LIGHTSKYBLUE);
+        else
+            ((Circle) newUser.epsilon.getView()).setStroke(Color.LIGHTCORAL);
     }
 }

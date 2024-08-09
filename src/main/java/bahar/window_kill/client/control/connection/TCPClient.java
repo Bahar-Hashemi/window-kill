@@ -296,8 +296,6 @@ public class TCPClient {
     }
     public void sendControls(String username, User user) {
         SendControlsMessage sendControlsMessage = new SendControlsMessage(username, user);
-        for (AbilityType abilityType: user.abilityRequests)
-            System.out.println(abilityType.name());
         try {
             establishConnection();
             sendMessage(gsonAgent.toJson(sendControlsMessage));

@@ -1,5 +1,6 @@
 package bahar.window_kill.server.control.game;
 
+import bahar.window_kill.communications.data.TableSquad;
 import bahar.window_kill.communications.data.TableUser;
 import bahar.window_kill.communications.model.Game;
 import bahar.window_kill.communications.model.User;
@@ -41,12 +42,39 @@ public class GamePool {
     }
     public static void removeGame(Game game) {
         synchronized (onlineGames) {
-            for (User user: game.users) {
-                TableUser tableUser = DataBaseManager.getInstance().getUser(user.getUsername());
-                tableUser.getDevelopment().setXp(tableUser.getDevelopment().getXp() + user.getXp());
-                DataBaseManager.getInstance().updateUser(tableUser);
-            }
+            updatePalioxis(game);
+            updateUsersState(game);
+            updateSquadHistory(game);
             onlineGames.remove(game);
+        }
+    }
+    private static void updatePalioxis(Game game) {
+        for (User user: game.users) {
+            TableUser tableUser = DataBaseManager.getInstance().getUser(user.getUsername());
+            TableSquad tableSquad = DataBaseManager.getInstance().getSquad(tableUser.getSquad());
+            if (tableSquad.getPalioxisState() == 1)
+                tableSquad.setVault(tableSquad.getVault() + user.getXp());
+            DataBaseManager.getInstance().updateSquad(tableSquad);
+        }
+    }
+    private static void updateSquadHistory(Game game) {
+        if (game.users.size() <= 1)
+            return;
+        for (User user: game.users) {
+            TableUser tableUser = DataBaseManager.getInstance().getUser(user.getUsername());
+            TableSquad tableSquad = DataBaseManager.getInstance().getSquad(tableUser.getSquad());
+            tableSquad.setHistory(tableSquad.getHistory() +
+                    user.getUsername() + " played and gained" + user.getXp() + " xps\n");
+            DataBaseManager.getInstance().updateUser(tableUser);
+        }
+    }
+    private static void updateUsersState(Game game) {
+        for (User user: game.users) {
+            TableUser tableUser = DataBaseManager.getInstance().getUser(user.getUsername());
+            tableUser.getDevelopment().setXp(tableUser.getDevelopment().getXp() + user.getXp());
+            if (tableUser.getState().equals("busy"))
+                tableUser.setState("online");
+            DataBaseManager.getInstance().updateUser(tableUser);
         }
     }
 }

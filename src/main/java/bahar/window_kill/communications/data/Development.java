@@ -88,8 +88,7 @@ public class Development {
         return null;
     }
     public static Development getFirstState() {
-        System.out.println("you should correct here!!!");
-        return new Development(0, 10000, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED, State.LOCKED}, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED});
+        return new Development(0, 0, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED, State.LOCKED}, new State[]{State.UNLOCKED, State.LOCKED, State.LOCKED});
     }
     public String toJson() {
         Gson gson = new Gson();

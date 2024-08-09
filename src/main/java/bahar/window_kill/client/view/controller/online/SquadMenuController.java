@@ -107,6 +107,12 @@ public class SquadMenuController extends OnlineController {
         if (item.getType() == UserMessageType.MEMBERSHIP_REQUEST) {
             new TCPClient().sendUserMessage(new UserMessage(UserMessageType.MEMBERSHIP_ACCEPTED, GameController.user.getUsername(), item.getSenderName()));
         }
+        if (item.getType() == UserMessageType.COLOSSEUM_REQUEST || item.getType() == UserMessageType.MONOMACHIA_REQUEST) {
+            new TCPClient().sendUserMessage(new UserMessage(UserMessageType.ACCEPT_BATTLE, GameController.user.getUsername(), item.getSenderName()));
+        }
+        if (item.getType() == UserMessageType.REQUEST_SUMMON) {
+            new TCPClient().sendUserMessage(new UserMessage(UserMessageType.ACCEPT_SUMMON, GameController.user.getUsername(), item.getSenderName()));
+        }
     }
 
     // Handle reject action
